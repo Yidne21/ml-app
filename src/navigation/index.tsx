@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cart from '../app/screens/cart';
 import Home from '../app/screens/home';
@@ -23,14 +23,25 @@ import NotFound from '../app/screens/NotFound';
 import Offline from '../app/screens/Offline';
 import SplashScreen from '../app/screens/SplashScreen';
 import WalkThroughScreen from '../app/screens/WalkThrough';
+import { View } from 'react-native';
 
 export default function DefaultLayout() {
+  const insets = useSafeAreaInsets();
+
   return (
-    <SafeAreaProvider>
-      <NavigationContainer>
+    <NavigationContainer>
+      <View
+        style={{
+          flex: 1,
+          paddingTop: insets.top,
+          paddingBottom: insets.bottom,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
+        }}
+      >
         <RootNavigator />
-      </NavigationContainer>
-    </SafeAreaProvider>
+      </View>
+    </NavigationContainer>
   );
 }
 
@@ -70,14 +81,14 @@ const Tab = createBottomTabNavigator();
 function Tabs() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="RootTab"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Tab.Screen name="Home" component={HomeStackScreen} />
-      <Tab.Screen name="DrugSearch" component={DrugSearchStackScreen} />
-      <Tab.Screen name="Profile" component={UserProfile} />
+      <Tab.Screen name="HomeTab" component={HomeStackScreen} />
+      <Tab.Screen name="DrugSearchTab" component={DrugSearchStackScreen} />
+      <Tab.Screen name="ProfileTab" component={UserProfile} />
     </Tab.Navigator>
   );
 }
@@ -91,7 +102,7 @@ function RootNavigator() {
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Splash" component={SplashScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="WalkThrough" component={WalkThroughScreen} />
       <Stack.Screen name="RootTap" component={Tabs} />
       <Stack.Screen name="Login" component={Login} />
