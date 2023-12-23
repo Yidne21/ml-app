@@ -1,51 +1,100 @@
-/**
- * Learn more about using TypeScript with React Navigation:
- * https://reactnavigation.org/docs/typescript/
- */
-
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
-declare global {
-  namespace ReactNavigation {
-    interface RootParamList extends RootStackParamList {}
-  }
-}
+// Declare additional types as needed
 
-export type ReservationRequestsStackParamList = {
-  ReservationRequestsList: undefined;
-  IndividualReservationRequestList: { eventId: string };
-  SpecialRequestList: undefined;
+// Home Stack Navigator
+/**
+ * Represents the parameter list for the Home stack navigation.
+ */
+export type HomeStackParamList = {
+  Home: undefined;
+  PharmacyDetail: { pharmacyId: string };
+  DrugSearch: undefined;
 };
 
-export type LandingScreenStackParamList = {
-  LandingScreen: undefined;
-  Map: undefined;
+/**
+ * Type definition for the props of screens in the HomeStack.
+ * @template Screen - The key of the screen in the HomeStackParamList.
+ */
+export type HomeStackScreenProps<Screen extends keyof HomeStackParamList> = NativeStackScreenProps<
+  HomeStackParamList,
+  Screen
+>;
+
+// Drug Search Stack Navigator
+/**
+ * Represents the parameter list for the DrugSearchStack navigation stack.
+ */
+export type DrugSearchStackParamList = {
+  DrugSearch: undefined;
+  DrugDetail: undefined;
 };
 
+/**
+ * Represents the props for a screen in the DrugSearchStack.
+ * @template Screen - The available screens in the DrugSearchStack.
+ */
+export type DrugSearchStackScreenProps<Screen extends keyof DrugSearchStackParamList> =
+  NativeStackScreenProps<DrugSearchStackParamList, Screen>;
+
+// Tab Navigator
+/**
+ * Represents the parameter list for the tabs in the navigation.
+ */
+export type TabParamList = {
+  HomeTab: NavigatorScreenParams<HomeStackParamList>;
+  DrugSearchTab: NavigatorScreenParams<DrugSearchStackParamList>;
+  ProfileTab: undefined;
+  RootTab: undefined;
+};
+
+/**
+ * Type definition for the props of a tab screen.
+ * @template Screen - The screen key of the tab.
+ */
+export type TabScreenProps<Screen extends keyof TabParamList> = BottomTabScreenProps<
+  TabParamList,
+  Screen
+>;
+
+// Root Stack Navigator
+/**
+ * Represents the parameter list for the root stack navigation.
+ */
 export type RootStackParamList = {
-  LoadingScreen: undefined;
-  IntroScreen: undefined;
-  RootTab: NavigatorScreenParams<RootTabParamList> | undefined;
+  Splash: undefined;
+  WalkThrough: undefined;
+  RootTab: NavigatorScreenParams<TabParamList> | undefined;
   Login: undefined;
-  SignUp: undefined | { id: string };
-  TripDetail: { id: string };
-  ReserveEvent: { id: string; reservationId?: string; editMode?: boolean };
-  Profile: { id: string } | undefined;
-  CreateTrip: { eventId: string } | undefined;
-  subAccounts: undefined;
-  Favorites: undefined;
+  ForgotPassword: undefined;
+  ResetPassword: undefined;
+  SignUp: undefined;
+  SignUpSuccess: undefined;
+  VerifyOtp: undefined;
+  Cart: undefined;
+  CheckOut: undefined;
+  CheckOutSuccess: undefined;
+  UserProfile: undefined;
+  Notification: undefined;
+  CartEmpty: undefined;
   NotFound: undefined;
+  Offline: undefined;
 };
 
+/**
+ * Represents the props for the root stack screen.
+ * @template Screen - The screen key of the root stack.
+ */
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
   RootStackParamList,
   Screen
 >;
 
-export type RootTabParamList = {
-  Search: { searchParam: {} } | undefined;
-  ReservedEvents: undefined;
-  ReservationRequests: NavigatorScreenParams<ReservationRequestsStackParamList> | undefined;
-  Landing: NavigatorScreenParams<LandingScreenStackParamList>;
-};
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
+}

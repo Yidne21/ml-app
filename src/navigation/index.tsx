@@ -4,14 +4,14 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cart from '../app/screens/cart';
-import Home from '../app/screens/home';
+import Home from '../app/screens/nearbyPharmacies';
 import CheckOut from '../app/screens/checkout';
 import DrugDetail from '../app/screens/drugDetail';
 import DrugSearch from '../app/screens/drugSearch';
 import ForgotPassword from '../app/screens/forgotPassword';
 import Login from '../app/screens/login';
 import Notification from '../app/screens/notification';
-import PharmacyProfile from '../app/screens/pharmacyProfile';
+import PharmacyDetail from '../app/screens/pharmacyDetail';
 import ResetPassword from '../app/screens/resetPassword';
 import SignUpSuccess from '../app/screens/SignUpSuccess';
 import SignUp from '../app/screens/signup';
@@ -21,9 +21,16 @@ import CartEmpty from '../app/screens/CartEmpty';
 import CheckOutSuccess from '../app/screens/CheckOutSuccess';
 import NotFound from '../app/screens/NotFound';
 import Offline from '../app/screens/Offline';
-import SplashScreen from '../app/screens/SplashScreen';
 import WalkThroughScreen from '../app/screens/WalkThrough';
 import { View } from 'react-native';
+// import useInitialAppLaunch from '../utils/hooks/useInitialAppLaunch';
+// import { useNavigation } from '@react-navigation/native';
+import {
+  HomeStackParamList,
+  DrugSearchStackParamList,
+  TabParamList,
+  RootStackParamList,
+} from './types';
 
 export default function DefaultLayout() {
   const insets = useSafeAreaInsets();
@@ -45,7 +52,7 @@ export default function DefaultLayout() {
   );
 }
 
-const HomeStack = createNativeStackNavigator();
+const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 
 function HomeStackScreen() {
   return (
@@ -55,13 +62,13 @@ function HomeStackScreen() {
       }}
     >
       <HomeStack.Screen name="Home" component={Home} />
-      <HomeStack.Screen name="PharmacyProfile" component={PharmacyProfile} />
+      <HomeStack.Screen name="PharmacyDetail" component={PharmacyDetail} />
       <HomeStack.Screen name="DrugSearch" component={DrugSearch} />
     </HomeStack.Navigator>
   );
 }
 
-const DrugSearchStack = createNativeStackNavigator();
+const DrugSearchStack = createNativeStackNavigator<DrugSearchStackParamList>();
 
 function DrugSearchStackScreen() {
   return (
@@ -76,7 +83,7 @@ function DrugSearchStackScreen() {
   );
 }
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<TabParamList>();
 
 function Tabs() {
   return (
@@ -93,32 +100,36 @@ function Tabs() {
   );
 }
 
-const Stack = createNativeStackNavigator();
+const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  // const navigation = useNavigation();
+  // useInitialAppLaunch(
+  //   () => navigation.navigate('RootTab'), // Navigate to home screen if logged in
+  //   () => navigation.navigate('Login'), // Navigate to login screen if not logged in
+  // );
+
   return (
-    <Stack.Navigator
+    <RootStack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="Splash" component={SplashScreen} />
-      <Stack.Screen name="WalkThrough" component={WalkThroughScreen} />
-      <Stack.Screen name="RootTap" component={Tabs} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-      <Stack.Screen name="ResetPassword" component={ResetPassword} />
-      <Stack.Screen name="SignUp" component={SignUp} />
-      <Stack.Screen name="SignUpSuccess" component={SignUpSuccess} />
-      <Stack.Screen name="VerifyOtp" component={VerifyOtp} />
-      <Stack.Screen name="Cart" component={Cart} />
-      <Stack.Screen name="CheckOut" component={CheckOut} />
-      <Stack.Screen name="CheckOutSuccess" component={CheckOutSuccess} />
-      <Stack.Screen name="UserProfile" component={UserProfile} />
-      <Stack.Screen name="Notification" component={Notification} />
-      <Stack.Screen name="CartEmpty" component={CartEmpty} />
-      <Stack.Screen name="NotFound" component={NotFound} />
-      <Stack.Screen name="Offline" component={Offline} />
-    </Stack.Navigator>
+      <RootStack.Screen name="WalkThrough" component={WalkThroughScreen} />
+      <RootStack.Screen name="RootTab" component={Tabs} />
+      <RootStack.Screen name="Login" component={Login} />
+      <RootStack.Screen name="ForgotPassword" component={ForgotPassword} />
+      <RootStack.Screen name="ResetPassword" component={ResetPassword} />
+      <RootStack.Screen name="SignUp" component={SignUp} />
+      <RootStack.Screen name="SignUpSuccess" component={SignUpSuccess} />
+      <RootStack.Screen name="VerifyOtp" component={VerifyOtp} />
+      <RootStack.Screen name="Cart" component={Cart} />
+      <RootStack.Screen name="CheckOut" component={CheckOut} />
+      <RootStack.Screen name="CheckOutSuccess" component={CheckOutSuccess} />
+      <RootStack.Screen name="Notification" component={Notification} />
+      <RootStack.Screen name="CartEmpty" component={CartEmpty} />
+      <RootStack.Screen name="NotFound" component={NotFound} />
+      <RootStack.Screen name="Offline" component={Offline} />
+    </RootStack.Navigator>
   );
 }
