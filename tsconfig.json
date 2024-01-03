@@ -9,5 +9,5 @@
   "include": [
     "**/*.ts",
     "**/*.tsx"
-  ]
+, "src/app/screens/UpdateProfile/component/CoverPhoto"  ]
 }

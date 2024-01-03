@@ -29,7 +29,8 @@ export type HomeStackScreenProps<Screen extends keyof HomeStackParamList> = Nati
  */
 export type DrugSearchStackParamList = {
   DrugSearch: undefined;
-  DrugDetail: undefined;
+  DrugDetail: { drugId: string };
+  Cart: undefined;
 };
 
 /**
@@ -39,6 +40,24 @@ export type DrugSearchStackParamList = {
 export type DrugSearchStackScreenProps<Screen extends keyof DrugSearchStackParamList> =
   NativeStackScreenProps<DrugSearchStackParamList, Screen>;
 
+// profile stack navigator
+/**
+ * Represents the parameter list for the profile stack navigation.
+ * @template Screen - The screen key of the profile stack.
+ */
+
+export type ProfileStackParamList = {
+  Profile: { userId: string };
+  EditProfile: { userId: string };
+};
+
+/**
+ * Represents the props for the profile stack screen.
+ * @template Screen - The screen key of the profile stack.
+ */
+export type ProfileStackScreenProps<Screen extends keyof ProfileStackParamList> =
+  NativeStackScreenProps<ProfileStackParamList, Screen>;
+
 // Tab Navigator
 /**
  * Represents the parameter list for the tabs in the navigation.
@@ -46,7 +65,7 @@ export type DrugSearchStackScreenProps<Screen extends keyof DrugSearchStackParam
 export type TabParamList = {
   HomeTab: NavigatorScreenParams<HomeStackParamList>;
   DrugSearchTab: NavigatorScreenParams<DrugSearchStackParamList>;
-  ProfileTab: undefined;
+  ProfileTab: NavigatorScreenParams<ProfileStackParamList>;
   RootTab: undefined;
 };
 
@@ -71,8 +90,8 @@ export type RootStackParamList = {
   ForgotPassword: undefined;
   ResetPassword: undefined;
   SignUp: undefined;
-  SignUpSuccess: undefined;
-  VerifyOtp: undefined;
+  SuccessScreen: { message: string; title: string };
+  VerifyOtp: { prevRoute: string };
   Cart: undefined;
   CheckOut: undefined;
   CheckOutSuccess: undefined;
