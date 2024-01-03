@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
-import Base_url from '../../../utils/configs/environments';
+import { Base_url } from '../environments';
 interface ApiTypes {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   route: string;
@@ -8,6 +8,7 @@ interface ApiTypes {
   token?: any;
   params?: any;
   ContentType?: string;
+  data?: any;
 }
 console.log('Base_url', Base_url);
 function API({ method, route, payload, params, token, ContentType }: ApiTypes) {
@@ -24,7 +25,7 @@ function API({ method, route, payload, params, token, ContentType }: ApiTypes) {
   return new Promise((resolve, reject) => {
     axios({
       method: method,
-      url: `http://192.168.137.209:5000/api/${route}`,
+      url: `${Base_url}/api/${route}`,
       data: payload,
       headers: headers,
       params: params,
@@ -34,24 +35,11 @@ function API({ method, route, payload, params, token, ContentType }: ApiTypes) {
         resolve(res);
       })
       .catch((error) => {
-        //console.log('error', error);
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log('server error');
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log('request made but no response');
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request);
+        if (error?.response?.status === 500) {
+          console.log(error?.response?.data?.message || error || 'Something went wrong');
         } else {
           reject(error?.response?.data?.message || 'Something went wrong');
         }
-        //console.log(error.config);
       });
   });
 }
