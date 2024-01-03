@@ -5,22 +5,21 @@ import PharmacyCard from './PharmacyCard';
 
 function PharmacyList({ pharmacies }: { pharmacies: Ipharmacies[] }) {
   return (
-    <View style={styles.listContainer}>
-      <FlatList
-        data={pharmacies}
-        renderItem={({ item }) => <PharmacyCard pharmacy={item} />}
-        style={styles.flatList}
-      />
-    </View>
+    <FlatList
+      data={pharmacies}
+      renderItem={({ item }) => <PharmacyCard pharmacy={item} />}
+      style={styles.flatList}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
+    backgroundColor: 'red',
   },
   flatList: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
   },
 });
 

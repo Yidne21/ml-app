@@ -19,7 +19,6 @@ export interface InearbyPharmacies {
 export interface Idrugs {
   _id: string;
   name: string;
-  price: number;
   stockLevel: number;
 }
 
@@ -29,5 +28,5 @@ export interface Ipharmacies {
   distance: number;
   name: string;
   location: [number, number];
-  drug?: Idrugs[];
+  drug: Idrugs;
 }
