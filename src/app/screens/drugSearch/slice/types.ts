@@ -1,0 +1,32 @@
+export interface IinitialDrugSearchState {
+  isSearching: boolean;
+  searchResult?: IdrugSearchResult;
+}
+
+export interface IgetDrugSearchPayload {
+  pageState: {
+    page: number;
+    limit: number;
+    serchQuery?: string;
+  };
+}
+
+export interface IdrugSearchResult {
+  totalDocuments: number;
+  totalPages: number;
+  drugs: Idrugs[];
+}
+
+export interface Idrugs {
+  _id: string;
+  name: string;
+  category: string;
+  price: number;
+  expiredDate: string;
+  pharmacy: {
+    _id: string;
+    location: number[];
+    name: string;
+    distance: number;
+  };
+}
