@@ -1,14 +1,152 @@
-import React from 'react';
-import { Text, View, Button } from 'react-native';
+// screens/WalkthroughScreen.js
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { theme } from '../../utils/theme/theme';
 import { RootStackScreenProps } from '../../navigation/types';
 
+const walkthroughData = [
+  {
+    image: require('../../assets/images/walkthrough1.jpg'),
+    title: 'Welcome to Medicin Locator',
+    description: 'Discover nearby pharmacies and find the medicines you need with ease.',
+  },
+  {
+    image: require('../../assets/images/walkthrough2.jpg'),
+    title: 'Easy Medicine Search',
+    description:
+      'Search for medicines and get detailed information, including prices and availability.',
+  },
+  {
+    image: require('../../assets/images/walkthrough3.jpg'),
+    title: 'Order Online',
+    description: 'Place orders online and have your medicines delivered to your doorstep.',
+  },
+];
+
 function WalkThroughScreen({ navigation }: RootStackScreenProps<'WalkThrough'>) {
+  const [activeStep, setActiveStep] = useState(0);
+
+  const handleSkip = () => {
+    // Implement logic to navigate to the main app screen
+    navigation.navigate('SignUp');
+    console.log('Skip pressed');
+  };
+
+  const handleNext = () => {
+    if (activeStep < walkthroughData.length - 1) {
+      setActiveStep(activeStep + 1);
+    } else {
+      // Implement logic to navigate to the main app screen
+      navigation.navigate('SignUp');
+      console.log('Next pressed');
+    }
+  };
+
   return (
-    <View>
-      <Text>WalkThrough screen</Text>
-      <Button title="skip" onPress={() => navigation.navigate('RootTab')}></Button>
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.topContainer}>
+        <Image source={walkthroughData[activeStep].image} style={styles.image} />
+      </View>
+
+      <View style={styles.bottomContainer}>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{walkthroughData[activeStep].title}</Text>
+          <Text style={styles.description}>{walkthroughData[activeStep].description}</Text>
+        </View>
+
+        <View style={styles.bottomButtonsContainer}>
+          <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
+            <Text style={styles.skipButtonText}>Skip</Text>
+          </TouchableOpacity>
+
+          <View style={styles.paginationDots}>
+            {walkthroughData.map((_, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.dot,
+                  {
+                    backgroundColor: index === activeStep ? theme.colors.primary[500] : 'lightgray',
+                  },
+                ]}
+              />
+            ))}
+          </View>
+
+          <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
+            <Text style={styles.nextButtonText}>
+              {activeStep === walkthroughData.length - 1 ? 'Finish' : 'Next'}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 export default WalkThroughScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+  },
+  topContainer: {
+    alignItems: 'center',
+    paddingTop: 20,
+    marginTop: 100,
+  },
+  image: {
+    width: 400,
+    height: 400,
+    resizeMode: 'cover',
+    borderRadius: 100,
+    marginBottom: 80,
+  },
+  bottomContainer: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  textContainer: {
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: theme.colors.primary[500],
+  },
+  description: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: theme.colors.text,
+  },
+  bottomButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+  skipButton: {},
+  skipButtonText: {
+    color: theme.colors.transparent,
+    fontSize: 16,
+  },
+  paginationDots: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 5,
+  },
+  nextButton: {},
+  nextButtonText: {
+    color: theme.colors.primary[900],
+    fontSize: 20,
+  },
+});
