@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as select from './slice/selector';
 import { useVerifyOtpScreenSlice } from './slice';
 import Toast from 'react-native-root-toast';
+import { useForgotPasswordScreenSlice } from '../ForgetPassword/slice';
+import * as forgotPasswordSelect from '../ForgetPassword/slice/selector';
 
 function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
   const [verificationCode, setVerificationCode] = useState('');
@@ -28,6 +30,10 @@ function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
   const isVerifying = useSelector(select.selectIsSendingOtp);
   const isVerified = useSelector(select.selectValidOtp);
   const errorMsg = useSelector(select.selectErrorMessage);
+
+  const { actions: forgotPasswordActions } = useForgotPasswordScreenSlice();
+  const isResendingOtp = useSelector(forgotPasswordSelect.selectIsForgotingPassword);
+  const isOtpSent = useSelector(forgotPasswordSelect.selectIsOtpSent);
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
@@ -64,9 +70,23 @@ function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
   }
 
   const handleResendCode = () => {
-    console.log('Resend Code pressed');
-    setCountdown(60); // Reset countdown on resend
+    setCountdown(60);
+    dispatch(forgotPasswordActions.forgotPassword({ phoneNumber }));
   };
+
+  useEffect(() => {
+    if (isOtpSent === true) {
+      Toast.show('Resent successfully', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+      });
+      dispatch(forgotPasswordActions.resetForgotPasswordState());
+    }
+  }, [isOtpSent, dispatch, forgotPasswordActions]);
 
   const handleSubmitCode = () => {
     dispatch(actions.verifyOtp({ code: verificationCode, phoneNumber }));
@@ -115,6 +135,10 @@ function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
         <Text style={styles.countdownText}>
           The verification code will expire in {countdown} sec
         </Text>
+
+        {isResendingOtp && (
+          <ActivityIndicator size="small" color={theme.colors.primary[500]} style={styles.loader} />
+        )}
 
         <TouchableOpacity style={styles.resendButton} onPress={handleResendCode}>
           <Text style={styles.resendButtonText}>Resend Code</Text>

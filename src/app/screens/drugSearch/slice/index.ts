@@ -7,6 +7,8 @@ import { IinitialDrugSearchState } from './types';
 
 export const initialState: IinitialDrugSearchState = {
   isSearching: false,
+  isSuccessful: false,
+  errorMsg: '',
   searchResult: undefined,
 };
 
@@ -15,17 +17,22 @@ const slice = createSlice({
   initialState,
   reducers: {
     getSearchedDrug: (state, action) => {
-      console.log('action.payload----', action.payload);
       state.isSearching = true;
     },
     getSearchedDrugSuccess: (state, action) => {
-      console.log('success', action.payload);
       state.searchResult = action.payload;
-      console.log('-----------success state---- ', state.searchResult);
       state.isSearching = false;
+      state.isSuccessful = true;
     },
     getSearchedDrugFailure: (state, action) => {
-      console.log('error', action.payload);
+      state.isSearching = false;
+      state.isSuccessful = false;
+      state.errorMsg = action.payload;
+    },
+    resetSearchResult: (state) => {
+      state.isSuccessful = false;
+      state.errorMsg = '';
+      state.isSearching = false;
     },
   },
 });

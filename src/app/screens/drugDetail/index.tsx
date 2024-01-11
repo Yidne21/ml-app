@@ -4,9 +4,9 @@ import { DrugSearchStackScreenProps } from '../../../navigation/types';
 import { useDrugDetailScreenSlice } from './slice';
 import { useDispatch } from 'react-redux';
 import { theme } from '../../../utils/theme/theme';
-import { MaterialIcons, Octicons } from '@expo/vector-icons';
+import { Octicons } from '@expo/vector-icons';
 import { format } from 'date-fns';
-
+import Header from '../../components/Custom/Header';
 const drug = {
   _id: '657711b99f521e451a499394',
   ingredients: [],
@@ -41,12 +41,7 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={24} color={theme.colors.primary[500]} />
-        </TouchableOpacity>
-        {/* Add any other header elements here */}
-      </View>
+      <Header showRightIcon={true} />
       <ScrollView>
         <Text style={styles.drugName}>{drug.name}</Text>
 
@@ -113,11 +108,6 @@ const styles = StyleSheet.create({
     padding: 16,
     flex: 1,
     backgroundColor: '#fff',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 30,
   },
   drugName: {
     fontSize: 24,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 import { Ipharmacies } from '../slice/types';
 import PharmacyCard from './PharmacyCard';
 
@@ -16,7 +16,6 @@ function PharmacyList({ pharmacies }: { pharmacies: Ipharmacies[] }) {
 const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
-    backgroundColor: 'red',
   },
   flatList: {
     paddingHorizontal: 10,

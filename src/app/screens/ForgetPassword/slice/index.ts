@@ -24,6 +24,10 @@ const slice = createSlice({
     forgotPasswordError(state, action) {
       state.isForgotingPassword = false;
     },
+    resetForgotPasswordState(state) {
+      state.isForgotingPassword = false;
+      state.isOtpSent = false;
+    },
   },
 });
 

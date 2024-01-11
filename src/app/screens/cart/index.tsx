@@ -1,8 +1,22 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
+import Header from '../../components/Custom/Header';
 
 function Cart() {
-  return <Text>Cart screen</Text>;
+  return (
+    <View style={styles.container}>
+      <Header showRightIcon={true} />
+      <Text>Cart</Text>
+    </View>
+  );
 }
 
 export default Cart;
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});

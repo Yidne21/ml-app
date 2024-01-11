@@ -16,14 +16,14 @@ export default SearchBar;
 const styles = {
   icon: {
     position: 'absolute',
-    top: 55,
+    top: 15,
     left: 15,
     zIndex: 1,
     color: 'gray',
   },
   inputContainer: {
     position: 'relative',
-    marginTop: 20, // Adjusted marginTop
+    marginTop: 10, // Adjusted marginTop
   },
   textInput: {
     height: 50,
@@ -31,7 +31,6 @@ const styles = {
     borderRadius: 25,
     paddingLeft: 50,
     paddingRight: 20,
-    marginTop: 40,
     backgroundColor: '#fff',
     shadowColor: 'gray',
     shadowOffset: {

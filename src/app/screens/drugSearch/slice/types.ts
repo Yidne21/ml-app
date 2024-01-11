@@ -1,6 +1,8 @@
 export interface IinitialDrugSearchState {
   isSearching: boolean;
   searchResult?: IdrugSearchResult;
+  isSuccessful: boolean;
+  errorMsg: string;
 }
 
 export interface IgetDrugSearchPayload {
@@ -14,10 +16,10 @@ export interface IgetDrugSearchPayload {
 export interface IdrugSearchResult {
   totalDocuments: number;
   totalPages: number;
-  drugs: Idrugs[];
+  drugs: Idrug[];
 }
 
-export interface Idrugs {
+export interface Idrug {
   _id: string;
   name: string;
   category: string;

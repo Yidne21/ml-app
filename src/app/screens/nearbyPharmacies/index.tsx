@@ -24,133 +24,111 @@ function Home({ navigation, route }: HomeStackScreenProps<'Home'>) {
   // const data = useSelector(select.selectPharmacies);
   const data: Ipharmacies[] = [
     {
-      _id: '657711b99f521e451a49933c',
-      location: [38.9557, 7.6123],
-      name: 'Buckridge - Bartoletti',
-      logo: 'https://picsum.photos/seed/VV2Qmrm/100/100',
-      distance: 0,
-      drug: {
-        _id: '657711b99f521e451a49939a',
-        name: 'Fantastic Plastic Sausages',
-        stockLevel: 1421,
+      _id: '65912f9a5b03b71ab47c5885',
+      location: {
+        coordinates: [39.0916, 7.4854],
+        type: 'Point',
       },
+      name: 'Bosco - Connelly',
+      logo: 'https://picsum.photos/seed/f1SIpn/100/100',
+      distance: 20.6,
     },
     {
-      _id: '657711b99f521e451a49934e',
-      location: [37.4645, 6.3816],
-      name: 'Hartmann - Lueilwitz',
-      logo: 'https://picsum.photos/seed/LDQ5zgYY5/100/100',
-      distance: 214.28,
-      drug: {
-        _id: '657711b99f521e451a499398',
-        name: 'Awesome Frozen Car',
-        stockLevel: 6926,
+      _id: '65912f9a5b03b71ab47c5877',
+      location: {
+        coordinates: [39.3535, 6.7853],
+        type: 'Point',
       },
+      name: 'Botsford, Durgan and Jakubowski',
+      logo: 'https://picsum.photos/seed/EI1aG5/100/100',
+      distance: 102.01,
     },
     {
-      _id: '657711b99f521e451a49934e',
-      location: [37.4645, 6.3816],
-      name: 'Hartmann - Lueilwitz',
-      logo: 'https://picsum.photos/seed/LDQ5zgYY5/100/100',
-      distance: 214.28,
-      drug: {
-        _id: '657711b99f521e451a499390',
-        name: 'Rustic Steel Shoes',
-        stockLevel: 6126,
+      _id: '65912f9a5b03b71ab47c5889',
+      location: {
+        coordinates: [39.7629, 8.3346],
+        type: 'Point',
       },
+      name: 'Crooks - Conn',
+      logo: 'https://picsum.photos/seed/KRa9nXV2k/100/100',
+      distance: 119.93,
     },
     {
-      _id: '657711b99f521e451a49934e',
-      location: [37.4645, 6.3816],
-      name: 'Hartmann - Lueilwitz',
-      logo: 'https://picsum.photos/seed/LDQ5zgYY5/100/100',
-      distance: 214.28,
-      drug: {
-        _id: '657711b99f521e451a4993c0',
-        name: 'Awesome Frozen Shirt',
-        stockLevel: 6690,
+      _id: '65912f9a5b03b71ab47c586f',
+      location: {
+        coordinates: [38.5277, 6.1803],
+        type: 'Point',
       },
+      name: 'Koss and Sons',
+      logo: 'https://picsum.photos/seed/nhnMS7/100/100',
+      distance: 166.28,
     },
     {
-      _id: '657711b99f521e451a499352',
-      location: [41.1156, 7.9472],
-      name: 'Kessler - Block',
-      logo: 'https://picsum.photos/seed/QfgTVtNHhj/100/100',
-      distance: 241.12,
-      drug: {
-        _id: '657711b99f521e451a49938c',
-        name: 'Bespoke Metal Chips',
-        stockLevel: 5327,
+      _id: '65912f9a5b03b71ab47c5883',
+      location: {
+        coordinates: [37.3541, 8.5361],
+        type: 'Point',
       },
+      name: 'Jerde LLC',
+      logo: 'https://picsum.photos/seed/909e8a1/100/100',
+      distance: 204.29,
     },
     {
-      _id: '657711b99f521e451a499336',
-      location: [38.0576, 5.5326],
-      name: 'Greenholt - Schumm',
-      logo: 'https://picsum.photos/seed/YWB56de/100/100',
-      distance: 251.91,
-      drug: {
-        _id: '657711b99f521e451a4993b4',
-        name: 'Small Wooden Chair',
-        stockLevel: 549,
+      _id: '65912f9a5b03b71ab47c588f',
+      location: {
+        coordinates: [36.6086, 6.7731],
+        type: 'Point',
       },
+      name: 'Kling Group',
+      logo: 'https://picsum.photos/seed/0HtBlt/100/100',
+      distance: 275.54,
     },
     {
-      _id: '657711b99f521e451a499336',
-      location: [38.0576, 5.5326],
-      name: 'Greenholt - Schumm',
-      logo: 'https://picsum.photos/seed/YWB56de/100/100',
-      distance: 251.91,
-      drug: {
-        _id: '657711b99f521e451a4993ba',
-        name: 'Unbranded Cotton Shirt',
-        stockLevel: 5197,
+      _id: '65912f9a5b03b71ab47c586b',
+      location: {
+        coordinates: [36.8092, 6.3384],
+        type: 'Point',
       },
+      name: 'Lesch - Abshire',
+      logo: 'https://picsum.photos/seed/YuJzt/100/100',
+      distance: 276.33,
     },
     {
-      _id: '657711b99f521e451a499356',
-      location: [41.583, 7.3511],
-      name: 'Mertz, Cartwright and Walter',
-      logo: 'https://picsum.photos/seed/z7azEU9/100/100',
-      distance: 291.43,
-      drug: {
-        _id: '657711b99f521e451a4993a2',
-        name: 'Generic Granite Soap',
-        stockLevel: 8985,
+      _id: '65912f9a5b03b71ab47c5863',
+      location: {
+        coordinates: [39.7778, 10.0223],
+        type: 'Point',
       },
+      name: 'Bahringer - Carroll',
+      logo: 'https://picsum.photos/seed/CNvXyz/100/100',
+      distance: 283.11,
     },
     {
-      _id: '657711b99f521e451a499356',
-      location: [41.583, 7.3511],
-      name: 'Mertz, Cartwright and Walter',
-      logo: 'https://picsum.photos/seed/z7azEU9/100/100',
-      distance: 291.43,
-      drug: {
-        _id: '657711b99f521e451a4993ac',
-        name: 'Electronic Frozen Mouse',
-        stockLevel: 6402,
+      _id: '65912f9a5b03b71ab47c588d',
+      location: {
+        coordinates: [40.3866, 9.7308],
+        type: 'Point',
       },
+      name: 'Gutkowski LLC',
+      logo: 'https://picsum.photos/seed/28dxyRgx/100/100',
+      distance: 283.56,
     },
     {
-      _id: '657711b99f521e451a499364',
-      location: [38.3379, 4.8584],
-      name: 'Bashirian and Sons',
-      logo: 'https://picsum.photos/seed/RVOvYiLv0/100/100',
-      distance: 314.09,
-      drug: {
-        _id: '657711b99f521e451a499394',
-        name: 'Tasty Frozen Shoes',
-        stockLevel: 885,
+      _id: '65912f9a5b03b71ab47c5893',
+      location: {
+        coordinates: [40.9788, 5.5065],
+        type: 'Point',
       },
+      name: 'Pagac - Kozey',
+      logo: 'https://picsum.photos/seed/1cRmAQj/100/100',
+      distance: 324.04,
     },
   ];
-
-  // console.log('---------index.tsx', data);
 
   return (
     <View style={styles.container}>
       <View style={styles.mapContainer}>
-        <Map />
+        <Map pharmacies={data} />
       </View>
       <View style={styles.pharmacies}>
         <Text style={styles.header}>Nearby Pharmacies</Text>

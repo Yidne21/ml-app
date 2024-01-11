@@ -5,9 +5,17 @@ import FilterBar from './component/FilterBar';
 import SearchBar from './component/SearchBar';
 import { theme } from '../../../utils/theme/theme';
 import DrugLists from './component/DrugLists';
+import Header from '../../components/Custom/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrugSearchScreenSlice } from './slice';
+import * as select from './slice/selectors';
 
 function DrugSearch({ navigation, route }) {
   const [showFilterBar, setShowFilterBar] = useState(false);
+
+  const serarchResult = useSelector(select.selectSearchResult);
+  const { actions } = useDrugSearchScreenSlice();
+  const dispatch = useDispatch();
 
   const handleFilterIconClick = () => {
     setShowFilterBar(!showFilterBar);
@@ -19,6 +27,7 @@ function DrugSearch({ navigation, route }) {
 
   return (
     <View style={styles.container}>
+      <Header showRightIcon={true} />
       <SearchBar />
       <View style={styles.filter}>
         <TouchableOpacity
@@ -44,9 +53,8 @@ function DrugSearch({ navigation, route }) {
 const styles = {
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 10,
+    padding: 16,
   },
   filter: {
     alignSelf: 'flex-end',
