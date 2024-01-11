@@ -5,23 +5,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationProp } from '@react-navigation/native';
 import { DrugSearchStackParamList } from '../../../../navigation/types';
+import { Idrug } from '../slice/types';
 
-const drug = {
-  _id: '657711b99f521e451a499396',
-  name: 'Handmade Bronze Towels',
-  drugPhoto: 'https://picsum.photos/seed/5Z3QZQ/100/100',
-  category: 'Books',
-  price: 60579.14,
-  expiredDate: '2024-07-14T12:02:51.393Z',
-  pharmacy: {
-    _id: '657711b99f521e451a499340',
-    location: [41.7055, 9.3739],
-    name: 'Kemmer Inc',
-    distance: 360.7,
-  },
-};
-
-function DrugItemCard() {
+function DrugItemCard({ drug }: { drug: Idrug }) {
   const navigation = useNavigation<NavigationProp<DrugSearchStackParamList>>();
   const handleDrugCardPress = () => {
     // Navigate to DrugDetail screen with the drug details
@@ -33,7 +19,7 @@ function DrugItemCard() {
     <TouchableOpacity onPress={handleDrugCardPress}>
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image source={{ uri: drug.drugPhoto }} style={styles.image} />
+          <Image source={{ uri: drug.drugPhoto[2] }} style={styles.image} />
         </View>
         <View style={styles.content}>
           <Text style={styles.drugName}>{drug.name}</Text>

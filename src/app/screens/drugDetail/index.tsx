@@ -1,102 +1,98 @@
-import React from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+import {
+  Text,
+  View,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  ActivityIndicator,
+} from 'react-native';
 import { DrugSearchStackScreenProps } from '../../../navigation/types';
 import { useDrugDetailScreenSlice } from './slice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { theme } from '../../../utils/theme/theme';
 import { Octicons } from '@expo/vector-icons';
 import { format } from 'date-fns';
 import Header from '../../components/Custom/Header';
-const drug = {
-  _id: '657711b99f521e451a499394',
-  ingredients: [],
-  needPrescription: false,
-  name: 'Tasty Frozen Shoes',
-  drugPhoto: 'https://picsum.photos/seed/5Z3QZQ/100/100',
-  category: 'Home',
-  price: 932956.93,
-  stockLevel: 885,
-  receivedFrom: 'Beier Inc',
-  instruction:
-    'Thalassinus timor desidero succurro volo deduco turbo sponte. Crustulum tendo depraedor sperno. Volutabrum eligendi animus degero.',
-  sideEffects:
-    'In vindico dolorem spero ulciscor adipisci beatus thesis allatus. Sed titulus degenero quisquam tunc sulum nostrum. Beneficium incidunt asperiores uterque ex absens.',
-  strengthAndDosage: 'Distinctio tener artificiose talis debitis decerno vilis blandior.',
-  manufacturedDate: '2023-05-01T13:52:41.221Z',
-  expiredDate: '2024-07-13T19:11:10.285Z',
-};
+import * as select from './slice/selector';
 
 const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
   const { actions } = useDrugDetailScreenSlice();
   const dispatch = useDispatch();
   const { drugId } = route.params;
+  const drug = useSelector(select.selectDrugDetail);
+  const isLoading = useSelector(select.selectIsLoadingDrugDetail);
+  const isLoaded = useSelector(select.selectIsLoaded);
 
-  // useEffect(() => {
-  //   dispatch(actions.getDrugDetail(drugId));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(actions.getDrugDetail(drugId));
+  }, [actions, dispatch, drugId]);
 
-  // const drugInfo = useSelector(select.selectDrugDetail);
-
-  // console.log('index.tsx--------', drugInfo);
+  console.log('index.tsx--------', drug);
 
   return (
     <View style={styles.container}>
       <Header showRightIcon={true} />
-      <ScrollView>
-        <Text style={styles.drugName}>{drug.name}</Text>
+      {isLoading ? (
+        <ActivityIndicator size="large" color={theme.colors.primary[500]} style={styles.loader} />
+      ) : (
+        <ScrollView>
+          <Text style={styles.drugName}>{drug.name}</Text>
 
-        <View style={styles.imageContainer}>
-          <Image source={{ uri: drug.drugPhoto }} style={styles.image} />
-          <View style={styles.dots}>
-            {[...Array(5)].map((_, index) => (
-              <Octicons
-                key={index}
-                name="dot"
-                size={24}
-                color={index === 2 ? theme.colors.primary[500] : theme.shadows.lg}
-              />
-            ))}
+          <View style={styles.imageContainer}>
+            <Image source={{ uri: drug.drugPhoto[1] }} style={styles.image} />
+            <View style={styles.dots}>
+              {[...Array(5)].map((_, index) => (
+                <Octicons
+                  key={index}
+                  name="dot"
+                  size={24}
+                  color={index === 2 ? theme.colors.primary[500] : theme.shadows.lg}
+                />
+              ))}
+            </View>
           </View>
-        </View>
 
-        <View style={styles.priceContainer}>
-          <Text style={styles.price}>{drug.price.toFixed(2)} Birr</Text>
-          <TouchableOpacity style={styles.btnAddToCart}>
-            <Text style={styles.btnAddToCartLabel}>Add to cart</Text>
+          <View style={styles.priceContainer}>
+            <Text style={styles.price}>{drug.price.toFixed(2)} Birr</Text>
+            <TouchableOpacity style={styles.btnAddToCart}>
+              <Text style={styles.btnAddToCartLabel}>Add to cart</Text>
+            </TouchableOpacity>
+          </View>
+
+          {renderSection('Instruction', drug.instruction)}
+          {renderSection('Side Effects', drug.sideEffects)}
+          {renderSection('Strength and Dosage', drug.strengthAndDosage)}
+
+          <View style={styles.expireDate}>
+            {renderRow('Wholesalers', drug.receivedFrom)}
+            {renderRow('Pharmacy', drug.receivedFrom)}
+            {renderRow('Manufactured Date', format(new Date(drug.manufacturedDate), 'dd/MM/yyyy'))}
+            {renderRow('Expire Date', format(new Date(drug.expiredDate), 'dd/MM/yyyy'))}
+          </View>
+          <TouchableOpacity
+            style={styles.btnGoToCart}
+            onPress={() => {
+              navigation.navigate('Cart');
+            }}
+          >
+            <Text style={styles.btnGotoCartLabel}>Go to cart</Text>
           </TouchableOpacity>
-        </View>
-
-        {renderSection('Instruction', drug.instruction)}
-        {renderSection('Side Effects', drug.sideEffects)}
-        {renderSection('Strength and Dosage', drug.strengthAndDosage)}
-
-        <View style={styles.expireDate}>
-          {renderRow('Wholesalers', drug.receivedFrom)}
-          {renderRow('Pharmacy', drug.receivedFrom)}
-          {renderRow('Manufactured Date', format(new Date(drug.manufacturedDate), 'dd/MM/yyyy'))}
-          {renderRow('Expire Date', format(new Date(drug.expiredDate), 'dd/MM/yyyy'))}
-        </View>
-        <TouchableOpacity
-          style={styles.btnGoToCart}
-          onPress={() => {
-            navigation.navigate('Cart');
-          }}
-        >
-          <Text style={styles.btnGotoCartLabel}>Go to cart</Text>
-        </TouchableOpacity>
-      </ScrollView>
+        </ScrollView>
+      )}
     </View>
   );
 };
 
-const renderSection = (title, content) => (
+const renderSection = (title: string, content: string) => (
   <View style={styles.contentBox}>
     <Text style={styles.title}>{title}</Text>
     <Text style={styles.content}>{content}</Text>
   </View>
 );
 
-const renderRow = (label, value) => (
+const renderRow = (label: string, value: string) => (
   <View style={styles.row}>
     <Text style={styles.label}>{label}:</Text>
     <Text style={styles.content}>{value}</Text>
@@ -108,6 +104,9 @@ const styles = StyleSheet.create({
     padding: 16,
     flex: 1,
     backgroundColor: '#fff',
+  },
+  loader: {
+    marginTop: 20,
   },
   drugName: {
     fontSize: 24,

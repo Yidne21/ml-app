@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, Dimensions } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Text, View, TouchableOpacity, Dimensions, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import FilterBar from './component/FilterBar';
 import SearchBar from './component/SearchBar';
@@ -8,10 +8,17 @@ import DrugLists from './component/DrugLists';
 import Header from '../../components/Custom/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrugSearchScreenSlice } from './slice';
-import * as select from './slice/selectors';
+import * as select from './slice/selector';
+import useCurrentLocation from '../../../utils/hooks/useCurrentLocation';
 
-function DrugSearch({ navigation, route }) {
+function DrugSearch() {
+  const currentLocation = useCurrentLocation() || '8.220573, 37.798139';
   const [showFilterBar, setShowFilterBar] = useState(false);
+  const [drugName, setDrugName] = useState('');
+  const [location, setLocation] = useState(currentLocation);
+  const [priceRange, setPriceRange] = useState([5, 10000]);
+  const [category, setCategory] = useState('');
+  const [pharmacy, setPharmacy] = useState('');
 
   const serarchResult = useSelector(select.selectSearchResult);
   const { actions } = useDrugSearchScreenSlice();
@@ -25,10 +32,57 @@ function DrugSearch({ navigation, route }) {
     setShowFilterBar(false);
   };
 
+  const handleKeyPress = useCallback(() => {
+    console.log('Enter key pressed');
+    dispatch(
+      actions.getSearchedDrug({
+        pageState: {
+          page: 1,
+          limit: 20,
+          location,
+          name: pharmacy,
+          drugName,
+          category,
+          maxPrice: priceRange[1],
+          minPrice: priceRange[0],
+        },
+      }),
+    );
+  }, [actions, dispatch, location, pharmacy, drugName, category, priceRange]);
+
+  const handeleApplyFilter = () => {
+    dispatch(
+      actions.getSearchedDrug({
+        pageState: {
+          page: 1,
+          limit: 20,
+          location,
+          name: pharmacy,
+          category,
+          maxPrice: priceRange[1],
+          minPrice: priceRange[0],
+        },
+      }),
+    );
+  };
+
+  useEffect(() => {
+    dispatch(
+      actions.getSearchedDrug({
+        pageState: {
+          page: 1,
+          limit: 20,
+          location,
+          name: pharmacy,
+        },
+      }),
+    );
+  }, [actions, dispatch, location, pharmacy]);
+
   return (
     <View style={styles.container}>
       <Header showRightIcon={true} />
-      <SearchBar />
+      <SearchBar drugName={drugName} setDrugName={setDrugName} handelKeyPress={handleKeyPress} />
       <View style={styles.filter}>
         <TouchableOpacity
           onPress={showFilterBar ? handleFilterCloseClick : handleFilterIconClick}
@@ -41,16 +95,28 @@ function DrugSearch({ navigation, route }) {
           />
         </TouchableOpacity>
       </View>
-      {showFilterBar && <FilterBar />}
+      {showFilterBar && (
+        <FilterBar
+          location={location}
+          category={category}
+          priceRange={priceRange}
+          pharmacy={pharmacy}
+          setLocation={setLocation}
+          setCategory={setCategory}
+          setPriceRange={setPriceRange}
+          setPharmacy={setPharmacy}
+          handleApplyFilter={handeleApplyFilter}
+        />
+      )}
       <View style={styles.header}>
         <Text style={styles.headerText}>Search Results</Text>
       </View>
-      <DrugLists />
+      <DrugLists data={serarchResult?.drugs} />
     </View>
   );
 }
 
-const styles = {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -75,6 +141,6 @@ const styles = {
     fontWeight: 'bold',
     padding: 10,
   },
-};
+});
 
 export default DrugSearch;

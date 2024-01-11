@@ -35,6 +35,7 @@ function API({ method, route, payload, params, token, ContentType }: ApiTypes) {
         resolve(res);
       })
       .catch((error) => {
+        console.log('error------------', error);
         if (error?.response?.status === 500) {
           console.log(error?.response?.data?.message || error || 'Something went wrong');
         } else {
@@ -48,7 +49,7 @@ export default API;
 
 export function fetcher({ method, route, payload, token }: ApiTypes): any {
   return new Promise((resolve, reject) => {
-    fetch(`${Base_url}/${route}`, {
+    fetch(`http://127.0.0.1:5000/${route}`, {
       method: method,
       headers: {
         Authorization: `Bearer ${token}`,

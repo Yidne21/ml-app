@@ -7,19 +7,22 @@ import { HomeStackScreenProps } from '../../../navigation/types';
 import { View, Text, StyleSheet } from 'react-native';
 import PharmacyList from './component/PharmacyList';
 import { Ipharmacies } from './slice/types';
+import useCurrentLocation from '../../../utils/hooks/useCurrentLocation';
 
 function Home({ navigation, route }: HomeStackScreenProps<'Home'>) {
-  // const { actions } = useNearbyPharmacySlice();
-  // const dispatch = useDispatch();
-  // const searchParams = {
-  //   location: '7.6123, 38.9557',
-  //   drugName: 'F',
-  //   //name: 'Rober',
-  // };
+  const location = useCurrentLocation() || '8.220573, 37.798139';
+  console.log('nearbyhome----', location);
+  const { actions } = useNearbyPharmacySlice();
+  const dispatch = useDispatch();
+  const searchParams = {
+    location,
+    drugName: 'F',
+    //name: 'Rober',
+  };
 
-  // useEffect(() => {
-  //   dispatch(actions.getNearbyPharmacies({ pageState: { page: 1, limit: 20, ...searchParams } }));
-  // }, [dispatch, actions]);
+  useEffect(() => {
+    dispatch(actions.getNearbyPharmacies({ pageState: { page: 1, limit: 20, ...searchParams } }));
+  }, [dispatch, actions, searchParams]);
 
   // const data = useSelector(select.selectPharmacies);
   const data: Ipharmacies[] = [

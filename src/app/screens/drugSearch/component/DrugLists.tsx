@@ -3,12 +3,12 @@ import { View, StyleSheet, FlatList } from 'react-native';
 import DrugItemCard from './DrugItemCard';
 import { Idrug } from '../slice/types';
 
-function DrugLists({ data }: { data: Idrug[] }) {
+function DrugLists({ data }: { data?: Idrug[] }) {
   return (
     <View style={styles.container}>
       <FlatList
         data={data}
-        renderItem={({ item }) => <DrugItemCard />}
+        renderItem={({ item }) => <DrugItemCard drug={item} />}
         keyExtractor={(item) => item._id}
         numColumns={2}
       />

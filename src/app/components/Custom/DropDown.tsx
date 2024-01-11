@@ -3,26 +3,26 @@ import { StyleSheet, View, Text } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { MaterialIcons } from '@expo/vector-icons';
 
-const data = [
-  { label: 'Item 1', value: '1' },
-  { label: 'Item 2', value: '2' },
-  { label: 'Item 3', value: '3' },
-  { label: 'Item 4', value: '4' },
-  { label: 'Item 5', value: '5' },
-  { label: 'Item 6', value: '6' },
-  { label: 'Item 7', value: '7' },
-  { label: 'Item 8', value: '8' },
-];
-
 interface IDropdownProps {
   placeholder: string;
   iconName: string;
+  data: { label: string; value: string }[];
 }
 
-const CustomeDropdown: React.FC<IDropdownProps> = ({ placeholder, iconName }) => {
+const CustomeDropdown: React.FC<IDropdownProps> = ({ placeholder, iconName, data }) => {
   const [value, setValue] = useState(null);
 
-  const renderItem = (item) => {
+  const renderItem = (item: {
+    label:
+      | string
+      | number
+      | boolean
+      | Iterable<React.ReactNode>
+      | React.ReactPortal
+      | null
+      | undefined;
+    value: null;
+  }) => {
     return (
       <View style={styles.item}>
         <Text style={styles.textItem}>{item.label}</Text>

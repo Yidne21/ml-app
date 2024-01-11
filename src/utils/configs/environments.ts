@@ -9,6 +9,7 @@ import {
   MEASUREMENT_ID,
 } from '@env';
 
+console.log('DEV_BASE_URLuuuuuu', DEV_BASE_URL);
 export const Base_url = DEV_BASE_URL;
 export const Api_key = API_KEY;
 export const Auth_domain = AUTH_DOMAIN;

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { theme } from '../../../../utils/theme/theme';
 import * as Location from 'expo-location';
 import { Ipharmacies } from '../slice/types';
 
 export default function Map({ pharmacies }: { pharmacies: Ipharmacies[] }) {
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [location, setLocation] = useState([9.145, 40.4897]);
   const [initialRender, setInitialRender] = useState(true);
   const [region, setRegion] = useState({
     latitude: 9.145,
@@ -20,13 +19,14 @@ export default function Map({ pharmacies }: { pharmacies: Ipharmacies[] }) {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        console.log('Permission to access location was denied');
         return;
       }
 
       const userLocation = await Location.getCurrentPositionAsync({});
-      setLocation(userLocation);
-
+      setLocation(
+        [userLocation.coords.latitude, userLocation.coords.longitude] || [8.220573, 37.798139],
+      );
       if (userLocation && initialRender) {
         setRegion({
           latitude: userLocation.coords.latitude,
@@ -37,7 +37,7 @@ export default function Map({ pharmacies }: { pharmacies: Ipharmacies[] }) {
         setInitialRender(false);
       }
     })();
-  }, []);
+  }, [initialRender]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -49,8 +49,8 @@ export default function Map({ pharmacies }: { pharmacies: Ipharmacies[] }) {
         {location && !initialRender && (
           <Marker
             coordinate={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
+              latitude: location[0],
+              longitude: location[1],
             }}
             title="You are here"
           />

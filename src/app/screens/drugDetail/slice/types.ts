@@ -1,6 +1,7 @@
 export interface IinitialDrugDetailState {
   isLoadingDrugDetail: boolean;
-  drugDetail?: Idrugs | undefined;
+  isLoaded: boolean;
+  drugDetail: Idrugs;
 }
 
 export interface IdrugDetailPayload {
@@ -9,6 +10,7 @@ export interface IdrugDetailPayload {
 
 export interface Idrugs {
   _id: string;
+  drugPhoto: string[];
   ingredients: string[];
   needPrescription: boolean;
   name: string;
@@ -21,4 +23,5 @@ export interface Idrugs {
   strengthAndDosage: string;
   manufacturedDate: string;
   expiredDate: string;
+  receivedFrom: string;
 }

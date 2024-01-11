@@ -22,11 +22,17 @@ export interface Idrugs {
   stockLevel: number;
 }
 
+type Coordinate = [number, number];
+
+interface Location {
+  coordinates: Coordinate;
+}
+
 export interface Ipharmacies {
   _id: string;
   logo: string;
   distance: number;
   name: string;
-  location: [number, number];
+  location: Location;
   drug: Idrugs;
 }

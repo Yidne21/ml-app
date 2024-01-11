@@ -1,20 +1,22 @@
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import { StyleSheet, Text, View, Dimensions, Platform } from 'react-native';
+import React from 'react';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { theme } from '../../../utils/theme/theme';
 
-export default function CustomRangeSlider() {
-  const [value, setValue] = useState({ values: [0, 37] });
-  const multiSliderValuesChange = (values) => {
-    setValue({
-      values,
-    });
+interface ISliderProps {
+  priceRange: number[];
+  setPriceRange: (priceRange: number[]) => void;
+}
+
+export default function CustomRangeSlider({ priceRange, setPriceRange }: ISliderProps) {
+  const multiSliderValuesChange = (values: number[]) => {
+    setPriceRange(values);
   };
 
   return (
     <View style={styles.slider_box}>
       <MultiSlider
-        values={[value.values[0], value.values[1]]}
+        values={[priceRange[0], priceRange[1]]}
         sliderLength={Dimensions.get('window').width - 100}
         selectedStyle={{ backgroundColor: theme.colors.primary[500] }}
         containerStyle={{ alignSelf: 'center', marginTop: -5, width: 200, marginRight: 115 }}
@@ -29,8 +31,8 @@ export default function CustomRangeSlider() {
             },
           }),
         }}
-        min={0}
-        max={37}
+        min={priceRange[0]}
+        max={priceRange[1]}
         step={1}
       />
       <View
@@ -41,9 +43,9 @@ export default function CustomRangeSlider() {
           marginTop: -20,
         }}
       >
-        <Text style={{ color: '#000' }}>{value.values[0]} Birr</Text>
+        <Text style={{ color: '#000' }}>{priceRange[0]} Birr</Text>
         <Text style={{ fontSize: 20, color: '#000' }}> - </Text>
-        <Text style={{ color: '#000' }}>{value.values[1]}k Birr</Text>
+        <Text style={{ color: '#000' }}>{priceRange[1]} Birr</Text>
       </View>
     </View>
   );

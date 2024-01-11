@@ -7,7 +7,24 @@ import { IinitialDrugDetailState } from './types';
 
 export const initialState: IinitialDrugDetailState = {
   isLoadingDrugDetail: false,
-  drugDetail: undefined,
+  drugDetail: {
+    _id: '',
+    drugPhoto: [],
+    ingredients: [],
+    needPrescription: false,
+    name: '',
+    category: '',
+    price: 0,
+    stockLevel: 0,
+    recivedFrom: '',
+    instruction: '',
+    sideEffects: '',
+    strengthAndDosage: '',
+    manufacturedDate: '',
+    expiredDate: '',
+    receivedFrom: '',
+  },
+  isLoaded: false,
 };
 
 const slice = createSlice({
@@ -20,12 +37,12 @@ const slice = createSlice({
     },
     getDrugDetailSuccess: (state, action) => {
       state.isLoadingDrugDetail = false;
+      state.isLoaded = true;
       state.drugDetail = action.payload;
-      console.log('success', state.drugDetail);
     },
     getDrugDetailFailur: (state, action) => {
       state.isLoadingDrugDetail = false;
-      console.log(action.payload);
+      state.isLoaded = false;
     },
   },
 });

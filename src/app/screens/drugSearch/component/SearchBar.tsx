@@ -1,19 +1,31 @@
 import React from 'react';
-import { View, TextInput, Dimensions } from 'react-native';
+import { View, TextInput, Dimensions, StyleSheet } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 
-function SearchBar() {
+interface SearchBarProps {
+  drugName: string;
+  setDrugName: (drugName: string) => void;
+  handelKeyPress: () => void;
+}
+
+function SearchBar({ drugName, setDrugName, handelKeyPress }: SearchBarProps) {
   return (
     <View style={styles.inputContainer}>
       <EvilIcons name="search" size={24} color="black" style={styles.icon} />
-      <TextInput style={styles.textInput} placeholder="Search Medicine or HealthCare products" />
+      <TextInput
+        value={drugName}
+        style={styles.textInput}
+        placeholder="Search Medicine or HealthCare products"
+        onChangeText={(text) => setDrugName(text)}
+        onKeyPress={handelKeyPress}
+      />
     </View>
   );
 }
 
 export default SearchBar;
 
-const styles = {
+const styles = StyleSheet.create({
   icon: {
     position: 'absolute',
     top: 15,
@@ -23,7 +35,7 @@ const styles = {
   },
   inputContainer: {
     position: 'relative',
-    marginTop: 10, // Adjusted marginTop
+    marginTop: 10,
   },
   textInput: {
     height: 50,
@@ -41,4 +53,4 @@ const styles = {
     shadowRadius: 4.65,
     elevation: 3,
   },
-};
+});

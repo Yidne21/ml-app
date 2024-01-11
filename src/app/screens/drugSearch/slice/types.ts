@@ -31,4 +31,5 @@ export interface Idrug {
     name: string;
     distance: number;
   };
+  drugPhoto: string[];
 }
