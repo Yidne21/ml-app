@@ -25,25 +25,20 @@ export default Buttons;
 
 const styles = StyleSheet.create({
   buttons: {
-    flex: 1,
     flexDirection: 'row',
     marginTop: 20,
     marginBottom: 20,
     gap: 20,
   },
   button: {
-    padding: 5,
-    height: 40,
-    borderRadius: 15,
     backgroundColor: theme.colors.primary[500],
-    justifyContent: 'center',
+    padding: 15,
+    borderRadius: 5,
     alignItems: 'center',
-    width: 90,
   },
   buttonText: {
-    color: '#fff',
-    fontWeight: 'bold',
+    color: 'white',
     fontSize: 12,
-    fontFamily: theme.fonts.RobotoBold,
+    fontWeight: 'bold',
   },
 });

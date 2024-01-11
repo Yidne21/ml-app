@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import * as select from './slice/selector';
-import { useUserProfileScreenSlice } from './slice';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import UserBasicInfo from './component/UserBasicInfo';
 import UserDetailInfo from './component/UserDetailInfo';
@@ -10,36 +9,40 @@ import { useNavigation } from '@react-navigation/native';
 import { theme } from '../../../utils/theme/theme';
 import { ProfileStackScreenProps } from '../../../navigation/types';
 import * as UpdateSelect from '../UpdateProfile/slice/selector';
-// import Toast from 'react-native-root-toast';
+import Header from '../../components/Custom/Header';
+import { removeSingleData } from '../../../utils/configs/asyncStorage';
+import useStoredUserData from '../../../utils/hooks/useStoreUserData';
+import { getData } from '../../../utils/configs/asyncStorage';
 
-function UserProfile({ navigation, route }: ProfileStackScreenProps<'Profile'>) {
+function UserProfile({ navigation }: ProfileStackScreenProps<'Profile'>) {
   const rootNavigation = useNavigation();
-  const userId = '65912f4bf08aa8195e56e7e1';
-
-  const { actions } = useUserProfileScreenSlice();
-  const dispatch = useDispatch();
-  const isUpdateting = useSelector(UpdateSelect.selectIsUpdating);
-
-  // selector
-  const user = useSelector(select.selectUser);
-  const isLoading = useSelector(select.selectIsLoading);
-
+  const userData = useStoredUserData();
+  const [user, setUser] = useState(userData);
+  const userId = user._id;
   // state
   const [avatarUri, setAvatarUri] = useState(user.avatar);
   const [coverPhotoUri, setCoverPhotoUri] = useState(user.coverPhoto);
 
-  useEffect(() => {
-    dispatch(actions.getUserProfile(userId));
-  }, [isUpdateting]);
+  const isLoading = useSelector(select.selectIsLoading);
+  const isUpdated = useSelector(UpdateSelect.selectIsUpdated);
 
   useEffect(() => {
     setAvatarUri(user.avatar);
     setCoverPhotoUri(user.coverPhoto);
   }, [user]);
 
-  const handleLogout = () => {
-    // You need to implement the logout logic here
-    rootNavigation.navigate('Login');
+  const fetchUser = async () => {
+    const userData = await getData('userData');
+    setUser(userData);
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, [isUpdated]);
+
+  const handleLogout = async () => {
+    await removeSingleData('userData');
+    rootNavigation.navigate('WalkThrough');
   };
 
   const handleEditProfile = () => {
@@ -47,17 +50,22 @@ function UserProfile({ navigation, route }: ProfileStackScreenProps<'Profile'>) 
   };
 
   return (
-    <>
+    <View style={styles.rootContainer}>
       {isLoading ? (
         <ActivityIndicator size="large" color={theme.colors.primary[500]} />
       ) : (
-        <View style={styles.container}>
-          <UserBasicInfo coverPhotoUri={coverPhotoUri} avatarUri={avatarUri} name={user.name} />
-          <UserDetailInfo user={user} />
-          <Buttons onEditProfile={handleEditProfile} onLogout={handleLogout} />
-        </View>
+        <>
+          <View style={styles.IconContainer}>
+            <Header showRightIcon={true} />
+          </View>
+          <View style={styles.container}>
+            <UserBasicInfo coverPhotoUri={coverPhotoUri} avatarUri={avatarUri} name={user.name} />
+            <UserDetailInfo user={user} />
+            <Buttons onEditProfile={handleEditProfile} onLogout={handleLogout} />
+          </View>
+        </>
       )}
-    </>
+    </View>
   );
 }
 
@@ -68,5 +76,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     height: '100%',
+  },
+  rootContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  IconContainer: {
+    position: 'absolute',
+    width: '100%',
+    padding: 16,
+    zIndex: 1,
+    justifyContent: 'space-between',
   },
 });

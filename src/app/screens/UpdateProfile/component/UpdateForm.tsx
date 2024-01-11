@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
+import { theme } from '../../../../utils/theme/theme';
 
 interface UpdateFormProps {
   editedEmail?: string;
@@ -23,7 +24,7 @@ const UpdateForm: React.FC<UpdateFormProps> = ({
       <View style={styles.editForm}>
         <TextInput
           style={styles.input}
-          placeholder="Edit Email"
+          placeholder="Email, eg. jondow@gmail.com "
           value={editedEmail}
           onChangeText={(text) => setEditedEmail(text)}
         />
@@ -46,15 +47,18 @@ const UpdateForm: React.FC<UpdateFormProps> = ({
 
 const styles = StyleSheet.create({
   editForm: {
-    marginTop: 20,
     width: '80%',
+    marginBottom: 10,
+    marginTop: 20,
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
+    height: 50,
+    borderColor: theme.colors.primary[500], // Use your primary color
     borderWidth: 1,
+    borderRadius: 25,
+    paddingHorizontal: 20,
     marginBottom: 10,
-    padding: 10,
+    fontSize: 16,
   },
 });
 

@@ -2,6 +2,7 @@ export interface IinitialUserProfileUpdateState {
   updateSuccessMsg: string;
   updateErrorMessage: string;
   isUpdating: boolean;
+  isUpdated: boolean;
 }
 
 export interface IupdateUserProfilePayload {

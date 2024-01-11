@@ -14,3 +14,4 @@ export const selectUpdateErrorMessage = createSelector(
 );
 
 export const selectIsUpdating = createSelector([selectSlice], (state) => state.isUpdating);
+export const selectIsUpdated = createSelector([selectSlice], (state) => state.isUpdated);
