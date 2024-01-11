@@ -8,6 +8,7 @@ import { IinitialverifyOtpState } from './types';
 export const initialState: IinitialverifyOtpState = {
   isSendingOtp: false,
   validOtp: false,
+  errorMessage: '',
 };
 
 const slice = createSlice({
@@ -21,11 +22,11 @@ const slice = createSlice({
     verifyOtpSuccess(state, action) {
       state.isSendingOtp = false;
       state.validOtp = action.payload.valid;
-      console.log('success', state.validOtp);
+      console.log(action.payload.valid);
     },
     verifyOtpError(state, action) {
       state.isSendingOtp = false;
-      console.log('error', action.payload);
+      state.errorMessage = action.payload;
     },
   },
 });

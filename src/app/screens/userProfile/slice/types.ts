@@ -8,6 +8,7 @@ export interface IgetUserProfilePayload {
 }
 
 export interface IUser {
+  _id: string;
   name: string;
   phoneNumber: string;
   email?: string;

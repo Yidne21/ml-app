@@ -1,11 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  StyleSheet,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { theme } from '../../../utils/theme/theme';
 import { RootStackScreenProps } from '../../../navigation/types';
+import Header from '../../components/Custom/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import * as select from './slice/selector';
+import { useVerifyOtpScreenSlice } from './slice';
+import Toast from 'react-native-root-toast';
 
 function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
   const [verificationCode, setVerificationCode] = useState('');
   const [countdown, setCountdown] = useState(60);
+
+  const dispatch = useDispatch();
+  const { actions } = useVerifyOtpScreenSlice();
+
+  const { phoneNumber, prevRoute } = route.params;
+
+  const isVerifying = useSelector(select.selectIsSendingOtp);
+  const isVerified = useSelector(select.selectValidOtp);
+  const errorMsg = useSelector(select.selectErrorMessage);
 
   useEffect(() => {
     const countdownInterval = setInterval(() => {
@@ -16,68 +38,99 @@ function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
 
     return () => clearInterval(countdownInterval);
   }, [countdown]);
+
+  useEffect(() => {
+    if (isVerified === true) {
+      if (prevRoute === 'SignUp') {
+        navigation.navigate('SuccessScreen', {
+          title: 'Account Created Successfully!',
+          message: 'Your account has been created successfully!',
+        });
+      } else if (prevRoute === 'ForgotPassword') {
+        navigation.navigate('ResetPassword', { phoneNumber });
+      }
+    }
+  }, [isVerified, isVerifying, navigation, phoneNumber, prevRoute]);
+
+  if (errorMsg !== '') {
+    Toast.show('invalid code', {
+      duration: Toast.durations.LONG,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+    });
+  }
+
   const handleResendCode = () => {
-    // Implement logic to resend verification code
     console.log('Resend Code pressed');
     setCountdown(60); // Reset countdown on resend
   };
 
   const handleSubmitCode = () => {
-    // Implement your logic to verify the entered code
-    if (route.params?.prevRoute === 'SignUp') {
-      navigation.navigate('SuccessScreen', {
-        title: 'Account Created Successfully!',
-        message: 'Your account has been created successfully!',
-      });
-    } else if (route.params?.prevRoute === 'ForgotPassword') {
-      navigation.navigate('SuccessScreen', {
-        title: 'Password Reseted Successfully!',
-        message: 'Your password has been reset successfully!',
-      });
-    }
+    dispatch(actions.verifyOtp({ code: verificationCode, phoneNumber }));
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Enter The Verify Code</Text>
-      <Text style={styles.description}>
-        {/* We just sent you a 6-digit verification code via the {route.params.phoneNumber} */}
-        We just sent you a 6-digit verification code via the{'\n'} phone number
-      </Text>
+    <KeyboardAvoidingView style={styles.rootContainer} behavior="padding">
+      <Header showRightIcon={false} />
+      <View style={styles.container}>
+        <Text style={styles.title}>Enter The Verify Code</Text>
+        <Text style={styles.description}>
+          We just sent you a 6-digit verification code via the{'\n'} {phoneNumber}
+        </Text>
 
-      <View style={styles.codeInputContainer}>
-        {[1, 2, 3, 4, 5, 6].map((index) => (
-          <TextInput
-            key={index}
-            style={styles.codeInput}
-            keyboardType="numeric"
-            maxLength={1}
-            value={verificationCode[index - 1]}
-            onChangeText={(text) => {
-              const updatedCode = verificationCode.split('');
-              updatedCode[index - 1] = text;
-              setVerificationCode(updatedCode.join(''));
-            }}
-          />
-        ))}
+        <View style={styles.codeInputContainer}>
+          {[1, 2, 3, 4, 5, 6].map((index) => (
+            <TextInput
+              key={index}
+              style={styles.codeInput}
+              keyboardType="numeric"
+              maxLength={1}
+              value={verificationCode[index - 1]}
+              onChangeText={(text) => {
+                setVerificationCode((prevCode) => {
+                  const updatedCode = prevCode.split('');
+                  updatedCode[index - 1] = text;
+                  return updatedCode.join('');
+                });
+              }}
+            />
+          ))}
+        </View>
+
+        {isVerifying && (
+          <ActivityIndicator size="large" color={theme.colors.primary[500]} style={styles.loader} />
+        )}
+
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={handleSubmitCode}
+          disabled={isVerifying || !verificationCode}
+        >
+          <Text style={styles.buttonText}>Submit Code</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.countdownText}>
+          The verification code will expire in {countdown} sec
+        </Text>
+
+        <TouchableOpacity style={styles.resendButton} onPress={handleResendCode}>
+          <Text style={styles.resendButtonText}>Resend Code</Text>
+        </TouchableOpacity>
       </View>
-
-      <TouchableOpacity style={styles.submitButton} onPress={handleSubmitCode}>
-        <Text style={styles.buttonText}>Submit Code</Text>
-      </TouchableOpacity>
-
-      <Text style={styles.countdownText}>The verification code will expire in {countdown} sec</Text>
-
-      <TouchableOpacity style={styles.resendButton} onPress={handleResendCode}>
-        <Text style={styles.resendButtonText}>Resend Code</Text>
-      </TouchableOpacity>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 
 export default VerifyOtp;
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    padding: 16,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -99,6 +152,10 @@ const styles = StyleSheet.create({
   codeInputContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
+    marginBottom: 20,
+  },
+  loader: {
+    marginTop: 20,
     marginBottom: 20,
   },
   codeInput: {
