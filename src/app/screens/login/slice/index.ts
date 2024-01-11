@@ -4,10 +4,12 @@ import { createSlice } from '../../../../utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from '../../../../utils/redux-injectors';
 import { LoginSaga } from './saga';
 import { IinitialLoginState } from './types';
+import { storeData } from '../../../../utils/configs/asyncStorage';
 
 export const initialState: IinitialLoginState = {
   isLoging: false,
-  token: '',
+  isLogedin: false,
+  errorMessage: '',
 };
 
 const slice = createSlice({
@@ -16,16 +18,21 @@ const slice = createSlice({
   reducers: {
     login(state, action) {
       state.isLoging = true;
-      console.log(action.type);
     },
     loginSuccess(state, action) {
       state.isLoging = false;
-      state.token = action.payload;
-      console.log('success', state.token);
+      state.isLogedin = true;
+      storeData('userData', action.payload);
     },
     loginError(state, action) {
       state.isLoging = false;
-      console.log('error', action.payload);
+      state.isLogedin = false;
+      state.errorMessage = action.payload;
+    },
+    resetLoginState(state) {
+      state.isLoging = false;
+      state.isLogedin = false;
+      state.errorMessage = '';
     },
   },
 });

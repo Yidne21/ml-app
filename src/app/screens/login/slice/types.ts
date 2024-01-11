@@ -1,9 +1,10 @@
 export interface IinitialLoginState {
   isLoging: boolean;
-  token: string;
+  isLogedin: boolean;
+  errorMessage: string;
 }
 export interface ILoginPayload {
-  phonenumber: string;
+  phoneNumber: string;
   password: string;
 }
 export interface ILoginResponse {

@@ -6,14 +6,14 @@ import { AxiosResponse } from 'axios';
 import { ILoginPayload } from './types';
 
 function* Login(action: PayloadAction<ILoginPayload>) {
-  const { password, phonenumber } = action.payload;
+  const { password, phoneNumber } = action.payload;
   try {
     const user: AxiosResponse = yield call(API, {
       method: 'POST',
       route: 'user/login',
-      data: {
+      payload: {
         password,
-        phonenumber,
+        phoneNumber,
       },
     });
     if (user.status === 200) {
@@ -23,7 +23,6 @@ function* Login(action: PayloadAction<ILoginPayload>) {
       });
     }
   } catch (error) {
-    console.log('--->', error);
     yield put({ type: actions.loginError, payload: error });
   }
 }

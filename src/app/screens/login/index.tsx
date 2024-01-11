@@ -1,18 +1,64 @@
 // screens/LoginScreen.js
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import { RootStackScreenProps } from '../../../navigation/types';
 import { theme } from '../../../utils/theme/theme';
+import Header from '../../components/Custom/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoginScreenSlice } from './slice';
+import * as select from './slice/selector';
+import Toast from 'react-native-root-toast';
 
-function Login({ navigation, route }: RootStackScreenProps<'Login'>) {
+function Login({ navigation }: RootStackScreenProps<'Login'>) {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
 
+  const dispatch = useDispatch();
+  const isLoging = useSelector(select.selectIsLoging);
+  const isLogedIn = useSelector(select.selectIsLogedIn);
+  const errorMessage = useSelector(select.errorMessage);
+  const { actions } = useLoginScreenSlice();
+
   const handleLogin = () => {
-    // Implement your login logic here
-    console.log('Login pressed');
-    navigation.navigate('RootTab');
+    dispatch(actions.login({ password, phoneNumber }));
   };
+
+  useEffect(() => {
+    if (isLogedIn == true) {
+      Toast.show('Login Success', {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+      });
+      dispatch(actions.resetLoginState());
+      navigation.navigate('RootTab');
+    }
+  }, [actions, dispatch, isLogedIn, navigation]);
+
+  useEffect(() => {
+    if (!isLogedIn && !isLoging && errorMessage) {
+      Toast.show(errorMessage, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+      });
+      dispatch(actions.resetLoginState());
+    }
+  }, [actions, dispatch, errorMessage, isLogedIn, isLoging]);
 
   const handleForgotPassword = () => {
     // Navigate to the reset password screen
@@ -20,34 +66,41 @@ function Login({ navigation, route }: RootStackScreenProps<'Login'>) {
   };
 
   return (
-    <View style={styles.container}>
-      <Image source={require('../../../assets/images/icon.png')} style={styles.appLogo} />
-      <Text style={styles.logoText}>Medicin Locator</Text>
+    <View style={styles.rootContainer}>
+      <Header showRightIcon={false} />
+      <View style={styles.container}>
+        <Image source={require('../../../assets/images/icon.png')} style={styles.appLogo} />
+        <Text style={styles.logoText}>Medicin Locator</Text>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="Phone Number"
-          keyboardType="phone-pad"
-          value={phoneNumber}
-          onChangeText={(text) => setPhoneNumber(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          secureTextEntry
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Phone Number"
+            keyboardType="phone-pad"
+            value={phoneNumber}
+            onChangeText={(text) => setPhoneNumber(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+          />
+        </View>
+
+        <TouchableOpacity style={styles.forgotPassword} onPress={handleForgotPassword}>
+          <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
+        </TouchableOpacity>
+
+        {isLoging && (
+          <ActivityIndicator size="large" color={theme.colors.primary[500]} style={styles.loader} />
+        )}
+
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
       </View>
-
-      <TouchableOpacity style={styles.forgotPassword} onPress={handleForgotPassword}>
-        <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -55,11 +108,18 @@ function Login({ navigation, route }: RootStackScreenProps<'Login'>) {
 export default Login;
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    padding: 16,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: theme.colors.background, // Add a background color
+  },
+  loader: {
+    marginTop: 20,
   },
   appLogo: {
     width: 120,
