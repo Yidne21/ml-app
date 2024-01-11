@@ -7,6 +7,8 @@ import { IinitialSignUpState } from './types';
 
 export const initialState: IinitialSignUpState = {
   isSigning: false,
+  isSigned: false,
+  errorMsg: '',
   user: undefined,
 };
 
@@ -16,17 +18,16 @@ const slice = createSlice({
   reducers: {
     signUp: (state, action) => {
       state.isSigning = true;
-      console.log('action.payload', action.payload);
     },
     signUpSuccess: (state, action) => {
       state.isSigning = false;
+      state.isSigned = true;
       state.user = action.payload;
-      console.log('state.user', state.user);
     },
     signUpFailure: (state, action) => {
       state.isSigning = false;
-      state.user = action.payload;
-      console.log('state.error', action.payload);
+      state.isSigned = false;
+      state.errorMsg = action.payload;
     },
   },
 });

@@ -6,13 +6,13 @@ import { SignupScreenAction as actions } from '.';
 import { IsignUpPayload } from './types';
 
 function* SignUp(action: PayloadAction<IsignUpPayload>) {
-  const { password, name, phoneNumber } = action.payload.user;
+  const { password, name, phoneNumber } = action.payload;
   try {
     const user: AxiosResponse = yield call(API, {
       method: 'POST',
       route: 'user/create',
-      data: {
-        role: 'user',
+      payload: {
+        role: 'customer',
         password,
         name,
         phoneNumber,
