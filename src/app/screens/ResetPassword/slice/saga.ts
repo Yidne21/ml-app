@@ -1,32 +1,35 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import API from '../../../../utils/configs/API';
-import { ForgotPasswordScreenAction as actions } from '.';
+import { ResetPasswordAction as actions } from '.';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
-import { IForgotPasswordPayload } from './types';
+import { IResetPasswordPayload } from './types';
 
-function* ForgotPassword(action: PayloadAction<IForgotPasswordPayload>) {
-  const { phonenumber } = action.payload;
+function* ResetPassword(action: PayloadAction<IResetPasswordPayload>) {
+  const { phoneNumber, newPassword } = action.payload;
+  const updatedPhoneNumber = '+251' + phoneNumber;
+
   try {
     const user: AxiosResponse = yield call(API, {
       method: 'POST',
-      route: 'user/forgotPassword',
-      data: {
-        phonenumber,
+      route: 'user/reset-password',
+      payload: {
+        phoneNumber: updatedPhoneNumber,
+        newPassword,
       },
     });
     if (user.status === 200) {
       yield put({
-        type: actions.forgotPasswordSuccess.type,
+        type: actions.resetPasswordSuccess.type,
         payload: user.data,
       });
     }
   } catch (error) {
     console.log('--->', error);
-    yield put({ type: actions.forgotPasswordError, payload: error });
+    yield put({ type: actions.resetPasswordError, payload: error });
   }
 }
 
-export function* ForgotPasswordSaga() {
-  yield takeLatest(actions.forgotPassword.type, ForgotPassword);
+export function* ResetPasswordSaga() {
+  yield takeLatest(actions.resetPassword.type, ResetPassword);
 }

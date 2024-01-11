@@ -2,38 +2,40 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '../../../../utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from '../../../../utils/redux-injectors';
-import { ForgotPasswordSaga } from './saga';
-import { IinitialForgotPasswordState } from './types';
+import { ResetPasswordSaga } from './saga';
+import { IinitialResetPasswordState } from './types';
 
-export const initialState: IinitialForgotPasswordState = {
-  isForgotingPassword: false,
-  isVerifyiedOtp: false,
+export const initialState: IinitialResetPasswordState = {
+  isResettingPassword: false,
+  isReseted: false,
+  errorMessage: '',
 };
 
 const slice = createSlice({
-  name: 'forgotPasswordScreen',
+  name: 'resetPasswordScreen',
   initialState,
   reducers: {
-    forgotPassword(state, action) {
-      state.isForgotingPassword = true;
-      console.log(action.type);
+    resetPassword(state, action) {
+      state.isResettingPassword = true;
+      state.isReseted = false;
     },
-    forgotPasswordSuccess(state, action) {
-      state.isForgotingPassword = false;
-      state.isVerifyiedOtp = action.payload;
-      console.log('success', state.isVerifyiedOtp);
+    resetPasswordSuccess(state, action) {
+      state.isResettingPassword = false;
+      state.isReseted = true;
+      state.errorMessage = '';
+      console.log('success', action.payload);
     },
-    forgotPasswordError(state, action) {
-      state.isForgotingPassword = false;
-      console.log('error', action.payload);
+    resetPasswordError(state, action) {
+      state.isResettingPassword = false;
+      state.errorMessage = action.payload;
     },
   },
 });
 
-export const { actions: ForgotPasswordScreenAction } = slice;
+export const { actions: ResetPasswordAction } = slice;
 
-export const useForgotPasswordScreenSlice = () => {
+export const useResetPasswordSlice = () => {
   useInjectReducer({ key: slice.name, reducer: slice.reducer });
-  useInjectSaga({ key: slice.name, saga: ForgotPasswordSaga });
+  useInjectSaga({ key: slice.name, saga: ResetPasswordSaga });
   return { actions: slice.actions };
 };

@@ -1,12 +1,32 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  ActivityIndicator,
+} from 'react-native';
 import { theme } from '../../../utils/theme/theme';
 import { RootStackScreenProps } from '../../../navigation/types';
+import Header from '../../components/Custom/Header';
+import { useDispatch, useSelector } from 'react-redux';
+import * as select from './slice/selector';
+import { useResetPasswordSlice } from './slice';
+import Toast from 'react-native-root-toast';
 
-function ResetPassword({ navigation }: RootStackScreenProps<'ResetPassword'>) {
+function ResetPassword({ navigation, route }: RootStackScreenProps<'ResetPassword'>) {
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const [passwordMismatch, setPasswordMismatch] = useState(false);
+
+  const dispatch = useDispatch();
+  const { actions } = useResetPasswordSlice();
+  const isResetting = useSelector(select.selectIsResettingPassword);
+  const isResetted = useSelector(select.selectIsReseted);
+  const resetError = useSelector(select.selectErrorMessage);
+  const phoneNumber = route.params.phoneNumber;
 
   const handleResetPassword = () => {
     if (newPassword !== confirmNewPassword) {
@@ -14,38 +34,62 @@ function ResetPassword({ navigation }: RootStackScreenProps<'ResetPassword'>) {
       return;
     }
 
-    // Implement your logic to reset the password
-    navigation.navigate('Login');
+    dispatch(actions.resetPassword({ newPassword, phoneNumber }));
   };
 
+  useEffect(() => {
+    if (isResetted === true) {
+      navigation.navigate('SuccessScreen', {
+        title: 'Password Reseted Successfully!',
+        message: 'Your password has been reset successfully!',
+      });
+    }
+  }, [isResetted, navigation]);
+
+  if (resetError) {
+    Toast.show(resetError, {
+      duration: Toast.durations.LONG,
+      position: Toast.positions.BOTTOM,
+      shadow: true,
+      animation: true,
+      hideOnPress: true,
+      delay: 0,
+    });
+  }
+
   return (
-    <View style={styles.container}>
-      <Image source={require('../../../assets/images/icon.png')} style={styles.appLogo} />
-      <Text style={styles.logoText}>Medicin Locator</Text>
+    <View style={styles.rootContainer}>
+      <Header showRightIcon={false} />
+      <View style={styles.container}>
+        <Image source={require('../../../assets/images/icon.png')} style={styles.appLogo} />
+        <Text style={styles.logoText}>Medicin Locator</Text>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.input}
-          placeholder="New Password"
-          secureTextEntry
-          value={newPassword}
-          onChangeText={(text) => setNewPassword(text)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Confirm New Password"
-          secureTextEntry
-          value={confirmNewPassword}
-          onChangeText={(text) => setConfirmNewPassword(text)}
-        />
-        {passwordMismatch && (
-          <Text style={styles.errorText}>Passwords do not match. Please try again.</Text>
-        )}
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            placeholder="New Password"
+            secureTextEntry
+            value={newPassword}
+            onChangeText={(text) => setNewPassword(text)}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Confirm New Password"
+            secureTextEntry
+            value={confirmNewPassword}
+            onChangeText={(text) => setConfirmNewPassword(text)}
+          />
+          {passwordMismatch && (
+            <Text style={styles.errorText}>Passwords do not match. Please try again.</Text>
+          )}
+        </View>
+
+        {isResetting && <ActivityIndicator size="large" color={theme.colors.primary[500]} />}
+
+        <TouchableOpacity style={styles.resetButton} onPress={handleResetPassword}>
+          <Text style={styles.buttonText}>Reset Password</Text>
+        </TouchableOpacity>
       </View>
-
-      <TouchableOpacity style={styles.resetButton} onPress={handleResetPassword}>
-        <Text style={styles.buttonText}>Reset Password</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -53,6 +97,10 @@ function ResetPassword({ navigation }: RootStackScreenProps<'ResetPassword'>) {
 export default ResetPassword;
 
 const styles = StyleSheet.create({
+  rootContainer: {
+    flex: 1,
+    padding: 16,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

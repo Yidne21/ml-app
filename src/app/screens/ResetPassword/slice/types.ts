@@ -1,7 +1,14 @@
-export interface IinitialForgotPasswordState {
-  isForgotingPassword: boolean;
-  isVerifyiedOtp: boolean;
+export interface IinitialResetPasswordState {
+  isResettingPassword: boolean;
+  isReseted: boolean;
+  errorMessage: string;
 }
-export interface IForgotPasswordPayload {
-  phonenumber: string;
+
+export interface IResetPasswordPayload {
+  phoneNumber: string;
+  newPassword: string;
+}
+export interface IUser {
+  phoneNumber: string;
+  newPassword: string;
 }
