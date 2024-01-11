@@ -2,11 +2,10 @@ import { RootState } from '../../../../types';
 import { initialState } from '.';
 import { createSelector } from '@reduxjs/toolkit';
 
-const selectSlice = (state: RootState) => state?.resetPasswordScreen || initialState;
+const selectSlice = (state: RootState) => state?.forgotPasswordScreen || initialState;
 
-export const selectIsResettingPassword = createSelector(
+export const selectIsForgotingPassword = createSelector(
   [selectSlice],
-  (state) => state.isResettingPassword,
+  (state) => state.isForgotingPassword,
 );
-
-export const selectResetPassword = createSelector([selectSlice], (state) => state);
+export const selectIsOtpSent = createSelector([selectSlice], (state) => state.isOtpSent);

@@ -2,36 +2,35 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '../../../../utils/@reduxjs/toolkit';
 import { useInjectReducer, useInjectSaga } from '../../../../utils/redux-injectors';
-import { ResetPasswordSaga } from './saga';
-import { IinitialResetPasswordState } from './types';
+import { ForgotPasswordSaga } from './saga';
+import { IinitialForgotPasswordState } from './types';
 
-export const initialState: IinitialResetPasswordState = {
-  isResettingPassword: false,
+export const initialState: IinitialForgotPasswordState = {
+  isForgotingPassword: false,
+  isOtpSent: false,
 };
 
 const slice = createSlice({
-  name: 'resetPasswordScreen',
+  name: 'forgotPasswordScreen',
   initialState,
   reducers: {
-    resetPassword(state, action) {
-      state.isResettingPassword = true;
-      console.log(action.type);
+    forgotPassword(state, action) {
+      state.isForgotingPassword = true;
     },
-    resetPasswordSuccess(state, action) {
-      state.isResettingPassword = false;
-      console.log('success', action.payload);
+    forgotPasswordSuccess(state, action) {
+      state.isForgotingPassword = false;
+      state.isOtpSent = true;
     },
-    resetPasswordError(state, action) {
-      state.isResettingPassword = false;
-      console.log('error', action.payload);
+    forgotPasswordError(state, action) {
+      state.isForgotingPassword = false;
     },
   },
 });
 
-export const { actions: ResetPasswordAction } = slice;
+export const { actions: ForgotPasswordScreenAction } = slice;
 
-export const useResetPasswordSlice = () => {
+export const useForgotPasswordScreenSlice = () => {
   useInjectReducer({ key: slice.name, reducer: slice.reducer });
-  useInjectSaga({ key: slice.name, saga: ResetPasswordSaga });
+  useInjectSaga({ key: slice.name, saga: ForgotPasswordSaga });
   return { actions: slice.actions };
 };
