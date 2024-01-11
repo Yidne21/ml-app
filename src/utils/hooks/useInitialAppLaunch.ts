@@ -7,11 +7,9 @@ export default function useInitialAppLaunch(loggedIn: () => void, notLoggedIn: (
       try {
         const user = await getData('userData');
         if (!user) {
-          console.log('user not found');
           notLoggedIn();
           return;
         }
-        console.log('user', user);
         loggedIn();
         return;
       } catch (e) {
