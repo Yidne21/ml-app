@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import { theme } from '../../utils/theme/theme';
 import { RootStackScreenProps } from '../../navigation/types';
+import Header from '../components/Custom/Header';
 
 const walkthroughData = [
   {
@@ -44,6 +45,7 @@ function WalkThroughScreen({ navigation }: RootStackScreenProps<'WalkThrough'>) 
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Header showRightIcon={false} />
       <View style={styles.topContainer}>
         <Image source={walkthroughData[activeStep].image} style={styles.image} />
       </View>
@@ -89,18 +91,18 @@ export default WalkThroughScreen;
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
+    padding: 16,
   },
   topContainer: {
     alignItems: 'center',
-    paddingTop: 20,
-    marginTop: 100,
+    marginTop: 10,
   },
   image: {
-    width: 400,
-    height: 400,
+    width: 300,
+    height: 300,
     resizeMode: 'cover',
     borderRadius: 100,
-    marginBottom: 80,
+    marginBottom: 40,
   },
   bottomContainer: {
     flex: 1,
