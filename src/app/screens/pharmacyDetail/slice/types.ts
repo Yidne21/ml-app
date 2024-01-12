@@ -1,6 +1,7 @@
 export interface IinitialPharmacyDetailState {
   isLoadingPharmacy: boolean;
-  pharmacyDetail?: Ipharmacy | undefined;
+  isLoadedPharmacy: boolean;
+  pharmacyDetail: Ipharmacy;
 }
 
 export interface IgetPharmacyDetailPayload {

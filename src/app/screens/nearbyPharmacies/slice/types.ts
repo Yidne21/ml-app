@@ -1,12 +1,13 @@
 export interface IinitialNearbyPharmaciesState {
   isLoadingNearbyPharmacies: boolean;
+  isLoadedNearbyPharmacies: boolean;
   nearbyPharmacies: InearbyPharmacies;
 }
 export interface IgetNearbyPharmaciesPayload {
   pageState: {
     page: number;
     limit: number;
-    searchQuery?: string;
+    location: string;
   };
 }
 

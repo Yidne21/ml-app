@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { theme } from '../../../../utils/theme/theme';
 import * as Location from 'expo-location';
 import { Ipharmacies } from '../slice/types';
 
