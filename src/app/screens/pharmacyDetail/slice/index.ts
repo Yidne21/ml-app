@@ -7,7 +7,24 @@ import { IinitialPharmacyDetailState } from './types';
 
 export const initialState: IinitialPharmacyDetailState = {
   isLoadingPharmacy: false,
-  pharmacyDetail: undefined,
+  pharmacyDetail: {
+    _id: '',
+    location: {
+      coordinates: [0, 0],
+    },
+    name: '',
+    address: '',
+    phoneNumber: '',
+    email: '',
+    logo: '',
+    socialMedia: {
+      facebook: '',
+      twitter: '',
+    },
+    reviews: [],
+    avgRating: 0,
+  },
+  isLoadedPharmacy: false,
 };
 
 const slice = createSlice({
@@ -16,17 +33,16 @@ const slice = createSlice({
   reducers: {
     getPharmacyDetail: (state, action) => {
       state.isLoadingPharmacy = true;
-      console.log('action.payload', action.payload);
     },
     getPharmacyDetailSuccess: (state, action) => {
-      state.isLoadingPharmacy = false;
       state.pharmacyDetail = action.payload;
-      console.log('state.pharmacyDetail', state.pharmacyDetail);
+      state.isLoadingPharmacy = false;
+      state.isLoadedPharmacy = true;
     },
     getPharmacyDetailFailure: (state, action) => {
       state.isLoadingPharmacy = false;
+      state.isLoadedPharmacy = false;
       state.pharmacyDetail = action.payload;
-      console.log('state.error', action.payload);
     },
   },
 });

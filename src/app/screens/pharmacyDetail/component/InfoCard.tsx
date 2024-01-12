@@ -2,58 +2,12 @@ import React from 'react';
 import { View, Text, Dimensions, TouchableOpacity, Linking, StyleSheet } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import renderStars from '../../../components/Custom/DinamicStar';
+import { Ipharmacy } from '../slice/types';
 
-const pharmacyInfo = {
-  _id: '657711b99f521e451a499338',
-  location: {
-    coordinates: [37.7801, 13.4574],
-  },
-  name: 'Collier, Grady and Schowalter',
-  address: 'Suite 342',
-  phoneNumber: '875-339-9034 x7295',
-  email: 'Shea_Hahn@gmail.com',
-  logo: 'https://picsum.photos/seed/SD3Gylb/100/100',
-  socialMedia: {
-    facebook: 'https://tan-maternity.biz',
-    twitter: 'https://vain-limit.com/',
-    telegram: 'https://vain-limit.com/',
-  },
-  reviews: [
-    {
-      _id: '657711ba9f521e451a49944a',
-      feedback:
-        'Adhaero assumenda vitae talis abbas terra usitas deleniti. Deripio adiuvo sed teneo desparatus ait cras est creator nihil. Aurum ceno acervus vulnero appello a commodi audacia nostrum.',
-      user: {
-        _id: '657711b89f521e451a4992c4',
-        name: 'Peggy Frami-Hauck IV',
-      },
-      rating: 0.89,
-    },
-    {
-      _id: '657711ba9f521e451a49944e',
-      feedback:
-        'Adopto tersus architecto somnus centum comis clamo. Ducimus suasoria vado decumbo coadunatio. Spiritus cuppedia tolero.',
-      user: {
-        _id: '657711b89f521e451a4992cb',
-        name: 'Christine Konopelski',
-      },
-      rating: 2.25,
-    },
-    {
-      _id: '657711ba9f521e451a499472',
-      feedback:
-        'Callide abduco depulso demo thalassinus. Iusto terebro tribuo approbo. Venustas deputo testimonium videlicet fugiat defaeco assentator viridis tui subito.',
-      user: {
-        _id: '657711b89f521e451a4992c4',
-        name: 'Peggy Frami-Hauck IV',
-      },
-      rating: 0.43,
-    },
-  ],
-  avgRating: 1.19,
-};
-
-function InfoCard() {
+interface IPharmacyInfoProps {
+  pharmacyInfo: Ipharmacy;
+}
+function InfoCard({ pharmacyInfo }: IPharmacyInfoProps) {
   const renderIconRow = (iconName: string, iconSize: number, text: string) => (
     <View style={styles.iconContainer}>
       <FontAwesome name={iconName} size={iconSize} color="green" style={styles.icon} />

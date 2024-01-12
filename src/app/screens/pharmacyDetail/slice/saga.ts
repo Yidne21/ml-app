@@ -7,7 +7,6 @@ import { IgetPharmacyDetailPayload } from './types';
 
 function* getPharmacyDetail(action: PayloadAction<IgetPharmacyDetailPayload>) {
   const pharmacyId = action.payload;
-  console.log('---------------pharmacyId-----------------', pharmacyId);
   try {
     const pharmacydetail: AxiosResponse = yield call(API, {
       method: 'GET',
