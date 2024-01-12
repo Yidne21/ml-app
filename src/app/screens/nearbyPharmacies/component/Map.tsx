@@ -3,8 +3,10 @@ import { Dimensions, StyleSheet, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { Ipharmacies } from '../slice/types';
+import useCurrentCoordinates from '../../../../utils/hooks/useCurrentCoordinates';
 
 export default function Map({ pharmacies }: { pharmacies: Ipharmacies[] }) {
+  const currentLocation = useCurrentCoordinates();
   const [location, setLocation] = useState([9.145, 40.4897]);
   const [initialRender, setInitialRender] = useState(true);
   const [region, setRegion] = useState({
@@ -15,28 +17,17 @@ export default function Map({ pharmacies }: { pharmacies: Ipharmacies[] }) {
   });
 
   useEffect(() => {
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission to access location was denied');
-        return;
-      }
-
-      const userLocation = await Location.getCurrentPositionAsync({});
-      setLocation(
-        [userLocation.coords.latitude, userLocation.coords.longitude] || [8.220573, 37.798139],
-      );
-      if (userLocation && initialRender) {
-        setRegion({
-          latitude: userLocation.coords.latitude,
-          longitude: userLocation.coords.longitude,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
-        });
-        setInitialRender(false);
-      }
-    })();
-  }, [initialRender]);
+    if (currentLocation) {
+      setLocation(currentLocation);
+      setRegion({
+        latitude: currentLocation[0],
+        longitude: currentLocation[1],
+        latitudeDelta: 5,
+        longitudeDelta: 5,
+      });
+    }
+    setInitialRender(false);
+  }, [currentLocation, initialRender]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -45,7 +36,7 @@ export default function Map({ pharmacies }: { pharmacies: Ipharmacies[] }) {
         region={region}
         onRegionChangeComplete={(newRegion) => setRegion(newRegion)}
       >
-        {location && !initialRender && (
+        {location && (
           <Marker
             coordinate={{
               latitude: location[0],

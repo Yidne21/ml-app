@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, TouchableOpacity, Dimensions, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Dimensions, StyleSheet, ActivityIndicator } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import FilterBar from './component/FilterBar';
 import SearchBar from './component/SearchBar';
@@ -21,6 +21,7 @@ function DrugSearch() {
   const [pharmacy, setPharmacy] = useState('');
 
   const serarchResult = useSelector(select.selectSearchResult);
+  const isSearching = useSelector(select.selectIsSearching);
   const { actions } = useDrugSearchScreenSlice();
   const dispatch = useDispatch();
 
@@ -110,6 +111,11 @@ function DrugSearch() {
       )}
       <View style={styles.header}></View>
       <DrugLists data={serarchResult?.drugs} />
+      {isSearching && (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color={theme.colors.primary[500]} />
+        </View>
+      )}
     </View>
   );
 }
@@ -140,6 +146,11 @@ const styles = StyleSheet.create({
     padding: 10,
     marginLeft: 5,
     color: theme.colors.primary[900],
+  },
+  loader: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
   },
 });
 

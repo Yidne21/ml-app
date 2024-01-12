@@ -1,5 +1,5 @@
 import Map from './component/Map';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNearbyPharmacySlice } from './slice';
 import * as select from './slice/selector';
@@ -13,16 +13,18 @@ function Home() {
   const { actions } = useNearbyPharmacySlice();
   const dispatch = useDispatch();
   const data = useSelector(select.selectPharmacies);
-  const isLoading = useSelector(select.selectIsLoading);
   const isLoaded = useSelector(select.selectIsLoaded);
+  const isLoading = useSelector(select.selectIsLoading);
+  const [Location, setLocation] = useState(location);
 
   useEffect(() => {
-    dispatch(actions.getNearbyPharmacies({ pageState: { page: 1, limit: 20, location } }));
-  }, [dispatch, actions, location]);
+    dispatch(
+      actions.getNearbyPharmacies({ pageState: { page: 1, limit: 20, location: Location } }),
+    );
+  }, [dispatch, actions, location, Location]);
 
   return (
     <View style={styles.container}>
-      {isLoading && <ActivityIndicator size="large" color={theme.colors.primary[500]} />}
       {isLoaded && (
         <>
           <View style={styles.mapContainer}>
@@ -33,6 +35,9 @@ function Home() {
             <PharmacyList pharmacies={data.pharmacies} />
           </View>
         </>
+      )}
+      {isLoading && (
+        <ActivityIndicator size="large" color={theme.colors.primary[500]} style={styles.loader} />
       )}
     </View>
   );
@@ -56,6 +61,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     margin: 16,
     padding: 10,
+  },
+  loader: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
   },
 });
 
