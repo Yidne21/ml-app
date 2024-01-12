@@ -280,6 +280,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 5,
     padding: 5,
+    color: theme.colors.primary[900],
   },
   Buttons: {
     flexDirection: 'row',

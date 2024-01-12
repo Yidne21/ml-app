@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TextInput, Dimensions, StyleSheet } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
+import { theme } from '../../../../utils/theme/theme';
 
 interface SearchBarProps {
   drugName: string;
@@ -17,7 +18,7 @@ function SearchBar({ drugName, setDrugName, handelKeyPress }: SearchBarProps) {
         style={styles.textInput}
         placeholder="Search Medicine or HealthCare products"
         onChangeText={(text) => setDrugName(text)}
-        onKeyPress={handelKeyPress}
+        onChange={handelKeyPress}
       />
     </View>
   );
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingLeft: 50,
     paddingRight: 20,
-    backgroundColor: '#fff',
+    borderColor: theme.colors.primary[500],
     shadowColor: 'gray',
     shadowOffset: {
       width: 0,

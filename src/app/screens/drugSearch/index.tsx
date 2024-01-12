@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, View, TouchableOpacity, Dimensions, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Dimensions, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import FilterBar from './component/FilterBar';
 import SearchBar from './component/SearchBar';
@@ -91,7 +91,7 @@ function DrugSearch() {
           <MaterialIcons
             name={showFilterBar ? 'close' : 'filter-list'}
             size={30}
-            color={theme.black}
+            color={theme.colors.primary[700]}
           />
         </TouchableOpacity>
       </View>
@@ -108,9 +108,7 @@ function DrugSearch() {
           handleApplyFilter={handeleApplyFilter}
         />
       )}
-      <View style={styles.header}>
-        <Text style={styles.headerText}>Search Results</Text>
-      </View>
+      <View style={styles.header}></View>
       <DrugLists data={serarchResult?.drugs} />
     </View>
   );
@@ -137,9 +135,11 @@ const styles = StyleSheet.create({
     aliginSelf: 'flex-start',
   },
   headerText: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     padding: 10,
+    marginLeft: 5,
+    color: theme.colors.primary[900],
   },
 });
 

@@ -25,16 +25,16 @@ function DrugItemCard({ drug }: { drug: Idrug }) {
           <Text style={styles.drugName}>{drug.name}</Text>
           <View style={styles.detailContainer}>
             <View style={styles.detail}>
-              <MaterialIcons name="local-pharmacy" size={24} color={theme.colors.transparent} />
+              <MaterialIcons name="local-pharmacy" size={24} color={theme.colors.primary[900]} />
               <Text style={styles.text}>{drug.pharmacy.name}</Text>
             </View>
             <View style={styles.detail}>
-              <MaterialIcons name="location-pin" size={24} color={theme.colors.transparent} />
+              <MaterialIcons name="location-pin" size={24} color={theme.colors.primary[900]} />
               <Text style={styles.text}>{drug.pharmacy.distance} km away</Text>
             </View>
             <View style={styles.detail}>
-              <MaterialIcons name="money" size={24} color={theme.colors.transparent} />
-              <Text>{drug.price} Birr</Text>
+              <MaterialIcons name="money" size={24} color={theme.colors.primary[900]} />
+              <Text>{drug.price.toFixed(2)} Birr</Text>
             </View>
           </View>
         </View>
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     elevation: 1,
     backgroundColor: theme.colors.white,
-    borderColor: theme.shadows.sm,
+    borderColor: theme.colors.primary[500],
   },
   image: {
     width: 100,

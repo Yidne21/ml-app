@@ -36,9 +36,10 @@ const slice = createSlice({
       console.log(action.type);
     },
     getDrugDetailSuccess: (state, action) => {
+      state.drugDetail = action.payload;
+      console.log('drugDetail', action.payload);
       state.isLoadingDrugDetail = false;
       state.isLoaded = true;
-      state.drugDetail = action.payload;
     },
     getDrugDetailFailur: (state, action) => {
       state.isLoadingDrugDetail = false;

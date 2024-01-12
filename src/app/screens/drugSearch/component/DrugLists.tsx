@@ -11,6 +11,7 @@ function DrugLists({ data }: { data?: Idrug[] }) {
         renderItem={({ item }) => <DrugItemCard drug={item} />}
         keyExtractor={(item) => item._id}
         numColumns={2}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

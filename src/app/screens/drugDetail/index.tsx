@@ -1,13 +1,5 @@
 import React, { useEffect } from 'react';
-import {
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { DrugSearchStackScreenProps } from '../../../navigation/types';
 import { useDrugDetailScreenSlice } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,21 +14,16 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
   const dispatch = useDispatch();
   const { drugId } = route.params;
   const drug = useSelector(select.selectDrugDetail);
-  const isLoading = useSelector(select.selectIsLoadingDrugDetail);
   const isLoaded = useSelector(select.selectIsLoaded);
 
   useEffect(() => {
     dispatch(actions.getDrugDetail(drugId));
   }, [actions, dispatch, drugId]);
 
-  console.log('index.tsx--------', drug);
-
   return (
     <View style={styles.container}>
       <Header showRightIcon={true} />
-      {isLoading ? (
-        <ActivityIndicator size="large" color={theme.colors.primary[500]} style={styles.loader} />
-      ) : (
+      {isLoaded && (
         <ScrollView>
           <Text style={styles.drugName}>{drug.name}</Text>
 
