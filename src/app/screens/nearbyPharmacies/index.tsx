@@ -17,6 +17,15 @@ function Home() {
   const isLoading = useSelector(select.selectIsLoading);
   const [Location, setLocation] = useState(location);
 
+  //map state
+  const coord = location.split(',');
+  const [region, setRegion] = useState({
+    latitude: Number(coord[0]),
+    longitude: Number(coord[1]),
+    latitudeDelta: 10,
+    longitudeDelta: 10,
+  });
+
   useEffect(() => {
     dispatch(
       actions.getNearbyPharmacies({ pageState: { page: 1, limit: 20, location: Location } }),
@@ -28,11 +37,16 @@ function Home() {
       {isLoaded && (
         <>
           <View style={styles.mapContainer}>
-            <Map pharmacies={data.pharmacies} />
+            <Map
+              pharmacies={data.pharmacies}
+              region={region}
+              userLocation={coord}
+              setRegion={setRegion}
+            />
           </View>
           <View style={styles.pharmacies}>
             <Text style={styles.header}>Nearby Pharmacies</Text>
-            <PharmacyList pharmacies={data.pharmacies} />
+            <PharmacyList pharmacies={data.pharmacies} setRegion={setRegion} />
           </View>
         </>
       )}
