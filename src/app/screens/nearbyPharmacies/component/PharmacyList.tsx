@@ -19,6 +19,7 @@ function PharmacyList({ pharmacies, setRegion }: IPharmacyListProps) {
       data={pharmacies}
       renderItem={({ item }) => <PharmacyCard pharmacy={item} setRegion={setRegion} />}
       style={styles.flatList}
+      showsVerticalScrollIndicator={false}
     />
   );
 }

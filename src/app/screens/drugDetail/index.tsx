@@ -24,7 +24,7 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
     <View style={styles.container}>
       <Header showRightIcon={true} />
       {isLoaded && (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.drugName}>{drug.name}</Text>
 
           <View style={styles.imageContainer}>
@@ -53,8 +53,8 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
           {renderSection('Strength and Dosage', drug.strengthAndDosage)}
 
           <View style={styles.expireDate}>
-            {renderRow('Wholesalers', drug.receivedFrom)}
-            {renderRow('Pharmacy', drug.receivedFrom)}
+            {renderRow('Wholesalers', drug.pharmacyName)}
+            {renderRow('Pharmacy', drug.pharmacyName)}
             {renderRow('Manufactured Date', format(new Date(drug.manufacturedDate), 'dd/MM/yyyy'))}
             {renderRow('Expire Date', format(new Date(drug.expiredDate), 'dd/MM/yyyy'))}
           </View>

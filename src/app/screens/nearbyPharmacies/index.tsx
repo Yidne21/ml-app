@@ -28,7 +28,7 @@ function Home() {
 
   useEffect(() => {
     dispatch(
-      actions.getNearbyPharmacies({ pageState: { page: 1, limit: 20, location: Location } }),
+      actions.getNearbyPharmacies({ pageState: { page: 1, limit: 30, location: Location } }),
     );
   }, [dispatch, actions, location, Location]);
 

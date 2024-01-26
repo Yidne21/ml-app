@@ -37,8 +37,8 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
     setRegion({
       latitude: pharmacy.location.coordinates[1],
       longitude: pharmacy.location.coordinates[0],
-      latitudeDelta: 0.09,
-      longitudeDelta: 0.1,
+      latitudeDelta: 0.5,
+      longitudeDelta: 0.5,
     });
   };
 

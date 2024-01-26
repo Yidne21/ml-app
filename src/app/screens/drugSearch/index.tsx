@@ -10,15 +10,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDrugSearchScreenSlice } from './slice';
 import * as select from './slice/selector';
 import useCurrentLocation from '../../../utils/hooks/useCurrentLocation';
-
-function DrugSearch() {
+import { HomeStackScreenProps } from '../../../navigation/types';
+function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
+  const { name } = route.params || '';
   const currentLocation = useCurrentLocation() || '8.220573, 37.798139';
   const [showFilterBar, setShowFilterBar] = useState(false);
   const [drugName, setDrugName] = useState('');
   const [location, setLocation] = useState(currentLocation);
   const [priceRange, setPriceRange] = useState([5, 10000]);
   const [category, setCategory] = useState('');
-  const [pharmacy, setPharmacy] = useState('');
+  const [pharmacy, setPharmacy] = useState(name);
 
   const serarchResult = useSelector(select.selectSearchResult);
   const isSearching = useSelector(select.selectIsSearching);
@@ -56,7 +57,7 @@ function DrugSearch() {
       actions.getSearchedDrug({
         pageState: {
           page: 1,
-          limit: 20,
+          limit: 30,
           location,
           name: pharmacy,
           category,
@@ -72,7 +73,7 @@ function DrugSearch() {
       actions.getSearchedDrug({
         pageState: {
           page: 1,
-          limit: 20,
+          limit: 30,
           location,
           name: pharmacy,
         },

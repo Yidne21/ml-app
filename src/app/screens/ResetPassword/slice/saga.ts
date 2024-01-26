@@ -7,14 +7,12 @@ import { IResetPasswordPayload } from './types';
 
 function* ResetPassword(action: PayloadAction<IResetPasswordPayload>) {
   const { phoneNumber, newPassword } = action.payload;
-  const updatedPhoneNumber = '+251' + phoneNumber;
-
   try {
     const user: AxiosResponse = yield call(API, {
       method: 'POST',
       route: 'user/reset-password',
       payload: {
-        phoneNumber: updatedPhoneNumber,
+        phoneNumber,
         newPassword,
       },
     });

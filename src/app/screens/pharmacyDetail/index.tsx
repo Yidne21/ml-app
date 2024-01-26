@@ -10,7 +10,7 @@ import ReviewList from './component/ReviewList';
 import Header from '../../components/Custom/Header';
 import { theme } from '../../../utils/theme/theme';
 
-function PharmacyProfile({ route }: HomeStackScreenProps<'PharmacyDetail'>) {
+function PharmacyProfile({ navigation, route }: HomeStackScreenProps<'PharmacyDetail'>) {
   const { actions } = usePharmacyDetailSlice();
   const dispatch = useDispatch();
   const { pharmacyId } = route.params;
@@ -22,6 +22,13 @@ function PharmacyProfile({ route }: HomeStackScreenProps<'PharmacyDetail'>) {
     dispatch(actions.getPharmacyDetail(pharmacyId));
   }, [actions, dispatch, pharmacyId]);
 
+  const handleDrugStoreClick = () => {
+    // Navigate to DrugStore screen with the pharmacy details
+    navigation.navigate('DrugSearch', {
+      name: pharmacyInfo.name,
+    });
+  };
+
   return (
     <View style={styles.rootContainer}>
       <View style={styles.IconContainer}>
@@ -31,14 +38,14 @@ function PharmacyProfile({ route }: HomeStackScreenProps<'PharmacyDetail'>) {
         <View style={styles.container}>
           {/* cover image */}
           <View style={styles.logoContainer}>
-            <Image source={{ uri: pharmacyInfo.logo }} style={styles.logo} />
+            <Image source={{ uri: pharmacyInfo.cover }} style={styles.logo} />
           </View>
           <InfoCard pharmacyInfo={pharmacyInfo} />
 
           <View style={styles.hederContainer}>
             <Text style={styles.reviewText}>Reviews</Text>
 
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleDrugStoreClick}>
               <Text style={styles.storeText}>Drug Store</Text>
             </TouchableOpacity>
           </View>

@@ -24,4 +24,5 @@ export interface Idrugs {
   manufacturedDate: string;
   expiredDate: string;
   receivedFrom: string;
+  pharmacyName: string;
 }
