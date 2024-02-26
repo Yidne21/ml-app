@@ -4,7 +4,6 @@ import {
   LayoutProps,
   TypographyProps,
   SpaceProps,
-  FlexProps,
   JustifyContentProps,
   AlignItemsProps,
   FlexDirectionProps,
@@ -132,7 +131,7 @@ export interface TextProps
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'base' | 'ellipsis';
   textOverflow?: string;
   cursor?: string;
-  children: string | JSX.Element[];
+  // children: string | JSX.Element[] | number;
 }
 
 export interface InputProps
@@ -209,7 +208,9 @@ export interface ImageBackgroundProps
     WidthProps,
     HeightProps,
     BorderProps {
-  source: string;
+  source: { uri: string };
   resizeMode: string;
   children?: JSX.Element | JSX.Element[];
 }
+
+export interface FlexProps extends FlexboxProps {}

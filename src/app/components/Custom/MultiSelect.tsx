@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Box } from 'react-native';
 import { MultiSelect } from 'react-native-element-dropdown';
 import { MaterialIcons } from '@expo/vector-icons';
 
@@ -23,7 +23,7 @@ const MultiSelect: React.FC<IMultiSelectComponentProps> = ({ placeholder, iconNa
   const [selected, setSelected] = useState([]);
 
   return (
-    <View style={styles.container}>
+    <Box padding={16}>
       <MultiSelect
         style={styles.dropdown}
         placeholderStyle={styles.placeholderStyle}
@@ -45,7 +45,7 @@ const MultiSelect: React.FC<IMultiSelectComponentProps> = ({ placeholder, iconNa
         )}
         selectedStyle={styles.selectedStyle}
       />
-    </View>
+    </Box>
   );
 };
 

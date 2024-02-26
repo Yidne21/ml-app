@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Flex, Text } from '../Basic';
 
 interface IDropdownProps {
   placeholder: string;
@@ -24,12 +25,12 @@ const CustomeDropdown: React.FC<IDropdownProps> = ({ placeholder, iconName, data
     value: null;
   }) => {
     return (
-      <View style={styles.item}>
+      <Flex p={17} flexDirection={'row'} style={styles.item}>
         <Text style={styles.textItem}>{item.label}</Text>
         {item.value === value && (
           <MaterialIcons style={styles.icon} color="green" name="check-circle-outline" size={20} />
         )}
-      </View>
+      </Flex>
     );
   };
 
