@@ -16,6 +16,7 @@ export interface Ipharmacy {
   phoneNumber: string;
   email: string;
   logo: string;
+  cover: string;
   socialMedia: IsocialMedia;
   reviews: Ireview[];
   avgRating: number;

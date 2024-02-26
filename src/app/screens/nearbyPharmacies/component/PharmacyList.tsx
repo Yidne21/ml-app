@@ -3,12 +3,23 @@ import { FlatList, StyleSheet } from 'react-native';
 import { Ipharmacies } from '../slice/types';
 import PharmacyCard from './PharmacyCard';
 
-function PharmacyList({ pharmacies }: { pharmacies: Ipharmacies[] }) {
+interface IPharmacyListProps {
+  pharmacies: Ipharmacies[];
+  setRegion: (region: {
+    latitude: number;
+    longitude: number;
+    latitudeDelta: number;
+    longitudeDelta: number;
+  }) => void;
+}
+
+function PharmacyList({ pharmacies, setRegion }: IPharmacyListProps) {
   return (
     <FlatList
       data={pharmacies}
-      renderItem={({ item }) => <PharmacyCard pharmacy={item} />}
+      renderItem={({ item }) => <PharmacyCard pharmacy={item} setRegion={setRegion} />}
       style={styles.flatList}
+      showsVerticalScrollIndicator={false}
     />
   );
 }
