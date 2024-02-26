@@ -4,6 +4,7 @@ import {
   boxShadow,
   flexbox,
   compose,
+  system,
   flex,
   layout,
   space,
@@ -14,7 +15,25 @@ import {
 } from 'styled-system';
 import { FlexProps } from './types';
 
+const gap = system({
+  gap: {
+    property: 'gap',
+    scale: 'space',
+  },
+});
+
 export const Flex = styled(Box)<FlexProps>`
   display: flex;
-  ${compose(flexbox, flex, space, layout, typography, border, position, borderRadius, boxShadow)};
+  ${compose(
+    flexbox,
+    flex,
+    space,
+    layout,
+    gap,
+    typography,
+    border,
+    position,
+    borderRadius,
+    boxShadow,
+  )};
 `;

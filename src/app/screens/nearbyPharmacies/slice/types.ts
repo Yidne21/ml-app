@@ -14,7 +14,7 @@ export interface IgetNearbyPharmaciesPayload {
 export interface InearbyPharmacies {
   totalDocuments: number;
   totalPages: number;
-  pharmacies: Ipharmacies[];
+  data: Ipharmacies[];
 }
 
 export interface Idrugs {

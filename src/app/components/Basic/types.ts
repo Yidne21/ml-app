@@ -32,6 +32,7 @@ import {
   OpacityProps,
   HeightProps,
   ShadowProps,
+  ResponsiveValue,
 } from 'styled-system';
 
 export interface ButtonProps
@@ -42,6 +43,8 @@ export interface ButtonProps
     SpaceProps,
     PositionProps,
     BorderProps,
+    FlexProps,
+    FlexBasisProps,
     FlexDirectionProps,
     AlignSelfProps,
     JustifySelfProps,
@@ -181,7 +184,7 @@ export interface ImageProps
     WidthProps,
     HeightProps,
     BorderProps {
-  source: string;
+  source: { uri: string };
 }
 
 export interface CardProps
@@ -213,4 +216,6 @@ export interface ImageBackgroundProps
   children?: JSX.Element | JSX.Element[];
 }
 
-export interface FlexProps extends FlexboxProps {}
+export interface FlexProps extends FlexboxProps {
+  gap?: ResponsiveValue<number | string>;
+}

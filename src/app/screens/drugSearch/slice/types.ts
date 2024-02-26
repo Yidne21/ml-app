@@ -16,7 +16,7 @@ export interface IgetDrugSearchPayload {
 export interface IdrugSearchResult {
   totalDocuments: number;
   totalPages: number;
-  drugs: Idrug[];
+  data: Idrug[];
 }
 
 export interface Idrug {

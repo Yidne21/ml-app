@@ -9,11 +9,12 @@ import {
   border,
   zIndex,
   position,
+  flexbox,
 } from 'styled-system';
 import { ButtonProps } from './types';
 
 export const Button = styled.TouchableOpacity<ButtonProps>`
-  ${compose(color, layout, space, typography, variant, border, zIndex, position)}
+  ${compose(color, layout, space, typography, variant, border, zIndex, flexbox, position)}
 `;
 
 export const HButton = styled.TouchableHighlight<ButtonProps>`

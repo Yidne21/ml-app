@@ -28,11 +28,11 @@ function Home() {
       {isLoaded && (
         <>
           <View style={styles.mapContainer}>
-            <Map pharmacies={data.pharmacies} />
+            <Map pharmacies={data.data} />
           </View>
           <View style={styles.pharmacies}>
             <Text style={styles.header}>Nearby Pharmacies</Text>
-            <PharmacyList pharmacies={data.pharmacies} />
+            <PharmacyList pharmacies={data.data} />
           </View>
         </>
       )}
