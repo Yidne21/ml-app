@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, Dimensions, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, FlatList } from 'react-native';
 import CustomRangeSlider from '../../../components/Custom/RangeSlider';
 import { theme } from '../../../../utils/theme/theme';
 import * as Crypto from 'expo-crypto';
+import { Flex, Text, Button } from '../../../components/Basic';
 
 interface IFilterBarProps {
   location: string;
@@ -197,21 +198,21 @@ const FilterBar: React.FC<IFilterBarProps> = ({
   };
 
   const renderItem = ({ item }: { item: { label: string; value: string } }) => (
-    <TouchableOpacity
+    <Pressable
       style={selectedLocation === item.value ? styles.selectedItem : styles.item}
       onPress={() => handleLocationPress(item.value)}
     >
       <Text>{item.label}</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   const renderCategoryItem = ({ item }: { item: { label: string; value: string } }) => (
-    <TouchableOpacity
+    <Pressable
       style={selectedCategory === item.value ? styles.selectedItem : styles.item}
       onPress={() => handleCategoryPress(item.value)}
     >
       <Text>{item.label}</Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 
   const handleClearFilter = () => {
@@ -224,9 +225,17 @@ const FilterBar: React.FC<IFilterBarProps> = ({
 
   return (
     <>
-      <View style={styles.dropdownContainer}>
-        <View>
-          <Text style={styles.filterTitle}>Location</Text>
+      <Flex flexDirection={'column'} width={Dimensions.get('window').width - 40}>
+        <Flex>
+          <Text
+            fontSize={16}
+            fontWeight={'bold'}
+            mb={5}
+            padding={5}
+            color={theme.colors.primary[900]}
+          >
+            Location
+          </Text>
           <FlatList
             data={LocationData}
             renderItem={renderItem}
@@ -234,9 +243,17 @@ const FilterBar: React.FC<IFilterBarProps> = ({
             horizontal
             showsHorizontalScrollIndicator={false}
           />
-        </View>
-        <View>
-          <Text style={styles.filterTitle}>Category</Text>
+        </Flex>
+        <Flex>
+          <Text
+            fontSize={16}
+            fontWeight={'bold'}
+            mb={5}
+            padding={5}
+            color={theme.colors.primary[900]}
+          >
+            Category
+          </Text>
           <FlatList
             data={CategoryData}
             renderItem={renderCategoryItem}
@@ -244,60 +261,53 @@ const FilterBar: React.FC<IFilterBarProps> = ({
             horizontal
             showsHorizontalScrollIndicator={false}
           />
-        </View>
-      </View>
-      <View style={styles.slider}>
+        </Flex>
+      </Flex>
+      <Flex
+        flexDirection={'row'}
+        height={80}
+        width={Dimensions.get('window').width - 60}
+        alignItems={'center'}
+        justifyContent={'center'}
+        marginTop={-20}
+        marginLeft={10}
+      >
         <CustomRangeSlider priceRange={priceRange} setPriceRange={setPriceRange} />
-      </View>
-      <View style={styles.Buttons}>
-        <TouchableOpacity style={styles.Button} onPress={handleApplyFilter}>
+      </Flex>
+      <Flex
+        flexDirection={'row'}
+        justifyContent={'flex-end'}
+        gap={10}
+        mx={20}
+        width={Dimensions.get('window').width - 70}
+        marginTop={0}
+      >
+        <Button
+          backgroundColor={theme.shadows.sm}
+          p={10}
+          borderRadius={15}
+          width={80}
+          alignItems={'center'}
+          onPress={handleApplyFilter}
+        >
           <Text>Apply</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.Button} onPress={handleClearFilter}>
+        </Button>
+        <Button
+          backgroundColor={theme.shadows.sm}
+          p={10}
+          borderRadius={15}
+          width={80}
+          alignItems={'center'}
+          onPress={handleClearFilter}
+        >
           <Text>Clear All</Text>
-        </TouchableOpacity>
-      </View>
+        </Button>
+      </Flex>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  dropdownContainer: {
-    flexDirection: 'column',
-    width: Dimensions.get('window').width - 40,
-  },
-  slider: {
-    flexDirection: 'row',
-    height: 80,
-    width: Dimensions.get('window').width - 60,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: -20,
-    marginLeft: 10, // Adjusted marginTop
-  },
-  filterTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
-    padding: 5,
-    color: theme.colors.primary[900],
-  },
-  Buttons: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    gap: 10,
-    marginHorizontal: 20,
-    width: Dimensions.get('window').width - 70,
-    marginTop: 0, // Adjusted marginTop
-  },
-  Button: {
-    backgroundColor: theme.shadows.sm,
-    padding: 10,
-    borderRadius: 15,
-    width: 80,
-    alignItems: 'center',
-  },
-
   item: {
     padding: 10,
     margin: 5,

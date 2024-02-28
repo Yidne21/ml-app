@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Image, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { theme } from '../../../../utils/theme/theme';
+import { Flex, Image, Button, Text } from '../../../components/Basic';
 
 interface UserBasicInfoProps {
   isEditMode: boolean;
@@ -20,7 +21,7 @@ const UserBasicInfo: React.FC<UserBasicInfoProps> = ({
 }) => {
   return (
     <>
-      <View style={styles.coverBox}>
+      <Flex style={styles.coverBox}>
         <Image
           source={{
             uri:
@@ -30,7 +31,7 @@ const UserBasicInfo: React.FC<UserBasicInfoProps> = ({
           style={styles.coverPhoto}
         />
         {isEditMode && (
-          <TouchableOpacity
+          <Button
             onPress={() => {
               pickImage(false);
             }}
@@ -41,19 +42,19 @@ const UserBasicInfo: React.FC<UserBasicInfoProps> = ({
               color={theme.colors.primary[500]}
               style={styles.cameraIcon}
             />
-          </TouchableOpacity>
+          </Button>
         )}
-      </View>
-      <View style={styles.avatarBox}>
+      </Flex>
+      <Flex style={styles.avatarBox}>
         {isEditMode && (
-          <TouchableOpacity style={styles.cameraBtn} onPress={() => pickImage(true)}>
+          <Button style={styles.cameraBtn} onPress={() => pickImage(true)}>
             <MaterialIcons
               name="camera-alt"
               size={34}
               color={theme.colors.primary[500]}
               style={styles.cameraIconAvatar}
             />
-          </TouchableOpacity>
+          </Button>
         )}
         <Image
           source={{
@@ -61,7 +62,7 @@ const UserBasicInfo: React.FC<UserBasicInfoProps> = ({
           }}
           style={styles.avatar}
         />
-      </View>
+      </Flex>
       <Text style={styles.name}>{name}</Text>
     </>
   );

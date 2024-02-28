@@ -27,7 +27,7 @@ export interface Idrug {
   expiredDate: string;
   pharmacy: {
     _id: string;
-    location: number[];
+    location: { coordinates: number[]; type: string };
     name: string;
     distance: number;
   };

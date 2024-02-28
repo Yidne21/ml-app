@@ -1,23 +1,24 @@
 import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import ReviewItem from './ReviewItem';
 import { Ireview } from '../slice/types';
+import { Flex } from '../../../components/Basic';
 
 function ReviewList({ reviews }: { reviews: Ireview[] }) {
   return (
-    <View style={styles.container}>
+    <Flex flex={1}>
       <FlatList
         data={reviews}
         renderItem={({ item }) => <ReviewItem review={item} />}
         keyExtractor={(item) => item._id}
       />
-    </View>
+    </Flex>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//   },
+// });
 export default ReviewList;

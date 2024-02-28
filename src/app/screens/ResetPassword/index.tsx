@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { theme } from '../../../utils/theme/theme';
 import { RootStackScreenProps } from '../../../navigation/types';
 import Header from '../../components/Custom/Header';
@@ -15,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as select from './slice/selector';
 import { useResetPasswordSlice } from './slice';
 import Toast from 'react-native-root-toast';
+import { Flex, Text, TextInput, Button, Image } from '../../components/Basic';
 
 function ResetPassword({ navigation, route }: RootStackScreenProps<'ResetPassword'>) {
   const [newPassword, setNewPassword] = useState('');
@@ -58,94 +51,125 @@ function ResetPassword({ navigation, route }: RootStackScreenProps<'ResetPasswor
   }
 
   return (
-    <View style={styles.rootContainer}>
+    <Flex flex={1} padding={16}>
       <Header showRightIcon={false} />
-      <View style={styles.container}>
-        <Image source={require('../../../assets/images/icon.png')} style={styles.appLogo} />
-        <Text style={styles.logoText}>Medicin Locator</Text>
+      <Flex alignItems="center" justifyContent="center" backgroundColor={theme.colors.background}>
+        <Image
+          source={require('../../../assets/images/icon.png')}
+          width={120}
+          height={120}
+          marginBottom={20}
+          borderRadius={60}
+        />
+        <Text fontSize={24} fontWeight="bold" marginBottom={30} color={theme.colors.primary[500]}>
+          Medicin Locator
+        </Text>
 
-        <View style={styles.inputContainer}>
+        <Flex width="80%" marginBottom={20}>
           <TextInput
-            style={styles.input}
+            height={50}
+            borderColor={theme.colors.primary[500]}
+            borderWidth={1}
+            borderRadius={25}
+            px={20}
+            marginBottom={20}
+            fontSize={16}
             placeholder="New Password"
             secureTextEntry
             value={newPassword}
             onChangeText={(text) => setNewPassword(text)}
           />
           <TextInput
-            style={styles.input}
+            height={50}
+            borderColor={theme.colors.primary[500]}
+            borderWidth={1}
+            borderRadius={25}
+            px={20}
+            marginBottom={20}
+            fontSize={16}
             placeholder="Confirm New Password"
             secureTextEntry
             value={confirmNewPassword}
             onChangeText={(text) => setConfirmNewPassword(text)}
           />
           {passwordMismatch && (
-            <Text style={styles.errorText}>Passwords do not match. Please try again.</Text>
+            <Text color="red" marginTop={5}>
+              Passwords do not match. Please try again.
+            </Text>
           )}
-        </View>
+        </Flex>
 
         {isResetting && <ActivityIndicator size="large" color={theme.colors.primary[500]} />}
 
-        <TouchableOpacity style={styles.resetButton} onPress={handleResetPassword}>
-          <Text style={styles.buttonText}>Reset Password</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        <Button
+          width="80%"
+          backgroundColor={theme.colors.primary[500]}
+          padding={15}
+          borderRadius={25}
+          alignItems="center"
+          onPress={handleResetPassword}
+        >
+          <Text color="white" fontSize={18} fontWeight="bold">
+            Reset Password
+          </Text>
+        </Button>
+      </Flex>
+    </Flex>
   );
 }
 
 export default ResetPassword;
 
-const styles = StyleSheet.create({
-  rootContainer: {
-    flex: 1,
-    padding: 16,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: theme.colors.background,
-  },
-  appLogo: {
-    width: 120,
-    height: 120,
-    marginBottom: 20,
-    borderRadius: 60,
-  },
-  logoText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 30,
-    color: theme.colors.primary[500],
-  },
-  inputContainer: {
-    width: '80%',
-    marginBottom: 20,
-  },
-  input: {
-    height: 50,
-    borderColor: theme.colors.primary[500],
-    borderWidth: 1,
-    borderRadius: 25,
-    paddingHorizontal: 20,
-    marginBottom: 20,
-    fontSize: 16,
-  },
-  resetButton: {
-    width: '80%',
-    backgroundColor: theme.colors.primary[500],
-    padding: 15,
-    borderRadius: 25,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  errorText: {
-    color: 'red',
-    marginTop: 5,
-  },
-});
+// const styles = StyleSheet.create({
+//   rootContainer: {
+//     flex: 1,
+//     padding: 16,
+//   },
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: theme.colors.background,
+//   },
+//   appLogo: {
+//     width: 120,
+//     height: 120,
+//     marginBottom: 20,
+//     borderRadius: 60,
+//   },
+//   logoText: {
+//     fontSize: 24,
+//     fontWeight: 'bold',
+//     marginBottom: 30,
+//     color: theme.colors.primary[500],
+//   },
+//   inputContainer: {
+//     width: '80%',
+//     marginBottom: 20,
+//   },
+//   input: {
+//     height: 50,
+//     borderColor: theme.colors.primary[500],
+//     borderWidth: 1,
+//     borderRadius: 25,
+//     paddingHorizontal: 20,
+//     marginBottom: 20,
+//     fontSize: 16,
+//   },
+//   resetButton: {
+//     width: '80%',
+//     backgroundColor: theme.colors.primary[500],
+//     padding: 15,
+//     borderRadius: 25,
+//     alignItems: 'center',
+//   },
+//   buttonText: {
+//     color: 'white',
+//     fontSize: 18,
+//     fontWeight: 'bold',
+//   },
+//   errorText: {
+//     color: 'red',
+//     marginTop: 5,
+//   },
+// });

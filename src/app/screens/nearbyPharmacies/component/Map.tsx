@@ -1,7 +1,8 @@
 import React from 'react';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Ipharmacies } from '../slice/types';
+import { Flex } from '../../../components/Basic';
 
 interface IMapProps {
   pharmacies: Ipharmacies[];
@@ -21,24 +22,27 @@ interface IMapProps {
 }
 
 export default function Map({ pharmacies, region, userLocation, setRegion }: IMapProps) {
+  console.log(userLocation, 'userLocation');
   return (
-    <View style={{ flex: 1 }}>
+    <Flex flex={1}>
       <MapView style={styles.map} region={region}>
-        <Marker
-          coordinate={{
-            latitude: Number(userLocation[0]),
-            longitude: Number(userLocation[1]),
-          }}
-          title="You are here"
-          onPress={() => {
-            setRegion({
+        {/* {userLocation.length > 0 && (
+          <Marker
+            coordinate={{
               latitude: Number(userLocation[0]),
               longitude: Number(userLocation[1]),
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
-            });
-          }}
-        />
+            }}
+            title="You are here"
+            onPress={() => {
+              setRegion({
+                latitude: Number(userLocation[0]),
+                longitude: Number(userLocation[1]),
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+              });
+            }}
+          />
+        )} */}
         {pharmacies.map((pharmacy) => (
           <Marker
             key={pharmacy._id}
@@ -50,7 +54,7 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
           />
         ))}
       </MapView>
-    </View>
+    </Flex>
   );
 }
 

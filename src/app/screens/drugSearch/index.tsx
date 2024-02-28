@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, TouchableOpacity, Dimensions, StyleSheet, ActivityIndicator } from 'react-native';
+import { Dimensions, ActivityIndicator } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import FilterBar from './component/FilterBar';
 import SearchBar from './component/SearchBar';
@@ -11,6 +11,8 @@ import { useDrugSearchScreenSlice } from './slice';
 import * as select from './slice/selector';
 import useCurrentLocation from '../../../utils/hooks/useCurrentLocation';
 import { HomeStackScreenProps } from '../../../navigation/types';
+import { Flex, Button } from '../../components/Basic';
+
 function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
   const { name } = route.params || '';
   const currentLocation = useCurrentLocation() || '8.220573, 37.798139';
@@ -504,21 +506,22 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
   }, [actions, dispatch, location, pharmacy]);
 
   return (
-    <View style={styles.container}>
+    <Flex flex={1} backgroundColor={'#fff'} p={16}>
       <Header showRightIcon={true} />
       <SearchBar drugName={drugName} setDrugName={setDrugName} handelKeyPress={handleKeyPress} />
-      <View style={styles.filter}>
-        <TouchableOpacity
+      <Flex alignSelf={'flex-end'} marginRight={20} mt={10}>
+        <Button
           onPress={showFilterBar ? handleFilterCloseClick : handleFilterIconClick}
-          style={styles.icon}
+          backgroundColor={theme.shadows.sm}
+          borderRadius={10}
         >
           <MaterialIcons
             name={showFilterBar ? 'close' : 'filter-list'}
             size={30}
             color={theme.colors.primary[700]}
           />
-        </TouchableOpacity>
-      </View>
+        </Button>
+      </Flex>
       {showFilterBar && (
         <FilterBar
           location={location}
@@ -532,49 +535,49 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
           handleApplyFilter={handeleApplyFilter}
         />
       )}
-      <View style={styles.header}></View>
+      <Flex mt={10} width={Dimensions.get('window').width - 50} alignSelf={'flex-start'}></Flex>
       <DrugLists data={serarchResult?.data} />
       {isSearching && (
-        <View style={styles.loader}>
+        <Flex position={'absolute'} top={'50%'} left={'50%'}>
           <ActivityIndicator size="large" color={theme.colors.primary[500]} />
-        </View>
+        </Flex>
       )}
-    </View>
+    </Flex>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 16,
-  },
-  filter: {
-    alignSelf: 'flex-end',
-    marginRight: 20,
-    marginTop: 10,
-  },
-  icon: {
-    backgroundColor: theme.shadows.sm,
-    borderRadius: 10,
-  },
-  header: {
-    marginTop: 10,
-    width: Dimensions.get('window').width - 50,
-    aliginSelf: 'flex-start',
-  },
-  headerText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    padding: 10,
-    marginLeft: 5,
-    color: theme.colors.primary[900],
-  },
-  loader: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     padding: 16,
+//   },
+//   filter: {
+//     alignSelf: 'flex-end',
+//     marginRight: 20,
+//     marginTop: 10,
+//   },
+//   icon: {
+//     backgroundColor: theme.shadows.sm,
+//     borderRadius: 10,
+//   },
+//   header: {
+//     marginTop: 10,
+//     width: Dimensions.get('window').width - 50,
+//     aliginSelf: 'flex-start',
+//   },
+//   headerText: {
+//     fontSize: 20,
+//     fontWeight: 'bold',
+//     padding: 10,
+//     marginLeft: 5,
+//     color: theme.colors.primary[900],
+//   },
+//   loader: {
+//     position: 'absolute',
+//     top: '50%',
+//     left: '50%',
+//   },
+// });
 
 export default DrugSearch;

@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNearbyPharmacySlice } from './slice';
 import * as select from './slice/selector';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { StyleSheet, ActivityIndicator } from 'react-native';
 import PharmacyList from './component/PharmacyList';
 import useCurrentLocation from '../../../utils/hooks/useCurrentLocation';
 import { theme } from '../../../utils/theme/theme';
+import { Flex, Text } from '../../components/Basic';
 
 function Home() {
   const location = useCurrentLocation() || '8.220573, 37.798139';
@@ -33,49 +34,51 @@ function Home() {
   }, [dispatch, actions, location, Location]);
 
   return (
-    <View style={styles.container}>
+    <Flex flex={1} backgroundColor="#fff">
       {isLoaded && (
         <>
-          <View style={styles.mapContainer}>
+          <Flex marginBottom={260}>
             <Map
               pharmacies={data.data}
               region={region}
               userLocation={coord}
               setRegion={setRegion}
             />
-          </View>
-          <View style={styles.pharmacies}>
-            <Text style={styles.header}>Nearby Pharmacies</Text>
+          </Flex>
+          <Flex flex={1} backgroundColor="#fff">
+            <Text fontSize={20} fontWeight="bold" margin={16} padding={10}>
+              Nearby Pharmacies
+            </Text>
             <PharmacyList pharmacies={data.data} setRegion={setRegion} />
-          </View>
+          </Flex>
         </>
       )}
       {isLoading && (
         <ActivityIndicator size="large" color={theme.colors.primary[500]} style={styles.loader} />
       )}
-    </View>
+    </Flex>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: '#fff',
+  // },
 
-  mapContainer: {
-    marginBottom: 260,
-  },
-  pharmacies: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    margin: 16,
-    padding: 10,
-  },
+  // mapContainer: {
+  //   marginBottom: 260,
+  // },
+  // pharmacies: {
+  //   flex: 1,
+  //   backgroundColor: '#fff',
+  // },
+  // header: {
+  //   fontSize: 20,
+  //   fontWeight: 'bold',
+  //   margin: 16,
+  //   padding: 10,
+  // },
   loader: {
     position: 'absolute',
     top: '50%',

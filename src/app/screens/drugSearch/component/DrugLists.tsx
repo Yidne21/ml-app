@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import DrugItemCard from './DrugItemCard';
 import { Idrug } from '../slice/types';
+import { Flex } from '../../../components/Basic';
 
 function DrugLists({ data }: { data?: Idrug[] }) {
   return (
-    <View style={styles.container}>
+    <Flex alignItems={'center'} backgroundColor={'#fff'}>
       <FlatList
         data={data}
         renderItem={({ item }) => <DrugItemCard drug={item} />}
@@ -13,16 +14,8 @@ function DrugLists({ data }: { data?: Idrug[] }) {
         numColumns={2}
         showsVerticalScrollIndicator={false}
       />
-    </View>
+    </Flex>
   );
 }
 
 export default DrugLists;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#fff',
-  },
-});
