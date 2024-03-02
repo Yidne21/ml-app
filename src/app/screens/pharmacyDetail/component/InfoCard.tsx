@@ -10,7 +10,7 @@ interface IPharmacyInfoProps {
 }
 function InfoCard({ pharmacyInfo }: IPharmacyInfoProps) {
   const renderIconRow = (iconName: string, iconSize: number, text: string) => (
-    <Flex flexDirection="row" alignItems="center" my={5} padding={3} gap={10}>
+    <Flex flexDirection="row" alignItems="center" my={'5px'} padding={'3px'} gap={10}>
       <FontAwesome name={iconName} size={iconSize} color="green" width={24} />
       <Text>{text}</Text>
     </Flex>
@@ -23,17 +23,15 @@ function InfoCard({ pharmacyInfo }: IPharmacyInfoProps) {
       height={220}
       width={Dimensions.get('window').width - 40}
       top={Dimensions.get('window').height / 4 - 80}
-      padding={20}
+      padding={'25px'}
       borderRadius={20}
-      mx={20}
-      // shadowColor="#000"
-      // shadowOffset={{ width: 0, height: 2 }}
-      // shadowOpacity={0.15}
-      // shadowRadius={2}
-      // elevation={1}
+      mx={'20px'}
+      boxShadow="0 2px 4px rgba(0, 0, 0, 0.15)"
+      borderColor={'#ccc'}
+      borderWidth={1}
     >
       <Flex position="absolute" top={10} left={20}>
-        <Text fontSize={18} fontWeight="bold" marginTop={10}>
+        <Text fontSize={18} fontWeight="bold" marginTop={'10px'}>
           {pharmacyInfo.name}
         </Text>
         {renderIconRow('phone-square', 20, pharmacyInfo.phoneNumber)}
@@ -111,72 +109,3 @@ const getSocialMediaIcon = (platform: string) => {
 };
 
 export default InfoCard;
-
-// const styles = StyleSheet.create({
-//   socialMediaButtons: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     position: 'absolute',
-//     bottom: 10,
-//     right: 20,
-//   },
-//   averageRating: {
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//   },
-//   name: {
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//     marginTop: 10,
-//   },
-//   socialMediaButton: {
-//     padding: 10,
-//     borderRadius: 5,
-//     marginHorizontal: 5,
-//     width: 35,
-//     height: 35,
-//     alignItems: 'center',
-//   },
-//   infoContainer: {
-//     position: 'absolute',
-//     backgroundColor: 'white',
-//     height: 220,
-//     width: Dimensions.get('window').width - 40,
-//     top: Dimensions.get('window').height / 4 - 80,
-//     padding: 20,
-//     borderRadius: 20,
-//     marginHorizontal: 20,
-//     shadowColor: '#000',
-//     shadowOffset: { width: 0, height: 2 },
-//     shadowOpacity: 0.15,
-//     shadowRadius: 2,
-//     elevation: 1,
-//   },
-
-//   nameSection: {
-//     position: 'absolute',
-//     top: 10,
-//     left: 20,
-//   },
-//   ratingSection: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     gap: 10,
-//     position: 'absolute',
-//     left: 20,
-//     bottom: 15,
-//   },
-
-//   iconContainer: {
-//     flexDirection: 'row',
-//     alignItems: 'center',
-//     marginVertical: 5,
-//     padding: 3,
-//     gap: 10, // Adjust spacing between icon rows
-//   },
-//   icon: {
-//     width: 24,
-//   },
-// });
-
-// export default InfoCard;
