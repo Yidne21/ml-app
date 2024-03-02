@@ -1,8 +1,8 @@
 // screens/SuccessScreen.js
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { theme } from '../../utils/theme/theme';
 import { RootStackScreenProps } from '../../navigation/types';
+import { Text, Image, Button, Flex } from '../components/Basic';
 
 function SuccessScreen({ navigation, route }: RootStackScreenProps<'SuccessScreen'>) {
   const { title, message } = route.params;
@@ -14,55 +14,35 @@ function SuccessScreen({ navigation, route }: RootStackScreenProps<'SuccessScree
   };
 
   return (
-    <View style={styles.container}>
-      <Image source={require('../../assets/images/success.png')} style={styles.successImage} />
+    <Flex
+      flex={1}
+      justifyContent={'center'}
+      alignItems={'center'}
+      backgroundColor={theme.colors.white}
+    >
+      <Image source={require('../../assets/images/success.png')} width={150} height={150} mb={20} />
 
-      <Text style={styles.title}>{title}</Text>
+      <Text fontSize={24} fontWeight={'bold'} mb={'10px'} color={theme.colors.white}>
+        {title}
+      </Text>
 
-      <Text style={styles.message}>{message}</Text>
+      <Text fontSize={16} textAlign={'center'} mb={20} color={theme.color.text}>
+        {message}
+      </Text>
 
-      <TouchableOpacity style={styles.continueButton} onPress={handleContinue}>
-        <Text style={styles.buttonText}>Continue</Text>
-      </TouchableOpacity>
-    </View>
+      <Button
+        backgroundColor={theme.colors.primary[500]}
+        p={15}
+        borderRadius={25}
+        alignItems={'center'}
+        onPress={handleContinue}
+      >
+        <Text color={'#fff'} fontSize={16} fontWeight={'bold'}>
+          Continue
+        </Text>
+      </Button>
+    </Flex>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: theme.colors.white,
-  },
-  successImage: {
-    width: 150,
-    height: 150,
-    marginBottom: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: theme.colors.primary[500],
-  },
-  message: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
-    color: theme.colors.text,
-  },
-  continueButton: {
-    backgroundColor: theme.colors.primary[500],
-    padding: 15,
-    borderRadius: 25,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
 
 export default SuccessScreen;

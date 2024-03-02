@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ActivityIndicator,
-  StyleSheet,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView } from 'react-native';
 import { theme } from '../../../utils/theme/theme';
 import { RootStackScreenProps } from '../../../navigation/types';
 import Header from '../../components/Custom/Header';
@@ -17,6 +9,7 @@ import { useVerifyOtpScreenSlice } from './slice';
 import Toast from 'react-native-root-toast';
 import { useForgotPasswordScreenSlice } from '../ForgetPassword/slice';
 import * as forgotPasswordSelect from '../ForgetPassword/slice/selector';
+import { Flex, Text, TextInput, Button } from '../../components/Basic';
 
 function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
   const [verificationCode, setVerificationCode] = useState('');
@@ -93,19 +86,38 @@ function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.rootContainer} behavior="padding">
+    <KeyboardAvoidingView
+      style={{
+        flex: 1,
+        padding: 16,
+      }}
+      behavior="padding"
+    >
       <Header showRightIcon={false} />
-      <View style={styles.container}>
-        <Text style={styles.title}>Enter The Verify Code</Text>
-        <Text style={styles.description}>
+      <Flex
+        flex={1}
+        justifyContent="center"
+        alignItems="center"
+        backgroundColor={theme.colors.background}
+      >
+        <Text fontSize={24} fontWeight="bold" marginBottom={10} color={theme.colors.primary[600]}>
+          Enter The Verify Code
+        </Text>
+        <Text fontSize={16} textAlign="center" marginBottom={20} color={theme.colors.text}>
           We just sent you a 6-digit verification code via the{'\n'} {phoneNumber}
         </Text>
 
-        <View style={styles.codeInputContainer}>
+        <Flex flexDirection="row" justifyContent="center" marginBottom={20}>
           {[1, 2, 3, 4, 5, 6].map((index) => (
             <TextInput
               key={index}
-              style={styles.codeInput}
+              height={50}
+              width={40}
+              borderColor={theme.colors.primary[500]} // Assuming `theme.colors.primary[500]` is a color variable
+              borderBottomWidth={1}
+              my={5}
+              textAlign="center"
+              fontSize={24}
               keyboardType="numeric"
               maxLength={1}
               value={verificationCode[index - 1]}
@@ -118,104 +130,58 @@ function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
               }}
             />
           ))}
-        </View>
+        </Flex>
 
         {isVerifying && (
-          <ActivityIndicator size="large" color={theme.colors.primary[500]} style={styles.loader} />
+          <ActivityIndicator
+            size="large"
+            color={theme.colors.primary[500]}
+            style={{
+              marginTop: 20,
+              marginBottom: 20,
+            }}
+          />
         )}
 
-        <TouchableOpacity
-          style={styles.submitButton}
+        <Button
+          width="80%"
+          backgroundColor={theme.colors.primary[500]}
+          padding={15}
+          borderRadius={25}
+          alignItems="center"
+          marginTop={20}
+          marginBottom={20}
           onPress={handleSubmitCode}
           disabled={isVerifying || !verificationCode}
         >
-          <Text style={styles.buttonText}>Submit Code</Text>
-        </TouchableOpacity>
+          <Text color={'#fff'} fontSize={18} fontWeight={'bold'}>
+            Submit Code
+          </Text>
+        </Button>
 
-        <Text style={styles.countdownText}>
+        <Text fontSize={14} color={theme.colors.text} mb={10}>
           The verification code will expire in {countdown} sec
         </Text>
 
         {isResendingOtp && (
-          <ActivityIndicator size="small" color={theme.colors.primary[500]} style={styles.loader} />
+          <ActivityIndicator
+            size="small"
+            color={theme.colors.primary[500]}
+            style={{
+              marginTop: 20,
+              marginBottom: 20,
+            }}
+          />
         )}
 
-        <TouchableOpacity style={styles.resendButton} onPress={handleResendCode}>
-          <Text style={styles.resendButtonText}>Resend Code</Text>
-        </TouchableOpacity>
-      </View>
+        <Button alignSelf={'center'} mb={'20px'} onPress={handleResendCode}>
+          <Text color={theme.colors.primary[500]} fontSize={16}>
+            Resend Code
+          </Text>
+        </Button>
+      </Flex>
     </KeyboardAvoidingView>
   );
 }
 
 export default VerifyOtp;
-
-const styles = StyleSheet.create({
-  rootContainer: {
-    flex: 1,
-    padding: 16,
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: theme.colors.background,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: theme.colors.primary[600],
-  },
-  description: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
-    color: theme.colors.text,
-  },
-  codeInputContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginBottom: 20,
-  },
-  loader: {
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  codeInput: {
-    height: 50,
-    width: 40,
-    borderColor: theme.colors.primary[500],
-    borderBottomWidth: 1,
-    marginHorizontal: 5,
-    textAlign: 'center',
-    fontSize: 24,
-  },
-  submitButton: {
-    width: '80%',
-    backgroundColor: theme.colors.primary[500],
-    padding: 15,
-    borderRadius: 25,
-    alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 20,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  countdownText: {
-    fontSize: 14,
-    color: theme.colors.text,
-    marginBottom: 10,
-  },
-  resendButton: {
-    alignSelf: 'center',
-    marginBottom: 20,
-  },
-  resendButtonText: {
-    color: theme.colors.primary[500],
-    fontSize: 16,
-  },
-});

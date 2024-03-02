@@ -12,6 +12,6 @@ import {
 } from 'styled-system';
 import { BoxProps } from './types';
 
-export const Container = styled.View<BoxProps>`
+export const Box = styled.View<BoxProps>`
   ${compose(color, layout, space, typography, variant, border, zIndex, position)};
 `;

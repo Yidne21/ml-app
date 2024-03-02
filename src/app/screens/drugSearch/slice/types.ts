@@ -16,7 +16,7 @@ export interface IgetDrugSearchPayload {
 export interface IdrugSearchResult {
   totalDocuments: number;
   totalPages: number;
-  drugs: Idrug[];
+  data: Idrug[];
 }
 
 export interface Idrug {
@@ -27,7 +27,7 @@ export interface Idrug {
   expiredDate: string;
   pharmacy: {
     _id: string;
-    location: number[];
+    location: { coordinates: number[]; type: string };
     name: string;
     distance: number;
   };
