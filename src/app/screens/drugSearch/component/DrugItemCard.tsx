@@ -19,7 +19,7 @@ function DrugItemCard({ drug }: { drug: Idrug }) {
   return (
     <Pressable onPress={handleDrugCardPress}>
       <Flex
-        m={10}
+        m={'10px'}
         borderRadius={10}
         width={Dimensions.get('window').width / 2 - 40}
         alignItems={'center'}
@@ -41,30 +41,38 @@ function DrugItemCard({ drug }: { drug: Idrug }) {
             width={100}
             height={100}
             borderRadius={10}
-            mb={10}
+            mb={'10px'}
             resizeMode="contain"
           />
         </Flex>
         <Flex
-          alignItems={'center'}
+          alignItems={'left'}
           width={Dimensions.get('window').width / 2 - 50}
           height={Dimensions.get('window').width / 3.8}
+          p={'5px'}
+          gap={5}
         >
-          <Text fontWeight={'bold'} fontSize={14}>
+          <Text fontWeight={'bold'} fontSize={14} numberOfLines={1} ellipsizeMode="tail">
             {drug.name}
           </Text>
-          <Flex justifyContent={'center'} ml={2}>
-            <Flex flexDirection={'row'} alignItems={'center'} gap={10}>
+          <Flex justifyContent={'center'} mr={'13px'}>
+            <Flex flexDirection={'row'} alignItems={'center'} gap={5}>
               <MaterialIcons name="local-pharmacy" size={24} color={theme.colors.primary[900]} />
-              <Text fontSize={10}>{drug.pharmacy.name}</Text>
+              <Text fontSize={12} numberOfLines={1} ellipsizeMode="tail">
+                {drug.pharmacy.name}{' '}
+              </Text>
             </Flex>
-            <Flex flexDirection={'row'} alignItems={'center'} gap={10}>
+            <Flex flexDirection={'row'} alignItems={'center'} gap={5}>
               <MaterialIcons name="location-pin" size={24} color={theme.colors.primary[900]} />
-              <Text fontSize={10}>{drug.pharmacy.distance} km away</Text>
+              <Text fontSize={12} numberOfLines={1} ellipsizeMode="tail">
+                {drug.pharmacy.distance} km away
+              </Text>
             </Flex>
-            <Flex flexDirection={'row'} alignItems={'center'} gap={10}>
+            <Flex flexDirection={'row'} alignItems={'center'} gap={5}>
               <MaterialIcons name="money" size={24} color={theme.colors.primary[900]} />
-              <Text fontSize={10}>{drug.price.toFixed(2)} Birr</Text>
+              <Text fontSize={13} fontWeight={'bold'}>
+                {drug.price.toFixed(2)} Birr
+              </Text>
             </Flex>
           </Flex>
         </Flex>

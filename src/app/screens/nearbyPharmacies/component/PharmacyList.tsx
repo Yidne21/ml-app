@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList } from 'react-native';
 import { Ipharmacies } from '../slice/types';
 import PharmacyCard from './PharmacyCard';
 import { Flex } from '../../../components/Basic';
@@ -20,17 +20,11 @@ function PharmacyList({ pharmacies, setRegion }: IPharmacyListProps) {
       <FlatList
         data={pharmacies}
         renderItem={({ item }) => <PharmacyCard pharmacy={item} setRegion={setRegion} />}
-        style={styles.flatList}
+        style={{ paddingHorizontal: 10 }}
         showsVerticalScrollIndicator={false}
       />
     </Flex>
   );
 }
-
-const styles = StyleSheet.create({
-  flatList: {
-    paddingHorizontal: 10,
-  },
-});
 
 export default PharmacyList;

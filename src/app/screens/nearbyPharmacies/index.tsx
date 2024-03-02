@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNearbyPharmacySlice } from './slice';
 import * as select from './slice/selector';
-import { StyleSheet, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import PharmacyList from './component/PharmacyList';
 import useCurrentLocation from '../../../utils/hooks/useCurrentLocation';
 import { theme } from '../../../utils/theme/theme';
@@ -54,18 +54,18 @@ function Home() {
         </>
       )}
       {isLoading && (
-        <ActivityIndicator size="large" color={theme.colors.primary[500]} style={styles.loader} />
+        <ActivityIndicator
+          size="large"
+          color={theme.colors.primary[500]}
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+          }}
+        />
       )}
     </Flex>
   );
 }
-
-const styles = StyleSheet.create({
-  loader: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-  },
-});
 
 export default Home;

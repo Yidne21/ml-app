@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, Alert, ActivityIndicator } from 'react-native';
+import { Alert, ActivityIndicator, Dimensions } from 'react-native';
 import { ProfileStackScreenProps } from '../../../navigation/types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as select from './slice/selector';
 import { useUserProfileUpdateScreenSlice } from './slice';
 import { imagePicker } from '../../../utils/helpers';
 import UpdateForm from './component/UpdateForm';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { MaterialIcons } from '@expo/vector-icons';
 import { theme } from '../../../utils/theme/theme';
 import { uploadImage } from '../../../utils/helpers';
 import Header from '../../components/Custom/Header';
 import useStoredUserData from '../../../utils/hooks/useStoreUserData';
+import { Flex, Box, Text, Image, Button } from '../../components/Basic';
 
 function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
   const { actions } = useUserProfileUpdateScreenSlice();
@@ -91,38 +91,64 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
   };
 
   return (
-    <View style={styles.rootContainer}>
-      <View style={styles.IconContainer}>
+    <Flex flex={1} backgroundColor={'#fff'}>
+      <Flex position="absolute" width="100%" padding={16} zIndex={1} justifyContent="space-between">
         <Header showRightIcon={true} />
-      </View>
-      <View style={styles.container}>
-        <View style={styles.coverBox}>
+      </Flex>
+      <Box alignItems={'center'}>
+        <Box width={'100%'} height={200}>
           <Image
             source={{
               uri:
                 coverPhotoUri ||
                 'https://fakeimg.pl/400x200/bdbdbd/ffffff?text=Cover+Photo&font=noto',
             }}
-            style={styles.coverPhoto}
+            width={Dimensions.get('window').width}
+            height={200}
           />
-          <TouchableOpacity onPress={handlePickCoverPhoto} style={styles.coverCameraBtn}>
+          <Button
+            onPress={handlePickCoverPhoto}
+            width={64}
+            ml="auto"
+            mt={-35}
+            borderRadius={100}
+            padding={10}
+            backgroundColor={theme.shadows.sm}
+          >
             <MaterialIcons name="camera-alt" size={44} color={theme.colors.primary[700]} />
-          </TouchableOpacity>
-        </View>
+          </Button>
+        </Box>
 
-        <View style={styles.avatarBox}>
+        <Box>
           <Image
             source={{
               uri: avatarUri || 'https://fakeimg.pl/150x150/bdbdbd/ffffff?text=avatar&font=noto',
             }}
-            style={styles.avatar}
+            width={150}
+            height={150}
+            borderRadius={100}
+            mt={-75}
+            borderWidth={3}
+            borderColor="#fff"
+            pt={10}
           />
-          <TouchableOpacity onPress={handlePickAvatarPhoto} style={styles.avatarCameraBtn}>
+          <Button
+            onPress={handlePickAvatarPhoto}
+            width={54}
+            borderRadius={100}
+            ml="auto"
+            mt={-35}
+            padding={10}
+            zIndex={1}
+            backgroundColor={theme.shadows.sm}
+          >
             <MaterialIcons name="camera-alt" size={34} color={theme.colors.primary[700]} />
-          </TouchableOpacity>
-        </View>
+          </Button>
+        </Box>
 
-        <Text style={styles.name}>{user.name}</Text>
+        <Text fontSize={24} fontWeight={'bold'} m={10}>
+          {user.name}
+        </Text>
 
         <UpdateForm
           editedEmail={editedEmail}
@@ -134,87 +160,31 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
         />
 
         {isUpdating && (
-          <ActivityIndicator size="large" color={theme.colors.primary[500]} style={styles.loader} />
+          <ActivityIndicator
+            size="large"
+            color={theme.colors.primary[500]}
+            style={{
+              marginTop: 20,
+            }}
+          />
         )}
 
-        <TouchableOpacity style={styles.button} onPress={handleSaveChanges}>
-          <Text style={styles.buttonText}>Save Changes</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+        <Button
+          width="80%"
+          backgroundColor={theme.colors.primary[500]}
+          padding={15}
+          borderRadius={25}
+          alignItems="center"
+          onPress={handleSaveChanges}
+          mt={10}
+        >
+          <Text color={'#fff'} fontSize={20}>
+            Save Changes
+          </Text>
+        </Button>
+      </Box>
+    </Flex>
   );
 }
 
 export default UpdateProfile;
-
-const styles = StyleSheet.create({
-  rootContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  container: {
-    alignItems: 'center',
-  },
-  IconContainer: {
-    position: 'absolute',
-    width: '100%',
-    padding: 16,
-    zIndex: 1,
-    justifyContent: 'space-between',
-  },
-  loader: {
-    marginTop: 20,
-  },
-  coverBox: {
-    width: '100%',
-    height: 200,
-  },
-  coverPhoto: {
-    width: '100%',
-    height: 200,
-  },
-  avatarBox: {},
-  avatarCameraBtn: {
-    width: 54,
-    borderRadius: 100,
-    marginLeft: 'auto',
-    marginTop: -35,
-    padding: 10,
-    zIndex: 1,
-    backgroundColor: theme.shadows.sm,
-  },
-  coverCameraBtn: {
-    width: 64,
-    marginLeft: 'auto',
-    marginTop: -35,
-    borderRadius: 100,
-    padding: 10,
-    backgroundColor: theme.shadows.sm,
-  },
-  avatar: {
-    width: 150,
-    height: 150,
-    borderRadius: 100,
-    marginTop: -75, // to overlap with the cover photo
-    borderWidth: 3,
-    borderColor: '#fff', // add a border to the avatar
-    paddingTop: 10,
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    margin: 10,
-  },
-  button: {
-    width: '80%',
-    backgroundColor: theme.colors.primary[500],
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-});

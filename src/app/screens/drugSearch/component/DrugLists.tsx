@@ -6,7 +6,7 @@ import { Flex } from '../../../components/Basic';
 
 function DrugLists({ data }: { data?: Idrug[] }) {
   return (
-    <Flex alignItems={'center'} backgroundColor={'#fff'}>
+    <Flex flex={1} alignItems={'center'} backgroundColor={'#fff'}>
       <FlatList
         data={data}
         renderItem={({ item }) => <DrugItemCard drug={item} />}

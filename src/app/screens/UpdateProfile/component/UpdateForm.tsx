@@ -62,22 +62,3 @@ const UpdateForm: React.FC<UpdateFormProps> = ({
 };
 
 export default UpdateForm;
-
-// const styles = StyleSheet.create({
-//   editForm: {
-//     width: '80%',
-//     marginBottom: 10,
-//     marginTop: 20,
-//   },
-//   input: {
-//     height: 50,
-//     borderColor: theme.colors.primary[500], // Use your primary color
-//     borderWidth: 1,
-//     borderRadius: 25,
-//     paddingHorizontal: 20,
-//     marginBottom: 10,
-//     fontSize: 16,
-//   },
-// });
-
-// export default UpdateForm;

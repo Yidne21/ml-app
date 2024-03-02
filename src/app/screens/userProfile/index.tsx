@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import * as select from './slice/selector';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import UserBasicInfo from './component/UserBasicInfo';
 import UserDetailInfo from './component/UserDetailInfo';
 import Buttons from './component/Buttons';
@@ -13,6 +13,7 @@ import Header from '../../components/Custom/Header';
 import { removeSingleData } from '../../../utils/configs/asyncStorage';
 import useStoredUserData from '../../../utils/hooks/useStoreUserData';
 import { getData } from '../../../utils/configs/asyncStorage';
+import { Box, Flex } from '../../components/Basic';
 
 function UserProfile({ navigation }: ProfileStackScreenProps<'Profile'>) {
   const rootNavigation = useNavigation();
@@ -50,42 +51,29 @@ function UserProfile({ navigation }: ProfileStackScreenProps<'Profile'>) {
   };
 
   return (
-    <View style={styles.rootContainer}>
+    <Flex flex={1} backgroundColor={'#fff'}>
       {isLoading ? (
         <ActivityIndicator size="large" color={theme.colors.primary[500]} />
       ) : (
         <>
-          <View style={styles.IconContainer}>
+          <Box
+            position="absolute"
+            width="100%"
+            padding={16}
+            zIndex={1}
+            justifyContent="space-between"
+          >
             <Header showRightIcon={true} />
-          </View>
-          <View style={styles.container}>
+          </Box>
+          <Flex flex={1} alignItems={'center'} height={'100%'}>
             <UserBasicInfo coverPhotoUri={coverPhotoUri} avatarUri={avatarUri} name={user.name} />
             <UserDetailInfo user={user} />
             <Buttons onEditProfile={handleEditProfile} onLogout={handleLogout} />
-          </View>
+          </Flex>
         </>
       )}
-    </View>
+    </Flex>
   );
 }
 
 export default UserProfile;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    height: '100%',
-  },
-  rootContainer: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  IconContainer: {
-    position: 'absolute',
-    width: '100%',
-    padding: 16,
-    zIndex: 1,
-    justifyContent: 'space-between',
-  },
-});

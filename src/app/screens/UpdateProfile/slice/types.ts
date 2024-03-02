@@ -16,3 +16,16 @@ export interface IupdateUserProfilePayload {
     newPassword?: string;
   };
 }
+
+export interface IUser {
+  _id: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  avatar: string;
+  coverPhoto: string;
+  address: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}

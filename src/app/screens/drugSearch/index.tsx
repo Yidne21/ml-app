@@ -546,38 +546,4 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
   );
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     padding: 16,
-//   },
-//   filter: {
-//     alignSelf: 'flex-end',
-//     marginRight: 20,
-//     marginTop: 10,
-//   },
-//   icon: {
-//     backgroundColor: theme.shadows.sm,
-//     borderRadius: 10,
-//   },
-//   header: {
-//     marginTop: 10,
-//     width: Dimensions.get('window').width - 50,
-//     aliginSelf: 'flex-start',
-//   },
-//   headerText: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     padding: 10,
-//     marginLeft: 5,
-//     color: theme.colors.primary[900],
-//   },
-//   loader: {
-//     position: 'absolute',
-//     top: '50%',
-//     left: '50%',
-//   },
-// });
-
 export default DrugSearch;

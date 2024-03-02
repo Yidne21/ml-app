@@ -13,11 +13,3 @@ function Cart() {
 }
 
 export default Cart;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     padding: 16,
-//     flex: 1,
-//     backgroundColor: '#fff',
-//   },
-// });

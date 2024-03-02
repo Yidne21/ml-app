@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 import { theme } from '../../../../utils/theme/theme';
 import { Flex, TextInput } from '../../../components/Basic';
@@ -12,8 +12,28 @@ interface SearchBarProps {
 
 function SearchBar({ drugName, setDrugName, handelKeyPress }: SearchBarProps) {
   return (
-    <Flex position={'relative'} mt={10}>
-      <EvilIcons name="search" size={24} color="black" style={styles.icon} />
+    <Flex
+      position={'relative'}
+      m={'5px'}
+      boxShadow="0 2px 4px rgba(0, 0, 0, 0.15)"
+      borderColor={'#ccc'}
+      borderWidth={1}
+      borderRadius={25}
+      px={'10px'}
+      mx={'10px'}
+    >
+      <EvilIcons
+        name="search"
+        size={24}
+        color="black"
+        style={{
+          position: 'absolute',
+          top: 15,
+          left: 15,
+          zIndex: 1,
+          color: 'gray',
+        }}
+      />
       <TextInput
         value={drugName}
         placeholder="Search Medicine or HealthCare products"
@@ -31,13 +51,3 @@ function SearchBar({ drugName, setDrugName, handelKeyPress }: SearchBarProps) {
 }
 
 export default SearchBar;
-
-const styles = StyleSheet.create({
-  icon: {
-    position: 'absolute',
-    top: 15,
-    left: 15,
-    zIndex: 1,
-    color: 'gray',
-  },
-});

@@ -40,16 +40,16 @@ function ForgetPassword({ navigation, route }: RootStackScreenProps<'ForgotPassw
           width={120}
           height={120}
           mb={20}
-          blurRadius={60}
+          borderRadius={60}
         />
-        <Text fontSize={24} fontWeight={'bold'} mb={10} color={theme.colors.primary[600]}>
+        <Text fontSize={24} fontWeight={'bold'} mb={'10px'} color={theme.colors.primary[600]}>
           Medicin Locator
         </Text>
-        <Text fontSize={16} textAlign={'center'} mb={30} color={theme.colors.text}>
+        <Text fontSize={16} textAlign={'center'} mb={'30px'} color={theme.colors.text}>
           Please enter your phone number{'\n'} to reset your password.
         </Text>
 
-        <Flex width={'80%'} mb={20}>
+        <Flex width={'80%'} mb={'20px'}>
           <TextInput
             placeholder="Phone Number"
             keyboardType="phone-pad"
@@ -91,62 +91,3 @@ function ForgetPassword({ navigation, route }: RootStackScreenProps<'ForgotPassw
 }
 
 export default ForgetPassword;
-
-// const styles = StyleSheet.create({
-//   rootContainer: {
-//     flex: 1,
-//     padding: 16,
-//   },
-//   loader: {
-//     marginTop: 20,
-//   },
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: theme.colors.background,
-//   },
-//   appLogo: {
-//     width: 120,
-//     height: 120,
-//     marginBottom: 20,
-//     borderRadius: 60,
-//   },
-//   logoText: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     marginBottom: 10,
-//     color: theme.colors.primary[600],
-//   },
-//   descriptionText: {
-//     fontSize: 16,
-//     textAlign: 'center',
-//     marginBottom: 30,
-//     color: theme.colors.text,
-//   },
-//   inputContainer: {
-//     width: '80%',
-//     marginBottom: 20,
-//   },
-//   input: {
-//     height: 50,
-//     borderColor: theme.colors.primary[500],
-//     borderWidth: 1,
-//     borderRadius: 25,
-//     paddingHorizontal: 20,
-//     fontSize: 16,
-//   },
-//   continueButton: {
-//     width: '80%',
-//     backgroundColor: theme.colors.primary[500],
-//     padding: 15,
-//     borderRadius: 25,
-//     alignItems: 'center',
-//     marginTop: 20,
-//   },
-//   buttonText: {
-//     color: 'white',
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//   },
-// });

@@ -32,21 +32,3 @@ const Buttons: React.FC<ButtonsProps> = ({ isEditMode, onSaveChange, onLogout })
 };
 
 export default Buttons;
-
-// const styles = StyleSheet.create({
-//   buttons: {
-//     flex: 1,
-//     flexDirection: 'row',
-//     marginTop: 50,
-//     marginBottom: 20,
-//     gap: 20,
-//   },
-//   button: {
-//     padding: 10,
-//     borderRadius: 10,
-//     backgroundColor: theme.colors.primary[700],
-//   },
-//   buttonText: {
-//     color: '#fff',
-//   },
-// });

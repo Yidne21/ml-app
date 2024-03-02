@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { Ipharmacies } from '../slice/types';
 import { Flex } from '../../../components/Basic';
@@ -25,7 +25,13 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
   console.log(userLocation, 'userLocation');
   return (
     <Flex flex={1}>
-      <MapView style={styles.map} region={region}>
+      <MapView
+        style={{
+          width: Dimensions.get('window').width,
+          height: Dimensions.get('window').height / 3,
+        }}
+        region={region}
+      >
         {userLocation.length > 0 && (
           <Marker
             coordinate={{
@@ -57,10 +63,3 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
     </Flex>
   );
 }
-
-const styles = StyleSheet.create({
-  map: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height / 3,
-  },
-});
