@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { theme } from '../../../../utils/theme/theme';
 import { IUser } from '../slice/types';
+import { Box, Flex, Text } from '../../../components/Basic';
 
 interface UserDetailInfoProps {
   user: IUser;
@@ -11,75 +11,57 @@ interface UserDetailInfoProps {
 const UserDetailInfo: React.FC<UserDetailInfoProps> = ({ user }) => {
   return (
     <>
-      <View style={styles.userDetail}>
-        <Text style={styles.name}>
-          <Text style={styles.welcome}>Welcome Back </Text>
+      <Box
+        padding={'20px'}
+        margin={'20px'}
+        width="90%"
+        alignItems="center"
+        borderRadius={10}
+        backgroundColor={theme.shadows.sm}
+      >
+        <Text fontSize={24} fontWeight={'bold'} m={'10px'}>
+          <Text color={theme.colors.primary[900]}>Welcome Back </Text>
           {user.name}
         </Text>
-        <View>
+        <Box>
           {user.email && (
-            <View style={styles.flexBox}>
+            <Flex flexDirection={'row'} alignItems={'center'} gap={10}>
               <MaterialIcons
                 name="email"
                 size={24}
                 color={theme.colors.primary[300]}
-                style={styles.icon}
+                style={{
+                  margin: 5,
+                  padding: 4,
+                  borderRadius: 5,
+                  backgroundColor: theme.colors.transparent,
+                }}
               />
-              <Text style={styles.email}>{user.email}</Text>
-            </View>
+              <Text fontSize={16} mt={'5px'}>
+                {user.email}
+              </Text>
+            </Flex>
           )}
-          <View style={styles.flexBox}>
+          <Flex flexDirection={'row'} alignItems={'center'} gap={10}>
             <MaterialIcons
               name="phone"
               size={24}
               color={theme.colors.primary[300]}
-              style={styles.icon}
+              style={{
+                margin: 5,
+                padding: 4,
+                borderRadius: 5,
+                backgroundColor: theme.colors.transparent,
+              }}
             />
-            <Text style={styles.phoneNumber}>{user.phoneNumber}</Text>
-          </View>
-        </View>
-      </View>
+            <Text mt={'5px'} fontSize={16}>
+              {user.phoneNumber}
+            </Text>
+          </Flex>
+        </Box>
+      </Box>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  userDetail: {
-    padding: 20,
-    margin: 20,
-    width: '90%',
-    alignItems: 'center',
-    borderRadius: 10,
-    backgroundColor: theme.shadows.sm,
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    margin: 10,
-  },
-  email: {
-    fontSize: 16,
-    marginTop: 5,
-  },
-  phoneNumber: {
-    fontSize: 16,
-    marginTop: 5,
-  },
-  flexBox: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  icon: {
-    margin: 5,
-    padding: 4,
-    borderRadius: 5,
-    backgroundColor: theme.colors.transparent,
-  },
-  welcome: {
-    color: theme.colors.primary[700],
-    fontSize: 20,
-  },
-});
 
 export default UserDetailInfo;

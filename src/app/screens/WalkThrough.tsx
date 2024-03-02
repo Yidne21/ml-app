@@ -1,9 +1,10 @@
 // screens/WalkthroughScreen.js
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { theme } from '../../utils/theme/theme';
 import { RootStackScreenProps } from '../../navigation/types';
 import Header from '../components/Custom/Header';
+import { Flex, Text, Image, Button, Box } from '../components/Basic';
 
 const walkthroughData = [
   {
@@ -44,111 +45,75 @@ function WalkThroughScreen({ navigation }: RootStackScreenProps<'WalkThrough'>) 
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+        padding: 16,
+      }}
+    >
       <Header showRightIcon={false} />
-      <View style={styles.topContainer}>
-        <Image source={walkthroughData[activeStep].image} style={styles.image} />
-      </View>
+      <Flex alignItems={'center'} mt={'10px'}>
+        <Image
+          source={walkthroughData[activeStep].image}
+          width={300}
+          height={300}
+          resizeMode={'cover'}
+          borderRadius={100}
+          marginBottom={40}
+        />
+      </Flex>
 
-      <View style={styles.bottomContainer}>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{walkthroughData[activeStep].title}</Text>
-          <Text style={styles.description}>{walkthroughData[activeStep].description}</Text>
-        </View>
+      <Flex flex={1} justifyContent={'space-between'}>
+        <Box py={'20px'} alignItems={'center'} mb={'40px'}>
+          <Text fontSize={'24px'} fontWeight={'bold'} mb={'10px'} color={theme.colors.primary[500]}>
+            {walkthroughData[activeStep].title}
+          </Text>
+          <Text fontSize={16} textAlign={'center'} color={theme.colors.text}>
+            {walkthroughData[activeStep].description}
+          </Text>
+        </Box>
 
-        <View style={styles.bottomButtonsContainer}>
-          <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
-            <Text style={styles.skipButtonText}>Skip</Text>
-          </TouchableOpacity>
+        <Flex
+          flexDirection="row"
+          justifyContent="space-between"
+          alignItems="center"
+          py={'20px'}
+          marginBottom={'20px'}
+        >
+          <Button onPress={handleSkip}>
+            <Text color={theme.colors.transparent} fontSize={16}>
+              Skip
+            </Text>
+          </Button>
 
-          <View style={styles.paginationDots}>
+          <Flex flexDirection={'row'} alignItems={'center'}>
             {walkthroughData.map((_, index) => (
               <View
                 key={index}
                 style={[
-                  styles.dot,
+                  {
+                    width: 10,
+                    height: 10,
+                    borderRadius: 5,
+                    marginHorizontal: 5,
+                  },
                   {
                     backgroundColor: index === activeStep ? theme.colors.primary[500] : 'lightgray',
                   },
                 ]}
               />
             ))}
-          </View>
+          </Flex>
 
-          <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
-            <Text style={styles.nextButtonText}>
+          <Button onPress={handleNext}>
+            <Text color={theme.colors.primary[900]} fontSize={20}>
               {activeStep === walkthroughData.length - 1 ? 'Finish' : 'Next'}
             </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+          </Button>
+        </Flex>
+      </Flex>
     </ScrollView>
   );
 }
 
 export default WalkThroughScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    padding: 16,
-  },
-  topContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  image: {
-    width: 300,
-    height: 300,
-    resizeMode: 'cover',
-    borderRadius: 100,
-    marginBottom: 40,
-  },
-  bottomContainer: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  textContainer: {
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    marginBottom: 40,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    color: theme.colors.primary[500],
-  },
-  description: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: theme.colors.text,
-  },
-  bottomButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
-  skipButton: {},
-  skipButtonText: {
-    color: theme.colors.transparent,
-    fontSize: 16,
-  },
-  paginationDots: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  dot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    marginHorizontal: 5,
-  },
-  nextButton: {},
-  nextButtonText: {
-    color: theme.colors.primary[900],
-    fontSize: 20,
-  },
-});

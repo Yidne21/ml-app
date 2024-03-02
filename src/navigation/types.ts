@@ -28,7 +28,7 @@ export type HomeStackScreenProps<Screen extends keyof HomeStackParamList> = Nati
  * Represents the parameter list for the DrugSearchStack navigation stack.
  */
 export type DrugSearchStackParamList = {
-  DrugSearch: undefined;
+  DrugSearch: { name: string };
   DrugDetail: { drugId: string };
   Cart: undefined;
 };
