@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { Ipharmacies } from '../slice/types';
 import PharmacyCard from './PharmacyCard';
+import { Flex } from '../../../components/Basic';
 
 interface IPharmacyListProps {
   pharmacies: Ipharmacies[];
@@ -15,19 +16,18 @@ interface IPharmacyListProps {
 
 function PharmacyList({ pharmacies, setRegion }: IPharmacyListProps) {
   return (
-    <FlatList
-      data={pharmacies}
-      renderItem={({ item }) => <PharmacyCard pharmacy={item} setRegion={setRegion} />}
-      style={styles.flatList}
-      showsVerticalScrollIndicator={false}
-    />
+    <Flex flex={1}>
+      <FlatList
+        data={pharmacies}
+        renderItem={({ item }) => <PharmacyCard pharmacy={item} setRegion={setRegion} />}
+        style={styles.flatList}
+        showsVerticalScrollIndicator={false}
+      />
+    </Flex>
   );
 }
 
 const styles = StyleSheet.create({
-  listContainer: {
-    flex: 1,
-  },
   flatList: {
     paddingHorizontal: 10,
   },

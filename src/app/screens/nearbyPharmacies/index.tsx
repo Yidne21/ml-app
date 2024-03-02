@@ -7,7 +7,7 @@ import { StyleSheet, ActivityIndicator } from 'react-native';
 import PharmacyList from './component/PharmacyList';
 import useCurrentLocation from '../../../utils/hooks/useCurrentLocation';
 import { theme } from '../../../utils/theme/theme';
-import { Flex, Text } from '../../components/Basic';
+import { Box, Flex, Text } from '../../components/Basic';
 
 function Home() {
   const location = useCurrentLocation() || '8.220573, 37.798139';
@@ -37,14 +37,14 @@ function Home() {
     <Flex flex={1} backgroundColor="#fff">
       {isLoaded && (
         <>
-          <Flex marginBottom={260}>
+          <Box marginBottom={260}>
             <Map
               pharmacies={data.data}
               region={region}
               userLocation={coord}
               setRegion={setRegion}
             />
-          </Flex>
+          </Box>
           <Flex flex={1} backgroundColor="#fff">
             <Text fontSize={20} fontWeight="bold" margin={16} padding={10}>
               Nearby Pharmacies
@@ -61,24 +61,6 @@ function Home() {
 }
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#fff',
-  // },
-
-  // mapContainer: {
-  //   marginBottom: 260,
-  // },
-  // pharmacies: {
-  //   flex: 1,
-  //   backgroundColor: '#fff',
-  // },
-  // header: {
-  //   fontSize: 20,
-  //   fontWeight: 'bold',
-  //   margin: 16,
-  //   padding: 10,
-  // },
   loader: {
     position: 'absolute',
     top: '50%',
