@@ -18,7 +18,7 @@ export default function useCurrentCoordinates() {
     })();
   }, []);
 
-  console.log('useCurrentLocationiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjj: ', location);
+  console.log('useCurrentCoordinates hook: ', location);
 
   return location;
 }

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Box } from 'react-native';
-import { MultiSelect } from 'react-native-element-dropdown';
+import { StyleSheet } from 'react-native';
+// import { MultiSelect } from 'react-native-element-dropdown';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Box } from '../Basic';
 
 const data = [
   { label: 'Item 1', value: '1' },

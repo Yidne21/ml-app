@@ -20,7 +20,7 @@ export default function useCurrentLocation() {
     })();
   }, []);
 
-  console.log('useCurrentLocationiiiiiiiiiiiiiiiiiiiiiiiiiiiijjjjjjjjjjjjj: ', location);
+  console.log('useCurrentLocation hook: ', location);
 
   return location;
 }

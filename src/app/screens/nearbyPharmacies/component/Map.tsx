@@ -32,7 +32,7 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
         }}
         region={region}
       >
-        {userLocation.length > 0 && (
+        {/* {userLocation.length > 0 && (
           <Marker
             coordinate={{
               latitude: Number(userLocation[0]),
@@ -48,7 +48,7 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
               });
             }}
           />
-        )}
+        )} */}
         {pharmacies.map((pharmacy) => (
           <Marker
             key={pharmacy._id}
