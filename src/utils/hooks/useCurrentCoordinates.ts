@@ -2,7 +2,8 @@ import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
 
 export default function useCurrentCoordinates() {
-  const [location, setLocation] = useState([8.220573, 37.798139]);
+  const [location, setLocation] = useState<[number, number]>();
+
   useEffect(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
@@ -17,8 +18,6 @@ export default function useCurrentCoordinates() {
       setLocation([locationObject.coords.latitude, locationObject.coords.longitude]);
     })();
   }, []);
-
-  console.log('useCurrentCoordinates hook: ', location);
 
   return location;
 }

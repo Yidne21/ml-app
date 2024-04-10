@@ -7,6 +7,7 @@ import { NearbyPharmacyAction as actions } from '.';
 
 function* getNearbyPharmacies(action: PayloadAction<IgetNearbyPharmaciesPayload>) {
   const { pageState } = action.payload;
+
   try {
     const nearbyPharmacies: AxiosResponse = yield call(API, {
       method: 'GET',
@@ -34,7 +35,7 @@ function* getSearchedNearbyPharmacies(action: PayloadAction<IgetNearbyPharmacies
       params: { ...pageState },
     });
     if (nearbyPharmacies.status === 200) {
-      if (pageState.searchQuery) {
+      if (pageState) {
         yield put({
           type: actions.getSearchedNearbyPharmaciesSuccess.type,
           payload: nearbyPharmacies.data,
