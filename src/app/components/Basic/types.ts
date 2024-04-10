@@ -185,6 +185,7 @@ export interface ImageProps
     HeightProps,
     BorderProps {
   source: { uri: string };
+  aspectRatio?: number;
 }
 
 export interface CardProps

@@ -1,10 +1,12 @@
 // screens/WalkthroughScreen.js
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, ScrollView } from 'react-native';
 import { theme } from '../../utils/theme/theme';
 import { RootStackScreenProps } from '../../navigation/types';
 import Header from '../components/Custom/Header';
 import { Flex, Text, Image, Button, Box } from '../components/Basic';
+import LottieView from 'lottie-react-native';
+import { width, height } from '../../utils/constants';
 
 const walkthroughData = [
   {
@@ -27,6 +29,17 @@ const walkthroughData = [
 
 function WalkThroughScreen({ navigation }: RootStackScreenProps<'WalkThrough'>) {
   const [activeStep, setActiveStep] = useState(0);
+  const animationRefs = [
+    useRef<LottieView>(null),
+    useRef<LottieView>(null),
+    useRef<LottieView>(null),
+  ];
+
+  useEffect(() => {
+    animationRefs.forEach((ref) => {
+      ref.current?.play();
+    });
+  }, []);
 
   const handleSkip = () => {
     // Implement logic to navigate to the main app screen
@@ -53,13 +66,16 @@ function WalkThroughScreen({ navigation }: RootStackScreenProps<'WalkThrough'>) 
     >
       <Header showRightIcon={false} />
       <Flex alignItems={'center'} mt={'10px'}>
-        <Image
-          source={walkthroughData[activeStep].image}
-          width={300}
-          height={300}
-          resizeMode={'cover'}
-          borderRadius={100}
-          marginBottom={40}
+        <LottieView
+          style={{
+            flex: 1,
+            width: '100%',
+            height: height * 0.4,
+          }}
+          ref={animationRefs[0]}
+          source={require('../../assets/animations/delivery-boy.json')}
+          autoPlay
+          loop
         />
       </Flex>
 
@@ -69,7 +85,7 @@ function WalkThroughScreen({ navigation }: RootStackScreenProps<'WalkThrough'>) 
             {walkthroughData[activeStep].title}
           </Text>
           <Text fontSize={16} textAlign={'center'} color={theme.colors.text}>
-            {walkthroughData[activeStep].description}
+            Easy Medicine Search
           </Text>
         </Box>
 
