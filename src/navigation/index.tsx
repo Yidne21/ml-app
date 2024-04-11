@@ -22,7 +22,8 @@ import CheckOutSuccess from '../app/screens/CheckOutSuccess';
 import NotFound from '../app/screens/NotFound';
 import Offline from '../app/screens/Offline';
 import UpdateProfile from '../app/screens/UpdateProfile';
-import WalkThroughScreen from '../app/screens/WalkThrough';
+// import WalkThroughScreen from '../app/screens/WalkThrough';
+import OnboardingScreen from '../app/screens/OnboardingScreen';
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 // import FistoIcon from 'react-native-vector-icons/Fontisto';
@@ -167,7 +168,7 @@ function RootNavigator() {
         headerShown: false,
       }}
     >
-      <RootStack.Screen name="WalkThrough" component={WalkThroughScreen} />
+      <RootStack.Screen name="WalkThrough" component={OnboardingScreen} />
       <RootStack.Screen name="RootTab" component={Tabs} />
       <RootStack.Screen name="Login" component={Login} />
       <RootStack.Screen name="ForgotPassword" component={ForgetPassword} />

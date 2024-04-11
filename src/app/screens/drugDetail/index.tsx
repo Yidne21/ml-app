@@ -62,9 +62,9 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
             alignItems={'center'}
             mb={20}
           >
-            <Text fontSize={18} fontWeight={'bold'}>
-              {drug.price.toFixed(2)} Birr
-            </Text>
+            {/* <Text fontSize={18} fontWeight={'bold'}>
+              {drug.price?.toFixed(2)} Birr
+            </Text> */}
             <Button p={10} borderRadius={10} backgroundColor={theme.shadows.sm}>
               <Text fontSize={16} color={theme.colors.primary[500]}>
                 Add to cart
@@ -76,12 +76,12 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
           {renderSection('Side Effects', drug.sideEffects)}
           {renderSection('Strength and Dosage', drug.strengthAndDosage)}
 
-          <Flex backgroundColor={theme.shadows.sm} p={10} borderRadius={10}>
+          {/* <Flex backgroundColor={theme.shadows.sm} p={10} borderRadius={10}>
             {renderRow('Wholesalers', drug.receivedFrom)}
             {renderRow('Pharmacy', drug.receivedFrom)}
             {renderRow('Manufactured Date', format(new Date(drug.manufacturedDate), 'dd/MM/yyyy'))}
             {renderRow('Expire Date', format(new Date(drug.expiredDate), 'dd/MM/yyyy'))}
-          </Flex>
+          </Flex> */}
           <Button
             p={10}
             borderRadius={20}

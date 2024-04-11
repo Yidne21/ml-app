@@ -5,32 +5,44 @@ import { useNearbyPharmacySlice } from './slice';
 import * as select from './slice/selector';
 import { ActivityIndicator } from 'react-native';
 import PharmacyList from './component/PharmacyList';
-import useCurrentLocation from '../../../utils/hooks/useCurrentLocation';
+// import useCurrentLocation from '../../../utils/hooks/useCurrentLocation';
 import { theme } from '../../../utils/theme/theme';
 import { Box, Flex, Text } from '../../components/Basic';
+import { width } from '../../../utils/constants';
+import useCurrentCoordinates from '../../../utils/hooks/useCurrentCoordinates';
 
 function Home() {
-  const location = useCurrentLocation() || '8.220573, 37.798139';
+  const location = useCurrentCoordinates();
   const { actions } = useNearbyPharmacySlice();
   const dispatch = useDispatch();
   const data = useSelector(select.selectPharmacies);
   const isLoaded = useSelector(select.selectIsLoaded);
   const isLoading = useSelector(select.selectIsLoading);
-  const [Location, setLocation] = useState(location);
+  const [Location, setLocation] = useState<[number, number]>([9.145, 40.4897]);
 
-  //map state
-  const coord = location.split(',');
   const [region, setRegion] = useState({
-    latitude: Number(coord[0]),
-    longitude: Number(coord[1]),
+    latitude: Location[0],
+    longitude: Location[1],
     latitudeDelta: 10,
     longitudeDelta: 10,
   });
 
   useEffect(() => {
-    dispatch(
-      actions.getNearbyPharmacies({ pageState: { page: 1, limit: 30, location: Location } }),
-    );
+    if (location) {
+      dispatch(
+        actions.getNearbyPharmacies({
+          pageState: { page: 1, limit: 30, location: `${location[0]}, ${location[1]}` },
+        }),
+      );
+
+      setLocation(location);
+    }
+    setRegion({
+      latitude: Location[0],
+      longitude: Location[1],
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    });
   }, [dispatch, actions, location, Location]);
 
   return (
@@ -41,11 +53,11 @@ function Home() {
             <Map
               pharmacies={data.data}
               region={region}
-              userLocation={coord}
+              userLocation={Location}
               setRegion={setRegion}
             />
           </Box>
-          <Flex flex={1} backgroundColor="#fff">
+          <Flex flex={1} backgroundColor="#fff" width={width}>
             <Text fontSize={20} fontWeight="bold" margin={16} padding={10}>
               Nearby Pharmacies
             </Text>

@@ -29,16 +29,16 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
     setRegion({
       latitude: pharmacy.location.coordinates[1],
       longitude: pharmacy.location.coordinates[0],
-      latitudeDelta: 10,
-      longitudeDelta: 10,
+      latitudeDelta: 5,
+      longitudeDelta: 5,
     });
   };
   const handleZoomPress = () => {
     setRegion({
       latitude: pharmacy.location.coordinates[1],
       longitude: pharmacy.location.coordinates[0],
-      latitudeDelta: 0.5,
-      longitudeDelta: 0.5,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
     });
   };
 
@@ -97,15 +97,6 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
             <Text color="green">More</Text>
           </Button>
         </Box>
-
-        {/* {pharmacy.drug && (
-          <Flex>
-            <Text color="green">{`Drug: ${pharmacy.drug.name}`}</Text>
-            <Text color="green">
-              {pharmacy.drug.stockLevel ? `Stock Level: ${pharmacy.drug.stockLevel}` : ''}
-            </Text>
-          </Flex>
-        )} */}
       </Flex>
     </Flex>
   );
