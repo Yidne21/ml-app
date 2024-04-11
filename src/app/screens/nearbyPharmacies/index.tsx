@@ -1,14 +1,11 @@
-import Map from './component/Map';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNearbyPharmacySlice } from './slice';
 import * as select from './slice/selector';
 import { ActivityIndicator } from 'react-native';
 import PharmacyList from './component/PharmacyList';
-// import useCurrentLocation from '../../../utils/hooks/useCurrentLocation';
 import { theme } from '../../../utils/theme/theme';
-import { Box, Flex, Text } from '../../components/Basic';
-import { width } from '../../../utils/constants';
+import { Flex } from '../../components/Basic';
 import useCurrentCoordinates from '../../../utils/hooks/useCurrentCoordinates';
 
 function Home() {
@@ -28,42 +25,32 @@ function Home() {
   });
 
   useEffect(() => {
-    if (location) {
-      dispatch(
-        actions.getNearbyPharmacies({
-          pageState: { page: 1, limit: 30, location: `${location[0]}, ${location[1]}` },
-        }),
-      );
+    dispatch(
+      actions.getNearbyPharmacies({
+        pageState: { page: 1, limit: 10, location: `${Location[0]}, ${Location[1]}` },
+      }),
+    );
 
+    if (location) {
       setLocation(location);
+      setRegion({
+        latitude: Location[0],
+        longitude: Location[1],
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
     }
-    setRegion({
-      latitude: Location[0],
-      longitude: Location[1],
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.01,
-    });
   }, [dispatch, actions, location, Location]);
 
   return (
     <Flex flex={1} backgroundColor="#fff">
       {isLoaded && (
-        <>
-          <Box marginBottom={260}>
-            <Map
-              pharmacies={data.data}
-              region={region}
-              userLocation={Location}
-              setRegion={setRegion}
-            />
-          </Box>
-          <Flex flex={1} backgroundColor="#fff" width={width}>
-            <Text fontSize={20} fontWeight="bold" margin={16} padding={10}>
-              Nearby Pharmacies
-            </Text>
-            <PharmacyList pharmacies={data.data} setRegion={setRegion} />
-          </Flex>
-        </>
+        <PharmacyList
+          pharmacies={data.data}
+          setRegion={setRegion}
+          region={region}
+          userLocation={Location}
+        />
       )}
       {isLoading && (
         <ActivityIndicator

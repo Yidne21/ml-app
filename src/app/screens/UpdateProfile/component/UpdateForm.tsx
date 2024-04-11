@@ -1,6 +1,5 @@
 import React from 'react';
 import { Flex, TextInput } from '../../../components/Basic';
-import { theme } from '../../../../utils/theme/theme';
 
 interface UpdateFormProps {
   editedEmail?: string;
@@ -22,37 +21,22 @@ const UpdateForm: React.FC<UpdateFormProps> = ({
   return (
     <Flex width="80%" marginBottom={10} marginTop={20}>
       <TextInput
-        height={50}
-        borderColor={theme.colors.primary[500]}
-        borderWidth={1}
-        borderRadius={25}
         px={20}
         marginBottom={10}
-        fontSize={16}
         placeholder="Email, eg. jondow@gmail.com"
         value={editedEmail}
         onChangeText={(text) => setEditedEmail(text)}
       />
       <TextInput
-        height={50}
-        borderColor={theme.colors.primary[500]}
-        borderWidth={1}
-        borderRadius={25}
         px={20}
         marginBottom={10}
-        fontSize={16}
         placeholder="Old password"
         value={oldPassword}
         onChangeText={(text) => setOldPassword(text)}
       />
       <TextInput
-        height={50}
-        borderColor={theme.colors.primary[500]}
-        borderWidth={1}
-        borderRadius={25}
         px={20}
         marginBottom={10}
-        fontSize={16}
         placeholder="New password"
         value={newPassword}
         onChangeText={(text) => setNewPassword(text)}

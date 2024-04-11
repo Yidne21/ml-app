@@ -1,3 +1,9 @@
-import { Dimensions } from 'react-native';
+import {
+  responsiveHeight,
+  responsiveFontSize,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
 
-export const { width, height } = Dimensions.get('window');
+export const hp = responsiveHeight,
+  wp = responsiveWidth,
+  fp = responsiveFontSize;

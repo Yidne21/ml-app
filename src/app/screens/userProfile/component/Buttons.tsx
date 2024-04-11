@@ -1,6 +1,7 @@
 import React from 'react';
 import { theme } from '../../../../utils/theme/theme';
 import { Button, Flex, Text } from '../../../components/Basic';
+import { fp } from '../../../../utils/constants';
 interface ButtonsProps {
   onEditProfile: () => void;
   onLogout: () => void;
@@ -18,7 +19,7 @@ const Buttons: React.FC<ButtonsProps> = ({ onEditProfile, onLogout }) => {
           mt={'10px'}
           onPress={onEditProfile}
         >
-          <Text color={'#fff'} fontSize={20}>
+          <Text color={'#fff'} fontSize={fp(2)}>
             Edit Profile
           </Text>
         </Button>
@@ -30,7 +31,7 @@ const Buttons: React.FC<ButtonsProps> = ({ onEditProfile, onLogout }) => {
           mt={'10px'}
           onPress={onLogout}
         >
-          <Text color={'#fff'} fontSize={20}>
+          <Text color={'#fff'} fontSize={fp(2)}>
             Logout
           </Text>
         </Button>

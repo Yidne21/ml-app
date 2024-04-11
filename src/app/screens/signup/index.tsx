@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Image } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import { theme } from '../../../utils/theme/theme';
 import { RootStackScreenProps } from '../../../navigation/types';
-import Header from '../../components/Custom/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSignUpScreenSlice } from './slice';
 import * as select from './slice/selector';
 import Toast from 'react-native-root-toast';
 import { Flex, Button, Text, TextInput } from '../../components/Basic';
+import { wp, fp } from '../../../utils/constants';
+import Logo from '../../components/Custom/Logo';
 
 function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -48,37 +49,21 @@ function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
   };
 
   return (
-    <Flex flex={1} padding={16}>
-      <Header showRightIcon={false} />
-      <Flex alignItems="center" justifyContent="center" backgroundColor={theme.colors.background}>
-        <Image
-          source={require('../../../assets/images/icon.png')}
-          style={{ width: 120, height: 120, marginBottom: 20, borderRadius: 60 }}
-        />
-        <Text fontSize={24} fontWeight="bold" marginBottom={40} color={theme.colors.primary[600]}>
-          Medicin Locator
-        </Text>
-
-        <Flex width="80%" marginBottom={20}>
+    <Flex flex={1} px={10} pt={30} backgroundColor={theme.colors.white}>
+      <Flex alignItems="center" justifyContent="center">
+        <Logo />
+        <Flex width="80%" marginBottom={10}>
           <TextInput
-            height={50}
-            borderColor={theme.colors.primary[500]}
-            borderWidth={1}
-            borderRadius={25}
             px={20}
-            marginBottom={20}
+            marginBottom={10}
             color={theme.colors.text}
             placeholder="Name Ex. Bisrat Jenbere"
             value={name}
             onChangeText={(text) => setName(text)}
           />
           <TextInput
-            height={50}
-            borderColor={theme.colors.primary[500]}
-            borderWidth={1}
-            borderRadius={25}
             px={20}
-            marginBottom={20}
+            marginBottom={10}
             color={theme.colors.text}
             placeholder="Phone Number"
             keyboardType="phone-pad"
@@ -86,12 +71,9 @@ function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
             onChangeText={(text) => setPhoneNumber(text)}
           />
           <TextInput
-            height={50}
-            borderColor={theme.colors.primary[500]}
-            borderWidth={1}
             borderRadius={25}
             px={20}
-            marginBottom={20}
+            marginBottom={10}
             color={theme.colors.text}
             placeholder="New Password"
             secureTextEntry
@@ -99,12 +81,8 @@ function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
             onChangeText={(text) => setNewPassword(text)}
           />
           <TextInput
-            height={50}
-            borderColor={theme.colors.primary[500]}
-            borderWidth={1}
-            borderRadius={25}
             px={20}
-            marginBottom={20}
+            marginBottom={10}
             color={theme.colors.text}
             placeholder="Confirm New Password"
             secureTextEntry
@@ -120,7 +98,7 @@ function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
           marginBottom={30}
           onPress={handleLoginRedirect}
         >
-          <Text style={{ color: theme.colors.primary[900], fontSize: 16 }}>
+          <Text style={{ color: theme.colors.primary[900], fontSize: fp(2) }}>
             Already have an account? Login
           </Text>
         </Button>
@@ -136,12 +114,12 @@ function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
         <Button
           width="80%"
           backgroundColor={theme.colors.primary[500]}
-          padding={15}
+          padding={wp(5)}
           borderRadius={25}
           alignItems="center"
           onPress={handleContinue}
         >
-          <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Continue</Text>
+          <Text style={{ color: 'white', fontSize: fp(2), fontWeight: 'bold' }}>Continue</Text>
         </Button>
       </Flex>
     </Flex>

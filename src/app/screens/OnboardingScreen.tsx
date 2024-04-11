@@ -2,10 +2,10 @@ import React from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { NavigationProp } from '@react-navigation/native';
 import Onboarding from 'react-native-onboarding-swiper';
-import { width } from '../../utils/constants';
 import { theme } from '../../utils/theme/theme';
 import { RootStackParamList } from '../../navigation/types';
 import { Button, Text, Box, Image } from '../components/Basic';
+import { wp, fp } from '../../utils/constants';
 
 const Dots = ({ selected }: { selected: boolean }) => {
   const backgroundColor = selected ? theme.colors.primary[500] : 'rgba(0, 0, 0, 0.3)';
@@ -53,7 +53,7 @@ const Done = ({ ...props }) => (
     mb={'10px'}
     {...props}
   >
-    <Text fontSize={16} color={theme.colors.white} fontWeight="bold">
+    <Text fontSize={fp(1.3)} color={theme.colors.white} fontWeight="bold">
       Get Started
     </Text>
   </Button>
@@ -74,15 +74,17 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
       onDone={() => navigation.navigate('SignUp')}
       bottomBarColor={theme.colors.white}
       transitionAnimationDuration={900}
-      subTitleStyles={{ color: theme.colors.black }}
+      subTitleStyles={{ color: theme.colors.black, fontSize: wp(3) }}
+      titleStyles={{ color: theme.colors.black, fontSize: wp(6) }}
+      imageContainerStyles={{ width: wp(100), height: wp(100) }}
       pages={[
         {
           backgroundColor: theme.colors.white,
           image: (
             <Image
               source={require('../../assets/illustrators/map1.png')}
-              width={width * 0.9}
-              height={width}
+              width={wp(90)}
+              height={wp(100)}
               aspectRatio={1}
             />
           ),
@@ -94,7 +96,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
           image: (
             <Image
               source={require('../../assets/illustrators/search.png')}
-              style={{ width: width * 0.9, height: width, aspectRatio: 1 }}
+              style={{ width: wp(90), height: wp(100), aspectRatio: 1 }}
             />
           ),
           title: 'Search and Buy drugs online',
@@ -106,7 +108,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
           image: (
             <Image
               source={require('../../assets/illustrators/pay.png')}
-              style={{ width: width * 0.9, height: width, aspectRatio: 1 }}
+              style={{ width: wp(90), height: wp(100), aspectRatio: 1 }}
             />
           ),
           title: 'Simple online payment',
@@ -117,8 +119,8 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
           image: (
             <Image
               source={require('../../assets/illustrators/delivery2.png')}
-              width={width * 0.9}
-              height={width}
+              width={wp(90)}
+              height={wp(100)}
               aspectRatio={1}
             />
           ),
@@ -130,8 +132,8 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
           image: (
             <Image
               source={require('../../assets/illustrators/Confirmed.png')}
-              width={width * 0.9}
-              height={width}
+              width={wp(90)}
+              height={wp(100)}
               aspectRatio={1}
             />
           ),

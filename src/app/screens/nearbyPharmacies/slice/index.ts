@@ -15,7 +15,7 @@ export const initialState: IinitialNearbyPharmaciesState = {
   nearbyPharmacies: {
     totalDocuments: 0,
     totalPages: 0,
-    pharmacies: [],
+    data: [],
   },
 };
 

@@ -27,14 +27,9 @@ function ForgetPassword({ navigation, route }: RootStackScreenProps<'ForgotPassw
   }, [isOtpSent, navigation, phoneNumber, route.name]);
 
   return (
-    <Flex flex={1} p={16}>
+    <Flex flex={1} pt={10} px={10} backgroundColor={theme.colors.white}>
       <Header showRightIcon={false} />
-      <Flex
-        flex={1}
-        justifyContent={'center'}
-        alignItems={'center'}
-        backgroundColor={theme.colors.background}
-      >
+      <Flex flex={1} justifyContent={'center'} alignItems={'center'}>
         <Image
           source={require('../../../assets/images/icon.png')}
           width={120}

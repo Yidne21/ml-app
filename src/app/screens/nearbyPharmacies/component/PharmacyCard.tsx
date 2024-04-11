@@ -5,6 +5,7 @@ import { HomeStackParamList } from '../../../../navigation/types';
 import { Flex, Text, Box, Image, Button } from '../../../components/Basic';
 import { Ipharmacies } from '../slice/types';
 import { theme } from '../../../../utils/theme/theme';
+import { wp, hp, fp } from '../../../../utils/constants';
 
 interface IPharmacyCardProps {
   pharmacy: Ipharmacies;
@@ -50,20 +51,23 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
       borderBottomColor="#ccc"
       backgroundColor={'#fff'}
       alignItems={'center'}
-      gap={10}
+      gap={3}
+      width={wp(100)}
     >
       <Image
         source={{ uri: pharmacy.logo }}
-        width={100}
-        height={100}
+        width={wp(20)}
+        maxWidth={200}
+        maxHeight={200}
+        height={wp(20)}
         marginRight={'16px'}
         borderRadius={8}
       />
       <Flex flex={1}>
-        <Text fontSize={18} fontWeight="bold" mb={'8px'} color="#333">
+        <Text fontSize={fp(2.5)} fontWeight="bold" mb={hp(0.2)} color="#333">
           {pharmacy.name}
         </Text>
-        <Text color="#666" marginBottom={'8px'}>{`${pharmacy.distance} km away`}</Text>
+        <Text color="#666" marginBottom={hp(0.2)}>{`${pharmacy.distance} km away`}</Text>
 
         <Box flexDirection="row" alignItems={'center'} mb={'5px'} gap={4} mt={'8px'}>
           <Button
@@ -74,7 +78,9 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
             borderRadius={8}
             onPress={handleZoomPress}
           >
-            <Text color="green">Zoom In</Text>
+            <Text color="green" fontSize={fp(1.5)}>
+              Zoom In
+            </Text>
           </Button>
           <Button
             px={'15px'}
@@ -84,7 +90,9 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
             borderRadius={8}
             onPress={handleDirectionPress}
           >
-            <Text color="green">Zoom Out</Text>
+            <Text color="green" fontSize={fp(1.5)}>
+              Zoom Out
+            </Text>
           </Button>
           <Button
             px={'15px'}
@@ -94,7 +102,9 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
             borderRadius={8}
             onPress={handlePharmacyPress}
           >
-            <Text color="green">More</Text>
+            <Text color="green" fontSize={fp(1.5)}>
+              More
+            </Text>
           </Button>
         </Box>
       </Flex>

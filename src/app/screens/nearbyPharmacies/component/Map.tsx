@@ -2,9 +2,9 @@ import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { Ipharmacies } from '../slice/types';
 import { Flex } from '../../../components/Basic';
-import { width, height } from '../../../../utils/constants';
+import { wp, hp } from '../../../../utils/constants';
 
-interface IMapProps {
+export interface IMapProps {
   pharmacies: Ipharmacies[];
   region: {
     latitude: number;
@@ -27,8 +27,8 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
     <Flex flex={1}>
       <MapView
         style={{
-          width: width,
-          height: height / 3,
+          width: wp(100),
+          height: hp(40),
         }}
         region={region}
       >

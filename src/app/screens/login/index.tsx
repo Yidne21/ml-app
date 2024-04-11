@@ -9,7 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLoginScreenSlice } from './slice';
 import * as select from './slice/selector';
 import Toast from 'react-native-root-toast';
-import { Flex, Text, TextInput, Button, Image } from '../../components/Basic';
+import { Flex, Text, TextInput, Button } from '../../components/Basic';
+import { wp, fp } from '../../../utils/constants';
+import Logo from '../../components/Custom/Logo';
 
 function Login({ navigation }: RootStackScreenProps<'Login'>) {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -41,7 +43,7 @@ function Login({ navigation }: RootStackScreenProps<'Login'>) {
   }, [actions, dispatch, isLogedIn, navigation]);
 
   useEffect(() => {
-    if (!isLogedIn && !isLoging && errorMessage) {
+    if (errorMessage) {
       Toast.show(errorMessage, {
         duration: Toast.durations.LONG,
         position: Toast.positions.BOTTOM,
@@ -60,46 +62,29 @@ function Login({ navigation }: RootStackScreenProps<'Login'>) {
   };
 
   return (
-    <Flex flex={1} padding={16}>
+    <Flex
+      flex={1}
+      pt={10}
+      px={10}
+      backgroundColor={theme.colors.white} // Add a background color
+    >
       <Header showRightIcon={false} />
-      <Flex
-        flex={1}
-        justifyContent="center"
-        alignItems="center"
-        backgroundColor={theme.colors.background} // Add a background color
-      >
-        <Image
-          source={require('../../../assets/images/icon.png')}
-          width={120}
-          height={120}
-          mb={20}
-          borderRadius={60}
-        />
-        <Text fontSize={24} fontWeight="bold" mb={30} color={theme.colors.primary[600]}>
-          Medicin Locator
-        </Text>
+      <Flex flex={1} justifyContent="center" alignItems="center">
+        <Logo />
 
         <Flex width="80%" mb={20}>
           <TextInput
-            height={50}
-            borderColor={theme.colors.primary[500]} // Use your primary color
-            borderWidth={1}
-            borderRadius={25}
             px={20}
-            marginBottom={20}
+            marginBottom={10}
             fontSize={16}
-            placeholder="Phone Number"
+            placeholder="Phone Number Ex. 0912.."
             keyboardType="phone-pad"
             value={phoneNumber}
             onChangeText={(text) => setPhoneNumber(text)}
           />
           <TextInput
-            height={50}
-            borderColor={theme.colors.primary[500]} // Use your primary color
-            borderWidth={1}
-            borderRadius={25}
             px={20}
-            marginBottom={20}
+            marginBottom={10}
             fontSize={16}
             placeholder="Password"
             secureTextEntry
@@ -115,7 +100,7 @@ function Login({ navigation }: RootStackScreenProps<'Login'>) {
           mb={30}
           onPress={handleForgotPassword}
         >
-          <Text color={theme.colors.primary[900]} fontSize={16}>
+          <Text color={theme.colors.primary[900]} fontSize={fp(2)}>
             Forgot Password?
           </Text>
         </Button>
@@ -131,12 +116,12 @@ function Login({ navigation }: RootStackScreenProps<'Login'>) {
         <Button
           width="80%"
           backgroundColor={theme.colors.primary[500]}
-          padding={15}
+          padding={wp(5)}
           borderRadius={25}
           alignItems="center"
           onPress={handleLogin}
         >
-          <Text color="white" fontSize={18} fontWeight="bold">
+          <Text color="white" fontSize={fp(2)} fontWeight="bold">
             Login
           </Text>
         </Button>

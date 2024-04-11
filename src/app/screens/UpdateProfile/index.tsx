@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, ActivityIndicator, Dimensions } from 'react-native';
+import { Alert, ActivityIndicator } from 'react-native';
 import { ProfileStackScreenProps } from '../../../navigation/types';
 import { useDispatch, useSelector } from 'react-redux';
 import * as select from './slice/selector';
@@ -12,6 +12,7 @@ import { uploadImage } from '../../../utils/helpers';
 import Header from '../../components/Custom/Header';
 import useStoredUserData from '../../../utils/hooks/useStoreUserData';
 import { Flex, Box, Text, Image, Button } from '../../components/Basic';
+import { hp, wp, fp } from '../../../utils/constants';
 
 function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
   const { actions } = useUserProfileUpdateScreenSlice();
@@ -96,26 +97,27 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
         <Header showRightIcon={true} />
       </Flex>
       <Box alignItems={'center'}>
-        <Box width={'100%'} height={200}>
+        <Box width={'100%'} height={hp(30)} maxHeight={200}>
           <Image
             source={{
               uri:
                 coverPhotoUri ||
                 'https://fakeimg.pl/400x200/bdbdbd/ffffff?text=Cover+Photo&font=noto',
             }}
-            width={Dimensions.get('window').width}
-            height={200}
+            width={wp(100)}
+            height={hp(30)}
+            maxHeight={200}
           />
           <Button
             onPress={handlePickCoverPhoto}
-            width={64}
+            width={wp(17)}
             ml="auto"
             mt={-35}
             borderRadius={100}
             padding={10}
             backgroundColor={theme.shadows.sm}
           >
-            <MaterialIcons name="camera-alt" size={44} color={theme.colors.primary[700]} />
+            <MaterialIcons name="camera-alt" size={wp(11.5)} color={theme.colors.primary[700]} />
           </Button>
         </Box>
 
@@ -124,8 +126,8 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
             source={{
               uri: avatarUri || 'https://fakeimg.pl/150x150/bdbdbd/ffffff?text=avatar&font=noto',
             }}
-            width={150}
-            height={150}
+            width={hp(20)}
+            height={hp(20)}
             borderRadius={100}
             mt={-75}
             borderWidth={3}
@@ -134,7 +136,7 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
           />
           <Button
             onPress={handlePickAvatarPhoto}
-            width={54}
+            width={wp(14)}
             borderRadius={100}
             ml="auto"
             mt={-35}
@@ -146,7 +148,7 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
           </Button>
         </Box>
 
-        <Text fontSize={24} fontWeight={'bold'} m={10}>
+        <Text fontSize={fp(3)} fontWeight={'bold'} m={10}>
           {user.name}
         </Text>
 
@@ -178,7 +180,7 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
           onPress={handleSaveChanges}
           mt={10}
         >
-          <Text color={'#fff'} fontSize={20}>
+          <Text color={'#fff'} fontSize={fp(2)}>
             Save Changes
           </Text>
         </Button>

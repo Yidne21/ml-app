@@ -3,6 +3,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { theme } from '../../../../utils/theme/theme';
 import { IUser } from '../slice/types';
 import { Box, Flex, Text } from '../../../components/Basic';
+import { fp } from '../../../../utils/constants';
 
 interface UserDetailInfoProps {
   user: IUser;
@@ -19,7 +20,7 @@ const UserDetailInfo: React.FC<UserDetailInfoProps> = ({ user }) => {
         borderRadius={10}
         backgroundColor={theme.shadows.sm}
       >
-        <Text fontSize={24} fontWeight={'bold'} m={'10px'}>
+        <Text fontSize={fp(3)} fontWeight={'bold'} m={'10px'}>
           <Text color={theme.colors.primary[900]}>Welcome Back </Text>
           {user.name}
         </Text>
@@ -37,7 +38,7 @@ const UserDetailInfo: React.FC<UserDetailInfoProps> = ({ user }) => {
                   backgroundColor: theme.colors.transparent,
                 }}
               />
-              <Text fontSize={16} mt={'5px'}>
+              <Text fontSize={fp(2)} mt={'5px'}>
                 {user.email}
               </Text>
             </Flex>
@@ -54,7 +55,7 @@ const UserDetailInfo: React.FC<UserDetailInfoProps> = ({ user }) => {
                 backgroundColor: theme.colors.transparent,
               }}
             />
-            <Text mt={'5px'} fontSize={16}>
+            <Text mt={'5px'} fontSize={fp(2)}>
               {user.phoneNumber}
             </Text>
           </Flex>
