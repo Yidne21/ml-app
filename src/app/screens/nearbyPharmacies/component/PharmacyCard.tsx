@@ -6,6 +6,7 @@ import { Flex, Text, Box, Image, Button } from '../../../components/Basic';
 import { Ipharmacies } from '../slice/types';
 import { theme } from '../../../../utils/theme/theme';
 import { wp, hp, fp } from '../../../../utils/constants';
+import { Linking, Platform } from 'react-native';
 
 interface IPharmacyCardProps {
   pharmacy: Ipharmacies;
@@ -27,12 +28,14 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
   };
 
   const handleDirectionPress = () => {
-    setRegion({
-      latitude: pharmacy.location.coordinates[1],
-      longitude: pharmacy.location.coordinates[0],
-      latitudeDelta: 5,
-      longitudeDelta: 5,
+    const [longitude, latitude] = pharmacy.location.coordinates;
+    const url = Platform.select({
+      ios: `http://maps.apple.com/?daddr=${latitude},${longitude}&dirflg=d`,
+      android: `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`,
     });
+    if (url) {
+      Linking.openURL(url);
+    }
   };
   const handleZoomPress = () => {
     setRegion({
@@ -64,21 +67,21 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
         borderRadius={8}
       />
       <Flex flex={1}>
-        <Text fontSize={fp(2.5)} fontWeight="bold" mb={hp(0.2)} color="#333">
+        <Text fontSize={fp(2.5)} fontWeight="bold" mb={hp(0.2)} color="black">
           {pharmacy.name}
         </Text>
         <Text color="#666" marginBottom={hp(0.2)}>{`${pharmacy.distance} km away`}</Text>
 
-        <Box flexDirection="row" alignItems={'center'} mb={'5px'} gap={4} mt={'8px'}>
+        <Box flexDirection="row" alignItems={'center'} mb={'5px'} gap={10} mt={'8px'}>
           <Button
             px={'10px'}
             py={'5px'}
             borderWidth={1}
-            borderColor={theme.colors.primary[900]}
-            borderRadius={8}
+            borderColor={theme.colors.primary[300]}
+            borderRadius={5}
             onPress={handleZoomPress}
           >
-            <Text color="green" fontSize={fp(1.5)}>
+            <Text color="black" fontSize={fp(1.5)}>
               Zoom In
             </Text>
           </Button>
@@ -86,23 +89,23 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
             px={'15px'}
             py={'5px'}
             borderWidth={1}
-            borderColor="green"
-            borderRadius={8}
+            borderColor={theme.colors.primary[300]}
+            borderRadius={5}
             onPress={handleDirectionPress}
           >
-            <Text color="green" fontSize={fp(1.5)}>
-              Zoom Out
+            <Text color="black" fontSize={fp(1.5)}>
+              Direction
             </Text>
           </Button>
           <Button
             px={'15px'}
             py={'5px'}
             borderWidth={1}
-            borderColor="green"
-            borderRadius={8}
+            borderColor={theme.colors.primary[300]}
+            borderRadius={5}
             onPress={handlePharmacyPress}
           >
-            <Text color="green" fontSize={fp(1.5)}>
+            <Text color="black" fontSize={fp(1.5)}>
               More
             </Text>
           </Button>
