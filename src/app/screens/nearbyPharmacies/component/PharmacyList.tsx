@@ -84,7 +84,7 @@ function PharmacyList({
     <Flex flex={1}>
       <FlatList
         ref={flatListRef}
-        // ListHeaderComponent={renderHeader}
+        ListHeaderComponent={renderHeader}
         refreshing={isRefreshing}
         onRefresh={handleOnRefresh}
         data={pharmacies}

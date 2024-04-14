@@ -3,10 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNearbyPharmacySlice } from './slice';
 import * as select from './slice/selector';
 import PharmacyList from './component/PharmacyList';
-import { Box, Flex, Text } from '../../components/Basic';
+import { Flex } from '../../components/Basic';
 import useCurrentCoordinates from '../../../utils/hooks/useCurrentCoordinates';
-import Map from './component/Map';
-import { fp } from '../../../utils/constants';
 
 function Home() {
   const location = useCurrentCoordinates();
@@ -39,23 +37,10 @@ function Home() {
       //   longitudeDelta: 0.01,
       // });
     }
-  }, [dispatch, actions, nextPage, location, Location]);
+  }, [dispatch, actions, nextPage, location, Location, data.totalDocuments]);
 
   return (
     <Flex flex={1} backgroundColor="#fff">
-      <Flex backgroundColor="#fff" flex={1} flexDirection={'row'}>
-        <Box>
-          <Map
-            pharmacies={data.data}
-            region={region}
-            userLocation={Location}
-            setRegion={setRegion}
-          />
-        </Box>
-      </Flex>
-      <Text fontSize={fp(3)} fontWeight="bold" px={15} py={'5px'}>
-        Nearby Pharmacies
-      </Text>
       <PharmacyList
         pharmacies={data.data}
         setRegion={setRegion}
