@@ -7,6 +7,7 @@ import { Ipharmacies } from '../slice/types';
 import { theme } from '../../../../utils/theme/theme';
 import { wp, hp, fp } from '../../../../utils/constants';
 import { Linking, Platform } from 'react-native';
+import { FlatList } from 'react-native';
 
 interface IPharmacyCardProps {
   pharmacy: Ipharmacies;
@@ -16,11 +17,13 @@ interface IPharmacyCardProps {
     latitudeDelta: number;
     longitudeDelta: number;
   }) => void;
+  flatListRef: React.RefObject<FlatList<Ipharmacies>>;
 }
 
-function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
+function PharmacyCard({ pharmacy, setRegion, flatListRef }: IPharmacyCardProps) {
   const navigation = useNavigation<NavigationProp<HomeStackParamList>>();
-  const handlePharmacyPress = () => {
+
+  const handleMorePress = () => {
     // Navigate to PharmacyDetail screen with the pharmacy details
     navigation.navigate('PharmacyDetail', {
       pharmacyId: pharmacy._id /* Other parameters if needed */,
@@ -38,6 +41,11 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
     }
   };
   const handleZoomPress = () => {
+    const headerHeight = hp(40);
+    flatListRef.current?.scrollToOffset({
+      offset: 0 - headerHeight,
+      animated: true,
+    });
     setRegion({
       latitude: pharmacy.location.coordinates[1],
       longitude: pharmacy.location.coordinates[0],
@@ -103,7 +111,7 @@ function PharmacyCard({ pharmacy, setRegion }: IPharmacyCardProps) {
             borderWidth={1}
             borderColor={theme.colors.primary[300]}
             borderRadius={5}
-            onPress={handlePharmacyPress}
+            onPress={handleMorePress}
           >
             <Text color="black" fontSize={fp(1.5)}>
               More

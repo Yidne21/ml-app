@@ -1,10 +1,13 @@
-import React from 'react';
-import { FlatList } from 'react-native';
+import React, { useRef } from 'react';
+import { ActivityIndicator, FlatList } from 'react-native';
 import { Ipharmacies } from '../slice/types';
 import PharmacyCard from './PharmacyCard';
 import { Box, Flex, Text } from '../../../components/Basic';
 import Map from './Map';
-import { fp } from '../../../../utils/constants';
+import { fp, hp } from '../../../../utils/constants';
+import { theme } from '../../../../utils/theme/theme';
+import { useSelector } from 'react-redux';
+import * as select from '../slice/selector';
 
 interface IPharmacyListProps {
   pharmacies: Ipharmacies[];
@@ -21,9 +24,44 @@ interface IPharmacyListProps {
     longitudeDelta: number;
   };
   userLocation: number[];
+  setNextPage: (page: number) => void;
+  nextPage: number;
 }
 
-function PharmacyList({ pharmacies, setRegion, region, userLocation }: IPharmacyListProps) {
+function PharmacyList({
+  pharmacies,
+  setRegion,
+  region,
+  userLocation,
+  setNextPage,
+  nextPage,
+}: IPharmacyListProps) {
+  const flatListRef = useRef<FlatList<Ipharmacies>>(null);
+  const isLoading = useSelector(select.selectIsLoading);
+  const data = useSelector(select.selectPharmacies);
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
+
+  const handleOnEndReached = () => {
+    if (nextPage + 1 > data.totalPages || isLoading) {
+      return;
+    }
+    const newPage = nextPage + 1;
+    setNextPage(newPage);
+  };
+
+  const handleOnRefresh = () => {
+    if (isLoading) {
+      return;
+    }
+
+    if (nextPage - 1 < 1) {
+      setIsRefreshing(false);
+      return;
+    }
+    const newPage = nextPage - 1;
+    setNextPage(newPage);
+  };
+
   function renderHeader() {
     return (
       <Flex backgroundColor="#fff" flex={1}>
@@ -45,10 +83,25 @@ function PharmacyList({ pharmacies, setRegion, region, userLocation }: IPharmacy
   return (
     <Flex flex={1}>
       <FlatList
-        ListHeaderComponent={renderHeader}
+        ref={flatListRef}
+        // ListHeaderComponent={renderHeader}
+        refreshing={isRefreshing}
+        onRefresh={handleOnRefresh}
         data={pharmacies}
-        renderItem={({ item }) => <PharmacyCard pharmacy={item} setRegion={setRegion} />}
+        renderItem={({ item }) => (
+          <PharmacyCard pharmacy={item} setRegion={setRegion} flatListRef={flatListRef} />
+        )}
         showsVerticalScrollIndicator={false}
+        keyExtractor={(item) => item._id.toString()}
+        onEndReached={handleOnEndReached}
+        ListFooterComponent={
+          isLoading ? <ActivityIndicator size="large" color={theme.colors.primary[500]} /> : null
+        }
+        ListEmptyComponent={
+          <Text textAlign="center" fontSize={fp(2)} color="gray" mt={hp(20)}>
+            No pharmacies found
+          </Text>
+        }
       />
     </Flex>
   );

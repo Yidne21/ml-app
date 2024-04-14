@@ -3,6 +3,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { Ipharmacies } from '../slice/types';
 import { Flex } from '../../../components/Basic';
 import { wp, hp } from '../../../../utils/constants';
+import { theme } from '../../../../utils/theme/theme';
 
 export interface IMapProps {
   pharmacies: Ipharmacies[];
@@ -39,6 +40,7 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
               longitude: userLocation[1],
             }}
             title="You are here"
+            pinColor={theme.colors.info[500]}
             onPress={() => {
               setRegion({
                 latitude: userLocation[0],
@@ -57,6 +59,7 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
               longitude: pharmacy.location.coordinates[0],
             }}
             title={pharmacy.name}
+            pinColor={theme.colors.primary[500]}
           />
         ))}
       </MapView>
