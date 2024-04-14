@@ -98,9 +98,11 @@ function PharmacyList({
           isLoading ? <ActivityIndicator size="large" color={theme.colors.primary[500]} /> : null
         }
         ListEmptyComponent={
-          <Text textAlign="center" fontSize={fp(2)} color="gray" mt={hp(20)}>
-            No pharmacies found
-          </Text>
+          !isLoading ? (
+            <Text textAlign="center" fontSize={fp(2)} color="gray" mt={hp(20)}>
+              No pharmacies found
+            </Text>
+          ) : null
         }
       />
     </Flex>
