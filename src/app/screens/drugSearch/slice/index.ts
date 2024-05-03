@@ -9,7 +9,11 @@ export const initialState: IinitialDrugSearchState = {
   isSearching: false,
   isSuccessful: false,
   errorMsg: '',
-  searchResult: undefined,
+  searchResult: {
+    totalDocuments: 0,
+    totalPages: 0,
+    data: [],
+  },
 };
 
 const slice = createSlice({

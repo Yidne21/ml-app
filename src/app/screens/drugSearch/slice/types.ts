@@ -1,6 +1,6 @@
 export interface IinitialDrugSearchState {
   isSearching: boolean;
-  searchResult?: IdrugSearchResult;
+  searchResult: IdrugSearchResult;
   isSuccessful: boolean;
   errorMsg: string;
 }
