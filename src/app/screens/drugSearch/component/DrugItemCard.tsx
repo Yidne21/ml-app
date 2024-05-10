@@ -65,13 +65,13 @@ function DrugItemCard({ drug }: { drug: Idrug }) {
             <Flex flexDirection={'row'} alignItems={'center'} gap={5}>
               <MaterialIcons name="location-pin" size={24} color={theme.colors.primary[900]} />
               <Text fontSize={12} numberOfLines={1} ellipsizeMode="tail">
-                {drug.pharmacy.distance} km away
+                {drug.pharmacy.distance.toFixed(1)} km away
               </Text>
             </Flex>
             <Flex flexDirection={'row'} alignItems={'center'} gap={5}>
               <MaterialIcons name="money" size={24} color={theme.colors.primary[900]} />
               <Text fontSize={13} fontWeight={'bold'}>
-                {drug.price.toFixed(2)} Birr
+                {drug.stocks.price.toFixed(2)} Birr
               </Text>
             </Flex>
           </Flex>

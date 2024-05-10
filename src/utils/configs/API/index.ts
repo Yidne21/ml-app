@@ -10,7 +10,6 @@ interface ApiTypes {
   ContentType?: string;
   data?: any;
 }
-console.log('Base_url', Base_url);
 function API({ method, route, payload, params, token, ContentType }: ApiTypes) {
   console.log('route', route);
   console.log('method', method);

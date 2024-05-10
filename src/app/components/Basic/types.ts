@@ -115,7 +115,11 @@ export interface TextInputProps
     JustifySelfProps,
     PositionProps,
     MarginProps,
-    FontFamilyProps {}
+    FontFamilyProps {
+  autoComplete?: boolean;
+  autoFocus?: boolean;
+  returnKeyType?: string;
+}
 
 export interface TextProps
   extends ColorProps,

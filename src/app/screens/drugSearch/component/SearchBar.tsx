@@ -12,16 +12,7 @@ interface SearchBarProps {
 
 function SearchBar({ drugName, setDrugName, handelKeyPress }: SearchBarProps) {
   return (
-    <Flex
-      position={'relative'}
-      m={'5px'}
-      boxShadow="0 2px 4px rgba(0, 0, 0, 0.15)"
-      borderColor={'#ccc'}
-      borderWidth={1}
-      borderRadius={25}
-      px={'10px'}
-      mx={'10px'}
-    >
+    <Flex borderColor={'#ccc'} borderRadius={25}>
       <EvilIcons
         name="search"
         size={24}
@@ -35,9 +26,9 @@ function SearchBar({ drugName, setDrugName, handelKeyPress }: SearchBarProps) {
         }}
       />
       <TextInput
-        value={drugName}
         placeholder="Search Medicine or HealthCare products"
         onChangeText={(text) => setDrugName(text)}
+        value={drugName}
         onChange={handelKeyPress}
         height={50}
         width={Dimensions.get('window').width - 40}
@@ -45,6 +36,8 @@ function SearchBar({ drugName, setDrugName, handelKeyPress }: SearchBarProps) {
         paddingLeft={50}
         paddingRight={20}
         borderColor={theme.colors.primary[500]}
+        autoFocus={true}
+        returnKeyType="search"
       />
     </Flex>
   );

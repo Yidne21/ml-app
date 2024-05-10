@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Dimensions, ActivityIndicator } from 'react-native';
+import { Dimensions } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import FilterBar from './component/FilterBar';
 import SearchBar from './component/SearchBar';
@@ -23,7 +23,6 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
   const [category, setCategory] = useState('');
   const [pharmacy, setPharmacy] = useState(name);
   const serarchResult = useSelector(select.selectSearchResult);
-  const isSearching = useSelector(select.selectIsSearching);
   const { actions } = useDrugSearchScreenSlice();
   const dispatch = useDispatch();
   const [nextPage, setNextPage] = useState(1);
@@ -37,33 +36,36 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
   };
 
   const handleKeyPress = useCallback(() => {
+    setNextPage(1);
     dispatch(
       actions.getSearchedDrug({
         pageState: {
-          page: 1,
-          limit: 20,
-          location,
-          name: pharmacy,
-          drugName,
-          category,
-          maxPrice: priceRange[1],
-          minPrice: priceRange[0],
+          page: nextPage,
+          limit: 10,
+          location: location || undefined,
+          name: pharmacy || undefined,
+          drugName: drugName || undefined,
+          category: category || undefined,
+          maxPrice: priceRange[1] || undefined,
+          minPrice: priceRange[0] || undefined,
         },
       }),
     );
-  }, [actions, dispatch, location, pharmacy, drugName, category, priceRange]);
+  }, [dispatch, actions, nextPage, location, pharmacy, drugName, category, priceRange]);
 
   const handeleApplyFilter = () => {
+    setNextPage(1);
     dispatch(
       actions.getSearchedDrug({
         pageState: {
-          page: 1,
-          limit: 30,
-          location,
-          name: pharmacy,
-          category,
-          maxPrice: priceRange[1],
-          minPrice: priceRange[0],
+          page: nextPage,
+          limit: 10,
+          location: location || undefined,
+          name: pharmacy || undefined,
+          drugName: drugName || undefined,
+          category: category || undefined,
+          maxPrice: priceRange[1] || undefined,
+          minPrice: priceRange[0] || undefined,
         },
       }),
     );
@@ -73,14 +75,18 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
     dispatch(
       actions.getSearchedDrug({
         pageState: {
-          page: 1,
-          limit: 30,
-          location,
-          name: pharmacy,
+          page: nextPage,
+          limit: 10,
+          location: location || undefined,
+          name: pharmacy || undefined,
+          drugName: drugName || undefined,
+          category: category || undefined,
+          maxPrice: priceRange[1] || undefined,
+          minPrice: priceRange[0] || undefined,
         },
       }),
     );
-  }, [actions, dispatch, location, pharmacy]);
+  }, [actions, category, dispatch, drugName, location, nextPage, pharmacy, priceRange]);
 
   return (
     <Flex flex={1} backgroundColor={'#fff'} p={16}>
@@ -114,11 +120,6 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
       )}
       <Flex mt={10} width={Dimensions.get('window').width - 50} alignSelf={'flex-start'}></Flex>
       <DrugLists drugs={serarchResult?.data} nextPage={nextPage} setNextPage={setNextPage} />
-      {isSearching && (
-        <Flex position={'absolute'} top={'50%'} left={'50%'}>
-          <ActivityIndicator size="large" color={theme.colors.primary[500]} />
-        </Flex>
-      )}
     </Flex>
   );
 }

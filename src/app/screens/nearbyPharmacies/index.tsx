@@ -30,12 +30,12 @@ function Home() {
 
     if (location) {
       setLocation(location);
-      // setRegion({
-      //   latitude: Location[0],
-      //   longitude: Location[1],
-      //   latitudeDelta: 0.01,
-      //   longitudeDelta: 0.01,
-      // });
+      setRegion({
+        latitude: Location[0],
+        longitude: Location[1],
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
     }
   }, [dispatch, actions, nextPage, location, Location, data.totalDocuments]);
 

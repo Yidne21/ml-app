@@ -32,4 +32,10 @@ export interface Idrug {
     distance: number;
   };
   drugPhoto: string[];
+  stocks: {
+    quantity: number;
+    price: number;
+    expireDate: Date;
+    stockId: string;
+  };
 }
