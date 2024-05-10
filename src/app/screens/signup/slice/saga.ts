@@ -6,7 +6,7 @@ import { SignupScreenAction as actions } from '.';
 import { IsignUpPayload } from './types';
 
 function* SignUp(action: PayloadAction<IsignUpPayload>) {
-  const { password, name, phoneNumber } = action.payload;
+  const { password, name, email } = action.payload;
   try {
     const user: AxiosResponse = yield call(API, {
       method: 'POST',
@@ -15,7 +15,7 @@ function* SignUp(action: PayloadAction<IsignUpPayload>) {
         role: 'customer',
         password,
         name,
-        phoneNumber,
+        email,
       },
     });
     if (user.status === 200) {

@@ -9,7 +9,7 @@ import { useForgotPasswordScreenSlice } from './slice';
 import { Flex, Text, Button, Image, TextInput } from '../../components/Basic';
 
 function ForgetPassword({ navigation, route }: RootStackScreenProps<'ForgotPassword'>) {
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
 
   const dispatch = useDispatch();
   const { actions } = useForgotPasswordScreenSlice();
@@ -17,14 +17,14 @@ function ForgetPassword({ navigation, route }: RootStackScreenProps<'ForgotPassw
   const isOtpSent = useSelector(select.selectIsOtpSent);
 
   const handleContinue = () => {
-    dispatch(actions.forgotPassword(phoneNumber));
+    dispatch(actions.forgotPassword(email));
   };
 
   useEffect(() => {
     if (isOtpSent === true) {
-      navigation.navigate('VerifyOtp', { prevRoute: route.name, phoneNumber });
+      navigation.navigate('VerifyOtp', { prevRoute: route.name, email });
     }
-  }, [isOtpSent, navigation, phoneNumber, route.name]);
+  }, [isOtpSent, navigation, email, route.name]);
 
   return (
     <Flex flex={1} pt={10} px={10} backgroundColor={theme.colors.white}>
@@ -46,10 +46,9 @@ function ForgetPassword({ navigation, route }: RootStackScreenProps<'ForgotPassw
 
         <Flex width={'80%'} mb={'20px'}>
           <TextInput
-            placeholder="Phone Number"
-            keyboardType="phone-pad"
-            value={phoneNumber}
-            onChangeText={(text) => setPhoneNumber(text)}
+            placeholder="Email Ex. zola@example.com"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
             height={50}
             borderColor={theme.colors.primary[500]}
             borderWidth={1}

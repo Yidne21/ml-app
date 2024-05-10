@@ -7,13 +7,13 @@ export interface IinitialSignUpState {
 
 export interface IsignUpPayload {
   name: string;
-  phoneNumber: string;
+  email: string;
   password: string;
   role: string;
 }
 export interface IUser {
   name: string;
-  phoneNumber: string;
+  email: string;
   password: string;
   role: string;
 }

@@ -70,7 +70,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
       NextButtonComponent={Next}
       DoneButtonComponent={Done}
       DotComponent={Dots}
-      onSkip={() => navigation.navigate('SignUp')}
+      onSkip={() => navigation.navigate('RootTab')}
       onDone={() => navigation.navigate('SignUp')}
       bottomBarColor={theme.colors.white}
       transitionAnimationDuration={900}

@@ -11,7 +11,7 @@ import { wp, fp } from '../../../utils/constants';
 import Logo from '../../components/Custom/Logo';
 
 function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [name, setName] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
@@ -24,14 +24,14 @@ function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
   const prevRoute = route.name;
 
   const handleContinue = () => {
-    dispatch(actions.signUp({ phoneNumber, password: newPassword, name }));
+    dispatch(actions.signUp({ email, password: newPassword, name }));
   };
 
   useEffect(() => {
     if (isSigned === true) {
       navigation.navigate('Login');
     }
-  }, [isSigned, navigation, phoneNumber, prevRoute]);
+  }, [isSigned, navigation, email, prevRoute]);
 
   if (errorMsg) {
     Toast.show(errorMsg, {
@@ -65,10 +65,9 @@ function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
             px={20}
             marginBottom={10}
             color={theme.colors.text}
-            placeholder="Phone Number"
-            keyboardType="phone-pad"
-            value={phoneNumber}
-            onChangeText={(text) => setPhoneNumber(text)}
+            placeholder="Email Ex. ababeba@gmail.com"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
           />
           <TextInput
             borderRadius={25}

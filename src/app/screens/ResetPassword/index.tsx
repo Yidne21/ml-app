@@ -19,7 +19,7 @@ function ResetPassword({ navigation, route }: RootStackScreenProps<'ResetPasswor
   const isResetting = useSelector(select.selectIsResettingPassword);
   const isResetted = useSelector(select.selectIsReseted);
   const resetError = useSelector(select.selectErrorMessage);
-  const phoneNumber = route.params.phoneNumber;
+  const email = route.params.email;
 
   const handleResetPassword = () => {
     if (newPassword !== confirmNewPassword) {
@@ -27,7 +27,7 @@ function ResetPassword({ navigation, route }: RootStackScreenProps<'ResetPasswor
       return;
     }
 
-    dispatch(actions.resetPassword({ newPassword, phoneNumber }));
+    dispatch(actions.resetPassword({ newPassword, email }));
   };
 
   useEffect(() => {
@@ -119,57 +119,3 @@ function ResetPassword({ navigation, route }: RootStackScreenProps<'ResetPasswor
 }
 
 export default ResetPassword;
-
-// const styles = StyleSheet.create({
-//   rootContainer: {
-//     flex: 1,
-//     padding: 16,
-//   },
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: theme.colors.background,
-//   },
-//   appLogo: {
-//     width: 120,
-//     height: 120,
-//     marginBottom: 20,
-//     borderRadius: 60,
-//   },
-//   logoText: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     marginBottom: 30,
-//     color: theme.colors.primary[500],
-//   },
-//   inputContainer: {
-//     width: '80%',
-//     marginBottom: 20,
-//   },
-//   input: {
-//     height: 50,
-//     borderColor: theme.colors.primary[500],
-//     borderWidth: 1,
-//     borderRadius: 25,
-//     paddingHorizontal: 20,
-//     marginBottom: 20,
-//     fontSize: 16,
-//   },
-//   resetButton: {
-//     width: '80%',
-//     backgroundColor: theme.colors.primary[500],
-//     padding: 15,
-//     borderRadius: 25,
-//     alignItems: 'center',
-//   },
-//   buttonText: {
-//     color: 'white',
-//     fontSize: 18,
-//     fontWeight: 'bold',
-//   },
-//   errorText: {
-//     color: 'red',
-//     marginTop: 5,
-//   },
-// });

@@ -88,10 +88,10 @@ export type RootStackParamList = {
   RootTab: NavigatorScreenParams<TabParamList> | undefined;
   Login: undefined;
   ForgotPassword: undefined;
-  ResetPassword: { phoneNumber: string };
+  ResetPassword: { email: string };
   SignUp: undefined;
   SuccessScreen: { message: string; title: string };
-  VerifyOtp: { prevRoute: string; phoneNumber: string };
+  VerifyOtp: { prevRoute: string; email: string };
   Cart: undefined;
   CheckOut: undefined;
   CheckOutSuccess: undefined;

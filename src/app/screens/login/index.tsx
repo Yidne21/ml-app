@@ -14,7 +14,7 @@ import { wp, fp } from '../../../utils/constants';
 import Logo from '../../components/Custom/Logo';
 
 function Login({ navigation }: RootStackScreenProps<'Login'>) {
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ function Login({ navigation }: RootStackScreenProps<'Login'>) {
   const { actions } = useLoginScreenSlice();
 
   const handleLogin = () => {
-    dispatch(actions.login({ password, phoneNumber }));
+    dispatch(actions.login({ password, email }));
   };
 
   useEffect(() => {
@@ -77,10 +77,9 @@ function Login({ navigation }: RootStackScreenProps<'Login'>) {
             px={20}
             marginBottom={10}
             fontSize={16}
-            placeholder="Phone Number Ex. 0912.."
-            keyboardType="phone-pad"
-            value={phoneNumber}
-            onChangeText={(text) => setPhoneNumber(text)}
+            placeholder="email Ex. abebea@example.com"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
           />
           <TextInput
             px={20}

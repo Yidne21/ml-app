@@ -158,7 +158,7 @@ const RootStack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   const navigation = useNavigation();
   useInitialAppLaunch(
-    () => navigation.navigate('RootTab'), // Navigate to home screen if logged in
+    () => navigation.navigate('SignUp'), // Navigate to home screen if logged in
     () => navigation.navigate('WalkThrough'), // Navigate to login screen if not logged in
   );
 
