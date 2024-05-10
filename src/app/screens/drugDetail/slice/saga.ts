@@ -6,18 +6,17 @@ import { drugDetailAction as actions } from '.';
 import { IdrugDetailPayload } from './types';
 
 function* getDrugDetail(action: PayloadAction<IdrugDetailPayload>) {
-  const drugId = action.payload;
-  console.log('---DrugId---', drugId);
-
+  const { drugId, stockId } = action.payload;
   try {
-    const pharmacydetail: AxiosResponse = yield call(API, {
+    const drugDetail: AxiosResponse = yield call(API, {
       method: 'GET',
       route: `drug/${drugId}`,
+      params: stockId,
     });
-    if (pharmacydetail.status === 200) {
+    if (drugDetail.status === 200) {
       yield put({
         type: actions.getDrugDetailSuccess.type,
-        payload: pharmacydetail.data,
+        payload: drugDetail.data,
       });
     }
   } catch (error) {

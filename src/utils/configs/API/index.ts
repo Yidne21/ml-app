@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 import { Base_url } from '../environments';
+
+console.log(Base_url);
 interface ApiTypes {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   route: string;

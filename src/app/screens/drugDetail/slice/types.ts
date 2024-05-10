@@ -6,12 +6,12 @@ export interface IinitialDrugDetailState {
 
 export interface IdrugDetailPayload {
   drugId: string;
+  stockId: string;
 }
 
 export interface Idrugs {
   _id: string;
   drugPhoto: string[];
-  ingredients: string[];
   needPrescription: boolean;
   name: string;
   category: string;
@@ -20,9 +20,29 @@ export interface Idrugs {
   recivedFrom: string;
   instruction: string;
   sideEffects: string;
-  strengthAndDosage: string;
-  manufacturedDate: string;
-  expiredDate: string;
-  receivedFrom: string;
-  pharmacyName: string;
+  strength: string;
+  dosage: string;
+  stock: Istock;
+  pharmacy: Ipharmacy;
+}
+
+export interface Istock {
+  _id: string;
+  quantity: string;
+  currentQuantity: string;
+  status: string;
+  price: number;
+  cost: number;
+  recievedFrom: string;
+  batchNumber: string;
+  expireDate: Date;
+}
+
+export interface Ipharmacy {
+  _id: string;
+  location: {
+    coordinates: [number, number];
+    type: string;
+  };
+  name: string;
 }

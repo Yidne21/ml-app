@@ -13,13 +13,13 @@ import { Button, Text, Flex, Image } from '../../components/Basic';
 const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
   const { actions } = useDrugDetailScreenSlice();
   const dispatch = useDispatch();
-  const { drugId } = route.params;
+  const { drugId, stockId } = route.params;
   const drug = useSelector(select.selectDrugDetail);
   const isLoaded = useSelector(select.selectIsLoaded);
 
   useEffect(() => {
-    dispatch(actions.getDrugDetail(drugId));
-  }, [actions, dispatch, drugId]);
+    dispatch(actions.getDrugDetail({ drugId, stockId }));
+  }, [actions, dispatch, drugId, stockId]);
 
   console.log('drug', drug.drugPhoto[1]);
 
@@ -62,26 +62,26 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
             alignItems={'center'}
             mb={20}
           >
-            {/* <Text fontSize={18} fontWeight={'bold'}>
-              {drug.price?.toFixed(2)} Birr
-            </Text> */}
-            <Button p={10} borderRadius={10} backgroundColor={theme.shadows.sm}>
+            <Text fontSize={18} fontWeight={'bold'}>
+              {drug.stock.price?.toFixed(2)} Birr
+            </Text>
+            {/* <Button p={10} borderRadius={10} backgroundColor={theme.shadows.sm}>
               <Text fontSize={16} color={theme.colors.primary[500]}>
-                Add to cart
+                Go to cart
               </Text>
-            </Button>
+            </Button> */}
           </Flex>
 
           {renderSection('Instruction', drug.instruction)}
           {renderSection('Side Effects', drug.sideEffects)}
-          {renderSection('Strength and Dosage', drug.strengthAndDosage)}
+          {renderSection('Strength', drug.strength)}
+          {renderSection('Dosage', drug.dosage)}
 
-          {/* <Flex backgroundColor={theme.shadows.sm} p={10} borderRadius={10}>
-            {renderRow('Wholesalers', drug.receivedFrom)}
-            {renderRow('Pharmacy', drug.receivedFrom)}
-            {renderRow('Manufactured Date', format(new Date(drug.manufacturedDate), 'dd/MM/yyyy'))}
-            {renderRow('Expire Date', format(new Date(drug.expiredDate), 'dd/MM/yyyy'))}
-          </Flex> */}
+          <Flex backgroundColor={theme.shadows.sm} p={10} borderRadius={10}>
+            {renderRow('Wholesalers', drug.stock.recievedFrom)}
+            {renderRow('Pharmacy', drug.pharmacy.name)}
+            {renderRow('Expire Date', format(new Date(drug.stock.expireDate), 'dd/MM/yyyy'))}
+          </Flex>
           <Button
             p={10}
             borderRadius={20}
@@ -95,7 +95,7 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
             }}
           >
             <Text fontSize={16} color={'#fff'}>
-              Go to cart
+              Add to cart
             </Text>
           </Button>
         </ScrollView>

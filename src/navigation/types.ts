@@ -29,7 +29,7 @@ export type HomeStackScreenProps<Screen extends keyof HomeStackParamList> = Nati
  */
 export type DrugSearchStackParamList = {
   DrugSearch: { name: string };
-  DrugDetail: { drugId: string };
+  DrugDetail: { drugId: string; stockId: string };
   Cart: undefined;
 };
 
