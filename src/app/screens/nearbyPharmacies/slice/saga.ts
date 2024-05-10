@@ -11,7 +11,7 @@ function* getNearbyPharmacies(action: PayloadAction<IgetNearbyPharmaciesPayload>
   try {
     const nearbyPharmacies: AxiosResponse = yield call(API, {
       method: 'GET',
-      route: 'pharmacy/',
+      route: 'pharmacy/gust',
       params: { ...pageState },
     });
     if (nearbyPharmacies.status === 200) {
