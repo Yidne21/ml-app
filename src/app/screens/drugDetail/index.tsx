@@ -4,11 +4,11 @@ import { DrugSearchStackScreenProps } from '../../../navigation/types';
 import { useDrugDetailScreenSlice } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { theme } from '../../../utils/theme/theme';
-import { Octicons } from '@expo/vector-icons';
 import { format } from 'date-fns';
 import Header from '../../components/Custom/Header';
 import * as select from './slice/selector';
-import { Button, Text, Flex, Image } from '../../components/Basic';
+import { Button, Text, Flex } from '../../components/Basic';
+import ImageSlider from './component/ImageSlider'; // Import ImageSlider component
 
 const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
   const { actions } = useDrugDetailScreenSlice();
@@ -21,8 +21,6 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
     dispatch(actions.getDrugDetail({ drugId, stockId }));
   }, [actions, dispatch, drugId, stockId]);
 
-  console.log('drug', drug.drugPhoto[1]);
-
   return (
     <Flex p={16} flex={1} backgroundColor={'#fff'}>
       <Header showRightIcon={true} />
@@ -32,29 +30,8 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
             {drug.name}
           </Text>
 
-          <Flex alignItems={'center'} height={150} mb={30}>
-            <Image
-              source={{ uri: drug.drugPhoto[1] }}
-              width={100}
-              height={100}
-              mt={20}
-              borderRadius={10}
-              mb={20}
-              p={10}
-              resizeMode="contain"
-            />
-
-            <Flex flexDirection={'row'} justifyContent={'space-between'} width={50}>
-              {[...Array(5)].map((_, index) => (
-                <Octicons
-                  key={index}
-                  name="dot"
-                  size={24}
-                  color={index === 2 ? theme.colors.primary[500] : theme.shadows.lg}
-                />
-              ))}
-            </Flex>
-          </Flex>
+          {/* Replace single Image component with ImageSlider */}
+          <ImageSlider images={drug.drugPhoto} />
 
           <Flex
             flexDirection={'row'}
@@ -65,11 +42,11 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
             <Text fontSize={18} fontWeight={'bold'}>
               {drug.stock.price?.toFixed(2)} Birr
             </Text>
-            {/* <Button p={10} borderRadius={10} backgroundColor={theme.shadows.sm}>
+            <Button p={10} mx={10} borderRadius={10} backgroundColor={theme.shadows.sm}>
               <Text fontSize={16} color={theme.colors.primary[500]}>
-                Go to cart
+                View pharmacy
               </Text>
-            </Button> */}
+            </Button>
           </Flex>
 
           {renderSection('Instruction', drug.instruction)}
@@ -78,9 +55,9 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
           {renderSection('Dosage', drug.dosage)}
 
           <Flex backgroundColor={theme.shadows.sm} p={10} borderRadius={10}>
-            {renderRow('Wholesalers', drug.stock.recievedFrom)}
+            {renderRow('From', drug.stock.recievedFrom)}
             {renderRow('Pharmacy', drug.pharmacy.name)}
-            {renderRow('Expire Date', format(new Date(drug.stock.expireDate), 'dd/MM/yyyy'))}
+            {renderRow('Expire Date', format(new Date(drug.stock.expiredDate), 'dd/MM/yyyy'))}
           </Flex>
           <Button
             p={10}

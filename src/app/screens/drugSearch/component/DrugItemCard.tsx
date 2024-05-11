@@ -14,6 +14,7 @@ function DrugItemCard({ drug }: { drug: Idrug }) {
     // Navigate to DrugDetail screen with the drug details
     navigation.navigate('DrugDetail', {
       drugId: drug._id /* Other parameters if needed */,
+      stockId: drug.stocks.stockId,
     });
   };
   return (

@@ -9,12 +9,11 @@ interface IFilterBarProps {
   location: string;
   category: string;
   priceRange: number[];
-  pharmacy: string;
   setLocation: (location: string) => void;
   setCategory: (category: string) => void;
   setPriceRange: (priceRange: number[]) => void;
-  setPharmacy: (pharmacy: string) => void;
   handleApplyFilter: () => void;
+  setNextPage: (value: number) => void;
 }
 
 const LocationData = [
@@ -51,6 +50,7 @@ const FilterBar: React.FC<IFilterBarProps> = ({
   setLocation,
   setCategory,
   handleApplyFilter,
+  setNextPage,
 }) => {
   const [selectedLocation, setSelectedLocation] = useState(location);
   const [selectedCategory, setSelectedCategory] = useState(category);
@@ -84,9 +84,10 @@ const FilterBar: React.FC<IFilterBarProps> = ({
   );
 
   const handleClearFilter = () => {
+    setNextPage(1);
     setSelectedLocation('');
     setSelectedCategory('');
-    setPriceRange([5, 10000]);
+    setPriceRange([5, 2000]);
     setLocation('8.220573, 37.798139');
     setCategory('');
   };

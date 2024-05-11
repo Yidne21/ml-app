@@ -11,7 +11,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 export type HomeStackParamList = {
   Home: undefined;
   PharmacyDetail: { pharmacyId: string };
-  DrugSearch: { name: string };
+  DrugSearch: { pharmacyId: string };
 };
 
 /**

@@ -35,7 +35,7 @@ export interface Istock {
   cost: number;
   recievedFrom: string;
   batchNumber: string;
-  expireDate: Date;
+  expiredDate: Date;
 }
 
 export interface Ipharmacy {

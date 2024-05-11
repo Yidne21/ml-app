@@ -14,14 +14,13 @@ import { HomeStackScreenProps } from '../../../navigation/types';
 import { Flex, Button } from '../../components/Basic';
 
 function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
-  const { name } = route.params || '';
+  const { pharmacyId } = route.params || '';
   const currentLocation = useCurrentLocation() || '8.220573, 37.798139';
   const [showFilterBar, setShowFilterBar] = useState(false);
   const [drugName, setDrugName] = useState('');
   const [location, setLocation] = useState(currentLocation);
   const [priceRange, setPriceRange] = useState([5, 10000]);
   const [category, setCategory] = useState('');
-  const [pharmacy, setPharmacy] = useState(name);
   const serarchResult = useSelector(select.selectSearchResult);
   const { actions } = useDrugSearchScreenSlice();
   const dispatch = useDispatch();
@@ -42,16 +41,12 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
         pageState: {
           page: nextPage,
           limit: 10,
-          location: location || undefined,
-          name: pharmacy || undefined,
+          location: location,
           drugName: drugName || undefined,
-          category: category || undefined,
-          maxPrice: priceRange[1] || undefined,
-          minPrice: priceRange[0] || undefined,
         },
       }),
     );
-  }, [dispatch, actions, nextPage, location, pharmacy, drugName, category, priceRange]);
+  }, [dispatch, actions, nextPage, location, drugName]);
 
   const handeleApplyFilter = () => {
     setNextPage(1);
@@ -60,12 +55,10 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
         pageState: {
           page: nextPage,
           limit: 10,
-          location: location || undefined,
-          name: pharmacy || undefined,
-          drugName: drugName || undefined,
+          location: location,
           category: category || undefined,
-          maxPrice: priceRange[1] || undefined,
-          minPrice: priceRange[0] || undefined,
+          maxPrice: priceRange[1],
+          minPrice: priceRange[0],
         },
       }),
     );
@@ -77,16 +70,13 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
         pageState: {
           page: nextPage,
           limit: 10,
-          location: location || undefined,
-          name: pharmacy || undefined,
+          location: location,
+          pharmacyId: pharmacyId,
           drugName: drugName || undefined,
-          category: category || undefined,
-          maxPrice: priceRange[1] || undefined,
-          minPrice: priceRange[0] || undefined,
         },
       }),
     );
-  }, [actions, category, dispatch, drugName, location, nextPage, pharmacy, priceRange]);
+  }, [actions, dispatch, drugName, location, nextPage, pharmacyId]);
 
   return (
     <Flex flex={1} backgroundColor={'#fff'} p={16}>
@@ -110,12 +100,11 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
           location={location}
           category={category}
           priceRange={priceRange}
-          pharmacy={pharmacy}
           setLocation={setLocation}
           setCategory={setCategory}
           setPriceRange={setPriceRange}
-          setPharmacy={setPharmacy}
           handleApplyFilter={handeleApplyFilter}
+          setNextPage={setNextPage}
         />
       )}
       <Flex mt={10} width={Dimensions.get('window').width - 50} alignSelf={'flex-start'}></Flex>
