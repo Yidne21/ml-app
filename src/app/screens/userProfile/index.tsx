@@ -43,7 +43,10 @@ function UserProfile({ navigation }: ProfileStackScreenProps<'Profile'>) {
 
   const handleLogout = async () => {
     await removeSingleData('userData');
-    rootNavigation.navigate('WalkThrough');
+    rootNavigation.reset({
+      index: 0,
+      routes: [{ name: 'RootTab' }],
+    });
   };
 
   const handleEditProfile = () => {

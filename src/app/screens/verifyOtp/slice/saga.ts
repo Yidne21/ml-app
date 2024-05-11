@@ -6,15 +6,13 @@ import { AxiosResponse } from 'axios';
 import { IverifyOtpPayload } from './types';
 
 function* VerifyOtp(action: PayloadAction<IverifyOtpPayload>) {
-  const { phoneNumber, code } = action.payload;
-  console.log(phoneNumber, code);
-  console.log(action.payload);
+  const { email, code } = action.payload;
   try {
     const user: AxiosResponse = yield call(API, {
       method: 'POST',
       route: 'user/verify-otp',
       payload: {
-        phoneNumber,
+        email,
         code,
       },
     });

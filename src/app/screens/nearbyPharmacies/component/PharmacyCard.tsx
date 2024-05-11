@@ -75,7 +75,7 @@ function PharmacyCard({ pharmacy, setRegion, flatListRef }: IPharmacyCardProps) 
         borderRadius={8}
       />
       <Flex flex={1}>
-        <Text fontSize={fp(2.5)} fontWeight="bold" mb={hp(0.2)} color="black">
+        <Text fontSize={fp(1.5)} fontWeight="bold" mb={hp(0.2)} color="black">
           {pharmacy.name}
         </Text>
         <Text color="#666" marginBottom={hp(0.2)}>{`${pharmacy.distance} km away`}</Text>

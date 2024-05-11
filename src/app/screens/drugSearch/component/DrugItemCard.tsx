@@ -7,6 +7,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { DrugSearchStackParamList } from '../../../../navigation/types';
 import { Idrug } from '../slice/types';
 import { Text, Image, Flex } from '../../../components/Basic';
+import { wp } from '../../../../utils/constants';
 
 function DrugItemCard({ drug }: { drug: Idrug }) {
   const navigation = useNavigation<NavigationProp<DrugSearchStackParamList>>();
@@ -58,19 +59,19 @@ function DrugItemCard({ drug }: { drug: Idrug }) {
           </Text>
           <Flex justifyContent={'center'} mr={'13px'}>
             <Flex flexDirection={'row'} alignItems={'center'} gap={5}>
-              <MaterialIcons name="local-pharmacy" size={24} color={theme.colors.primary[900]} />
+              <MaterialIcons name="local-pharmacy" size={wp(4)} color={theme.colors.primary[500]} />
               <Text fontSize={12} numberOfLines={1} ellipsizeMode="tail">
                 {drug.pharmacy.name}{' '}
               </Text>
             </Flex>
             <Flex flexDirection={'row'} alignItems={'center'} gap={5}>
-              <MaterialIcons name="location-pin" size={24} color={theme.colors.primary[900]} />
+              <MaterialIcons name="location-pin" size={wp(4)} color={theme.colors.primary[500]} />
               <Text fontSize={12} numberOfLines={1} ellipsizeMode="tail">
                 {drug.pharmacy.distance.toFixed(1)} km away
               </Text>
             </Flex>
             <Flex flexDirection={'row'} alignItems={'center'} gap={5}>
-              <MaterialIcons name="money" size={24} color={theme.colors.primary[900]} />
+              <MaterialIcons name="money" size={wp(4)} color={theme.colors.primary[500]} />
               <Text fontSize={13} fontWeight={'bold'}>
                 {drug.stocks.price.toFixed(2)} Birr
               </Text>

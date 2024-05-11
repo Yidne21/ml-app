@@ -2,8 +2,8 @@ import React, { useRef } from 'react';
 import { ActivityIndicator, FlatList } from 'react-native';
 import { Ipharmacies } from '../slice/types';
 import PharmacyCard from './PharmacyCard';
-import { Box, Flex, Text } from '../../../components/Basic';
-import Map from './Map';
+import { Flex, Text } from '../../../components/Basic';
+// import Map from './Map';
 import { fp, hp } from '../../../../utils/constants';
 import { theme } from '../../../../utils/theme/theme';
 import { useSelector } from 'react-redux';
@@ -31,8 +31,8 @@ interface IPharmacyListProps {
 function PharmacyList({
   pharmacies,
   setRegion,
-  region,
-  userLocation,
+  // region,
+  // userLocation,
   setNextPage,
   nextPage,
 }: IPharmacyListProps) {
@@ -62,29 +62,28 @@ function PharmacyList({
     setNextPage(newPage);
   };
 
-  function renderHeader() {
-    return (
-      <Flex backgroundColor="#fff" flex={1}>
-        <Box marginBottom={10}>
-          <Map
-            pharmacies={pharmacies}
-            region={region}
-            userLocation={userLocation}
-            setRegion={setRegion}
-          />
-        </Box>
-        <Text fontSize={fp(3)} fontWeight="bold" px={15}>
-          Nearby Pharmacies
-        </Text>
-      </Flex>
-    );
-  }
+  // function renderHeader() {
+  //   return (
+  //     <Flex backgroundColor="#fff" flex={1}>
+  //       <Box marginBottom={10}>
+  //         <Map
+  //           pharmacies={pharmacies}
+  //           region={region}
+  //           userLocation={userLocation}
+  //           setRegion={setRegion}
+  //         />
+  //       </Box>
+  //       <Text fontSize={fp(2)} fontWeight="bold" px={15}>
+  //         Nearby Pharmacies
+  //       </Text>
+  //     </Flex>
+  //   );
+  // }
 
   return (
     <Flex flex={1}>
       <FlatList
         ref={flatListRef}
-        ListHeaderComponent={renderHeader}
         refreshing={isRefreshing}
         onRefresh={handleOnRefresh}
         data={pharmacies}
@@ -99,7 +98,7 @@ function PharmacyList({
         }
         ListEmptyComponent={
           !isLoading ? (
-            <Text textAlign="center" fontSize={fp(2)} color="gray" mt={hp(20)}>
+            <Text textAlign="center" fontSize={fp(2)} color="gray" mt={hp(10)}>
               No pharmacies found
             </Text>
           ) : null

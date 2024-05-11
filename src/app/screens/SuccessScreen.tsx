@@ -6,10 +6,10 @@ import { Text, Image, Button, Flex } from '../components/Basic';
 
 function SuccessScreen({ navigation, route }: RootStackScreenProps<'SuccessScreen'>) {
   const { title, message } = route.params;
+  console.log('title', title);
+  console.log('message', message);
 
   const handleContinue = () => {
-    // Implement your logic for what happens when Continue is pressed
-    console.log('Continue pressed');
     navigation.navigate('Login');
   };
 
@@ -22,11 +22,11 @@ function SuccessScreen({ navigation, route }: RootStackScreenProps<'SuccessScree
     >
       <Image source={require('../../assets/images/success.png')} width={150} height={150} mb={20} />
 
-      <Text fontSize={24} fontWeight={'bold'} mb={'10px'} color={theme.colors.white}>
+      <Text fontSize={24} fontWeight={'bold'} mb={'10px'} color={theme.colors.primary[900]}>
         {title}
       </Text>
 
-      <Text fontSize={16} textAlign={'center'} mb={20} color={theme.color.text}>
+      <Text fontSize={16} textAlign={'center'} mb={20} color={theme.colors.primary[900]}>
         {message}
       </Text>
 

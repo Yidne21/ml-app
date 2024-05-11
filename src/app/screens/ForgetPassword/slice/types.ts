@@ -3,5 +3,5 @@ export interface IinitialForgotPasswordState {
   isOtpSent: boolean;
 }
 export interface IForgotPasswordPayload {
-  phonenumber: string;
+  email: string;
 }

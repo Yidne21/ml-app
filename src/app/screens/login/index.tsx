@@ -1,5 +1,3 @@
-// screens/LoginScreen.js
-// screens/LoginScreen.js
 import React, { useState, useEffect } from 'react';
 import { ActivityIndicator } from 'react-native';
 import { RootStackScreenProps } from '../../../navigation/types';
@@ -54,10 +52,9 @@ function Login({ navigation }: RootStackScreenProps<'Login'>) {
       });
       dispatch(actions.resetLoginState());
     }
-  }, [actions, dispatch, errorMessage, isLogedIn, isLoging]);
+  }, [actions, dispatch, errorMessage]);
 
   const handleForgotPassword = () => {
-    // Navigate to the reset password screen
     navigation.navigate('ForgotPassword');
   };
 
@@ -98,6 +95,7 @@ function Login({ navigation }: RootStackScreenProps<'Login'>) {
           width="80%"
           mb={30}
           onPress={handleForgotPassword}
+          disabled={isLoging}
         >
           <Text color={theme.colors.primary[900]} fontSize={fp(2)}>
             Forgot Password?
@@ -119,6 +117,7 @@ function Login({ navigation }: RootStackScreenProps<'Login'>) {
           borderRadius={25}
           alignItems="center"
           onPress={handleLogin}
+          disabled={isLoging}
         >
           <Text color="white" fontSize={fp(2)} fontWeight="bold">
             Login

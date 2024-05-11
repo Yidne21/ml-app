@@ -30,7 +30,7 @@ function API({ method, route, payload, params, token, ContentType }: ApiTypes) {
       data: payload,
       headers: headers,
       params: params,
-      timeout: 20000,
+      timeout: 100000,
     })
       .then((res) => {
         resolve(res);

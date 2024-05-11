@@ -10,7 +10,7 @@ function* SignUp(action: PayloadAction<IsignUpPayload>) {
   try {
     const user: AxiosResponse = yield call(API, {
       method: 'POST',
-      route: 'user/create',
+      route: 'user/signUp',
       payload: {
         role: 'customer',
         password,

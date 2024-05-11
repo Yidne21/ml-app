@@ -17,7 +17,7 @@ function ForgetPassword({ navigation, route }: RootStackScreenProps<'ForgotPassw
   const isOtpSent = useSelector(select.selectIsOtpSent);
 
   const handleContinue = () => {
-    dispatch(actions.forgotPassword(email));
+    dispatch(actions.forgotPassword({ email }));
   };
 
   useEffect(() => {

@@ -6,5 +6,5 @@ export interface IinitialverifyOtpState {
 
 export interface IverifyOtpPayload {
   code: number;
-  phoneNumber: string;
+  email: string;
 }

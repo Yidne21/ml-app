@@ -15,15 +15,15 @@ const Header: React.FC<HeaderProps> = ({ showRightIcon }) => {
   return (
     <Flex flexDirection={'row'} justifyContent={'space-between'} marginBottom={30}>
       <Button onPress={() => rootNavigation.goBack()}>
-        <MaterialIcons name="arrow-back" size={24} color={theme.colors.primary[900]} />
+        <MaterialIcons name="arrow-back" size={24} color={theme.colors.primary[500]} />
       </Button>
       {showRightIcon && (
         <Flex flexDirection={'row'} justifyContent={'space-around'} width={80}>
           <Button onPress={() => rootNavigation.navigate('Notification')}>
-            <MaterialIcons name="notifications-none" size={24} color={theme.colors.primary[900]} />
+            <MaterialIcons name="notifications-none" size={24} color={theme.colors.primary[500]} />
           </Button>
           <Button onPress={() => rootNavigation.navigate('Cart')}>
-            <MaterialIcons name="add-shopping-cart" size={24} color={theme.colors.primary[900]} />
+            <MaterialIcons name="add-shopping-cart" size={24} color={theme.colors.primary[500]} />
           </Button>
         </Flex>
       )}
@@ -32,16 +32,3 @@ const Header: React.FC<HeaderProps> = ({ showRightIcon }) => {
 };
 
 export default Header;
-
-// const styles = StyleSheet.create({
-//   header: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     marginBottom: 30,
-//   },
-//   leftIcon: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-around',
-//     width: 80,
-//   },
-// });

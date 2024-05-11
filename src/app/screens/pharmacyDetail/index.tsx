@@ -24,8 +24,13 @@ function PharmacyProfile({ navigation, route }: HomeStackScreenProps<'PharmacyDe
 
   const handleDrugStoreClick = () => {
     // Navigate to DrugStore screen with the pharmacy details
-    navigation.navigate('DrugSearch', {
-      name: pharmacyInfo.name,
+    navigation.reset({
+      index: 0,
+      routes: [
+        { name: 'Home' },
+        { name: 'PharmacyDetail', params: { pharmacyId } },
+        { name: 'DrugSearch', params: { pharmacyId } },
+      ],
     });
   };
 

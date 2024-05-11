@@ -6,12 +6,14 @@ import { AxiosResponse } from 'axios';
 import { IForgotPasswordPayload } from './types';
 
 function* ForgotPassword(action: PayloadAction<IForgotPasswordPayload>) {
+  const { email } = action.payload;
   try {
     const user: AxiosResponse = yield call(API, {
       method: 'POST',
       route: 'user/send-otp',
       payload: {
-        phoneNumber: action.payload,
+        email,
+        type: 'forgot',
       },
     });
     if (user.status === 200) {

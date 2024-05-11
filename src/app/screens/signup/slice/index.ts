@@ -17,9 +17,11 @@ const slice = createSlice({
   initialState,
   reducers: {
     signUp: (state, action) => {
+      state.errorMsg = '';
       state.isSigning = true;
     },
     signUpSuccess: (state, action) => {
+      state.errorMsg = '';
       state.isSigning = false;
       state.isSigned = true;
       state.user = action.payload;

@@ -9,6 +9,7 @@ import Toast from 'react-native-root-toast';
 import { Flex, Button, Text, TextInput } from '../../components/Basic';
 import { wp, fp } from '../../../utils/constants';
 import Logo from '../../components/Custom/Logo';
+import Header from '../../components/Custom/Header';
 
 function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
   const [email, setEmail] = useState('');
@@ -29,7 +30,7 @@ function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
 
   useEffect(() => {
     if (isSigned === true) {
-      navigation.navigate('Login');
+      navigation.navigate('VerifyOtp', { email, prevRoute: 'SignUp' });
     }
   }, [isSigned, navigation, email, prevRoute]);
 
@@ -50,6 +51,7 @@ function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
 
   return (
     <Flex flex={1} px={10} pt={30} backgroundColor={theme.colors.white}>
+      <Header showRightIcon={false} />
       <Flex alignItems="center" justifyContent="center">
         <Logo />
         <Flex width="80%" marginBottom={10}>
@@ -117,6 +119,7 @@ function SignUp({ navigation, route }: RootStackScreenProps<'SignUp'>) {
           borderRadius={25}
           alignItems="center"
           onPress={handleContinue}
+          disabled={isSigning}
         >
           <Text style={{ color: 'white', fontSize: fp(2), fontWeight: 'bold' }}>Continue</Text>
         </Button>

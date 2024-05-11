@@ -2,19 +2,19 @@ import React from 'react';
 import { Flex, TextInput } from '../../../components/Basic';
 
 interface UpdateFormProps {
-  editedEmail?: string;
+  editedPhone?: string;
   oldPassword?: string;
   newPassword?: string;
-  setEditedEmail: (text: string) => void;
+  setEditedPhone: (text: string) => void;
   setOldPassword: (text: string) => void;
   setNewPassword: (text: string) => void;
 }
 
 const UpdateForm: React.FC<UpdateFormProps> = ({
-  editedEmail,
+  editedPhone,
   oldPassword,
   newPassword,
-  setEditedEmail,
+  setEditedPhone,
   setOldPassword,
   setNewPassword,
 }) => {
@@ -23,9 +23,10 @@ const UpdateForm: React.FC<UpdateFormProps> = ({
       <TextInput
         px={20}
         marginBottom={10}
-        placeholder="Email, eg. jondow@gmail.com"
-        value={editedEmail}
-        onChangeText={(text) => setEditedEmail(text)}
+        placeholder="Phone Number, Ex. 0944567892"
+        value={editedPhone}
+        onChangeText={(text) => setEditedPhone(text)}
+        keyboardType="phone-pad"
       />
       <TextInput
         px={20}
@@ -33,6 +34,7 @@ const UpdateForm: React.FC<UpdateFormProps> = ({
         placeholder="Old password"
         value={oldPassword}
         onChangeText={(text) => setOldPassword(text)}
+        secureTextEntry
       />
       <TextInput
         px={20}
@@ -40,6 +42,7 @@ const UpdateForm: React.FC<UpdateFormProps> = ({
         placeholder="New password"
         value={newPassword}
         onChangeText={(text) => setNewPassword(text)}
+        secureTextEntry
       />
     </Flex>
   );

@@ -22,7 +22,7 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
 
   const isUpdating = useSelector(select.selectIsUpdating);
   const isUpdated = useSelector(select.selectIsUpdated);
-  const [editedEmail, setEditedEmail] = useState(user.email);
+  const [editedPhone, setEditedPhone] = useState(user.phoneNumber);
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [avatarUri, setAvatarUri] = useState(user.avatar);
@@ -31,7 +31,7 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
   useEffect(() => {
     setAvatarUri(user.avatar);
     setCoverPhotoUri(user.coverPhoto);
-    setEditedEmail(user.email);
+    setEditedPhone(user.phoneNumber);
   }, [user]);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
     }
 
     const userData = {
-      email: editedEmail,
+      phoneNumber: editedPhone,
       avatar: newAvatarUri,
       coverPhoto: newCoverPhotoUri,
       oldPassword,
@@ -117,7 +117,7 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
             padding={10}
             backgroundColor={theme.shadows.sm}
           >
-            <MaterialIcons name="camera-alt" size={wp(11.5)} color={theme.colors.primary[700]} />
+            <MaterialIcons name="camera-alt" size={wp(11.5)} color={theme.colors.primary[500]} />
           </Button>
         </Box>
 
@@ -144,7 +144,7 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
             zIndex={1}
             backgroundColor={theme.shadows.sm}
           >
-            <MaterialIcons name="camera-alt" size={34} color={theme.colors.primary[700]} />
+            <MaterialIcons name="camera-alt" size={34} color={theme.colors.primary[500]} />
           </Button>
         </Box>
 
@@ -153,10 +153,10 @@ function UpdateProfile({ navigation }: ProfileStackScreenProps<'EditProfile'>) {
         </Text>
 
         <UpdateForm
-          editedEmail={editedEmail}
+          editedPhone={editedPhone}
           oldPassword={oldPassword}
           newPassword={newPassword}
-          setEditedEmail={setEditedEmail}
+          setEditedPhone={setEditedPhone}
           setOldPassword={setOldPassword}
           setNewPassword={setNewPassword}
         />

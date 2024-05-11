@@ -5,7 +5,7 @@ export interface IinitialResetPasswordState {
 }
 
 export interface IResetPasswordPayload {
-  phoneNumber: string;
+  email: string;
   newPassword: string;
 }
 export interface IUser {

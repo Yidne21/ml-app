@@ -4,7 +4,7 @@ export interface IinitialLoginState {
   errorMessage: string;
 }
 export interface ILoginPayload {
-  phoneNumber: string;
+  email: string;
   password: string;
 }
 export interface ILoginResponse {

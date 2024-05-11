@@ -14,6 +14,8 @@ interface IFilterBarProps {
   setPriceRange: (priceRange: number[]) => void;
   handleApplyFilter: () => void;
   setNextPage: (value: number) => void;
+  setIsClear: (value: boolean) => void;
+  isClear: boolean;
 }
 
 const LocationData = [
@@ -51,6 +53,8 @@ const FilterBar: React.FC<IFilterBarProps> = ({
   setCategory,
   handleApplyFilter,
   setNextPage,
+  setIsClear,
+  isClear,
 }) => {
   const [selectedLocation, setSelectedLocation] = useState(location);
   const [selectedCategory, setSelectedCategory] = useState(category);
@@ -84,6 +88,7 @@ const FilterBar: React.FC<IFilterBarProps> = ({
   );
 
   const handleClearFilter = () => {
+    setIsClear(isClear ? false : true);
     setNextPage(1);
     setSelectedLocation('');
     setSelectedCategory('');

@@ -18,7 +18,7 @@ function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
   const dispatch = useDispatch();
   const { actions } = useVerifyOtpScreenSlice();
 
-  const { phoneNumber, prevRoute } = route.params;
+  const { email, prevRoute } = route.params;
 
   const isVerifying = useSelector(select.selectIsSendingOtp);
   const isVerified = useSelector(select.selectValidOtp);
@@ -46,13 +46,13 @@ function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
           message: 'Your account has been created successfully!',
         });
       } else if (prevRoute === 'ForgotPassword') {
-        navigation.navigate('ResetPassword', { phoneNumber });
+        navigation.navigate('ResetPassword', { email });
       }
     }
-  }, [isVerified, isVerifying, navigation, phoneNumber, prevRoute]);
+  }, [isVerified, isVerifying, navigation, email, prevRoute]);
 
-  if (errorMsg !== '') {
-    Toast.show('invalid code', {
+  if (errorMsg) {
+    Toast.show(errorMsg, {
       duration: Toast.durations.LONG,
       position: Toast.positions.BOTTOM,
       shadow: true,
@@ -64,7 +64,7 @@ function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
 
   const handleResendCode = () => {
     setCountdown(60);
-    dispatch(forgotPasswordActions.forgotPassword({ phoneNumber }));
+    dispatch(forgotPasswordActions.forgotPassword({ email }));
   };
 
   useEffect(() => {
@@ -82,7 +82,7 @@ function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
   }, [isOtpSent, dispatch, forgotPasswordActions]);
 
   const handleSubmitCode = () => {
-    dispatch(actions.verifyOtp({ code: verificationCode, phoneNumber }));
+    dispatch(actions.verifyOtp({ code: verificationCode, email }));
   };
 
   return (
@@ -104,7 +104,7 @@ function VerifyOtp({ navigation, route }: RootStackScreenProps<'VerifyOtp'>) {
           Enter The Verify Code
         </Text>
         <Text fontSize={16} textAlign="center" marginBottom={20} color={theme.colors.text}>
-          We just sent you a 6-digit verification code via the{'\n'} {phoneNumber}
+          We just sent you a 6-digit verification code via the{'\n'} {email}
         </Text>
 
         <Flex flexDirection="row" justifyContent="center" marginBottom={20}>

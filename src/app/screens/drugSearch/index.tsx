@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, KeyboardAvoidingView, Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import FilterBar from './component/FilterBar';
 import SearchBar from './component/SearchBar';
@@ -13,18 +13,19 @@ import useCurrentLocation from '../../../utils/hooks/useCurrentLocation';
 import { HomeStackScreenProps } from '../../../navigation/types';
 import { Flex, Button } from '../../components/Basic';
 
-function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
+const DrugSearch = ({ route }: HomeStackScreenProps<'DrugSearch'>) => {
   const { pharmacyId } = route.params || '';
   const currentLocation = useCurrentLocation() || '8.220573, 37.798139';
   const [showFilterBar, setShowFilterBar] = useState(false);
   const [drugName, setDrugName] = useState('');
   const [location, setLocation] = useState(currentLocation);
-  const [priceRange, setPriceRange] = useState([5, 10000]);
+  const [priceRange, setPriceRange] = useState([5, 2000]);
   const [category, setCategory] = useState('');
   const serarchResult = useSelector(select.selectSearchResult);
   const { actions } = useDrugSearchScreenSlice();
   const dispatch = useDispatch();
   const [nextPage, setNextPage] = useState(1);
+  const [isClear, setIsClear] = useState(false);
 
   const handleFilterIconClick = () => {
     setShowFilterBar(!showFilterBar);
@@ -79,38 +80,46 @@ function DrugSearch({ route }: HomeStackScreenProps<'DrugSearch'>) {
   }, [actions, dispatch, drugName, location, nextPage, pharmacyId]);
 
   return (
-    <Flex flex={1} backgroundColor={'#fff'} p={16}>
-      <Header showRightIcon={true} />
-      <SearchBar drugName={drugName} setDrugName={setDrugName} handelKeyPress={handleKeyPress} />
-      <Flex alignSelf={'flex-end'} marginRight={20} mt={10}>
-        <Button
-          onPress={showFilterBar ? handleFilterCloseClick : handleFilterIconClick}
-          backgroundColor={theme.shadows.sm}
-          borderRadius={10}
-        >
-          <MaterialIcons
-            name={showFilterBar ? 'close' : 'filter-list'}
-            size={30}
-            color={theme.colors.primary[700]}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{ flex: 1 }}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 10}
+    >
+      <Flex flex={1} backgroundColor={'#fff'} p={16}>
+        <Header showRightIcon={true} />
+        <SearchBar drugName={drugName} setDrugName={setDrugName} handelKeyPress={handleKeyPress} />
+        <Flex alignSelf={'flex-end'} marginRight={20} mt={10}>
+          <Button
+            onPress={showFilterBar ? handleFilterCloseClick : handleFilterIconClick}
+            backgroundColor={theme.shadows.sm}
+            borderRadius={10}
+          >
+            <MaterialIcons
+              name={showFilterBar ? 'close' : 'filter-list'}
+              size={30}
+              color={theme.colors.primary[500]}
+            />
+          </Button>
+        </Flex>
+        {showFilterBar && (
+          <FilterBar
+            location={location}
+            category={category}
+            priceRange={priceRange}
+            setLocation={setLocation}
+            setCategory={setCategory}
+            setPriceRange={setPriceRange}
+            handleApplyFilter={handeleApplyFilter}
+            setNextPage={setNextPage}
+            setIsClear={setIsClear}
+            isClear={isClear}
           />
-        </Button>
+        )}
+        <Flex mt={10} width={Dimensions.get('window').width - 50} alignSelf={'flex-start'}></Flex>
+        <DrugLists drugs={serarchResult?.data} nextPage={nextPage} setNextPage={setNextPage} />
       </Flex>
-      {showFilterBar && (
-        <FilterBar
-          location={location}
-          category={category}
-          priceRange={priceRange}
-          setLocation={setLocation}
-          setCategory={setCategory}
-          setPriceRange={setPriceRange}
-          handleApplyFilter={handeleApplyFilter}
-          setNextPage={setNextPage}
-        />
-      )}
-      <Flex mt={10} width={Dimensions.get('window').width - 50} alignSelf={'flex-start'}></Flex>
-      <DrugLists drugs={serarchResult?.data} nextPage={nextPage} setNextPage={setNextPage} />
-    </Flex>
+    </KeyboardAvoidingView>
   );
-}
+};
 
 export default DrugSearch;

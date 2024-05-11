@@ -71,7 +71,7 @@ const OnboardingScreen: React.FC<OnboardingScreenProps> = ({ navigation }) => {
       DoneButtonComponent={Done}
       DotComponent={Dots}
       onSkip={() => navigation.navigate('RootTab')}
-      onDone={() => navigation.navigate('SignUp')}
+      onDone={() => navigation.navigate('RootTab')}
       bottomBarColor={theme.colors.white}
       transitionAnimationDuration={900}
       subTitleStyles={{ color: theme.colors.black, fontSize: wp(3) }}

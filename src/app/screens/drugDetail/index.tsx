@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import { ScrollView } from 'react-native';
-import { DrugSearchStackScreenProps } from '../../../navigation/types';
+import {
+  DrugSearchStackScreenProps,
+  HomeStackParamList,
+  RootStackParamList,
+} from '../../../navigation/types';
 import { useDrugDetailScreenSlice } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { theme } from '../../../utils/theme/theme';
@@ -9,8 +13,10 @@ import Header from '../../components/Custom/Header';
 import * as select from './slice/selector';
 import { Button, Text, Flex } from '../../components/Basic';
 import ImageSlider from './component/ImageSlider'; // Import ImageSlider component
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { getData } from '../../../utils/configs/asyncStorage';
 
-const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
+const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
   const { actions } = useDrugDetailScreenSlice();
   const dispatch = useDispatch();
   const { drugId, stockId } = route.params;
@@ -21,11 +27,36 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
     dispatch(actions.getDrugDetail({ drugId, stockId }));
   }, [actions, dispatch, drugId, stockId]);
 
+  const homeNavigation = useNavigation<NavigationProp<HomeStackParamList>>();
+  const rootNavigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+  const handleViewPharmacy = () => {
+    // Navigate to PharmacyDetail screen with the pharmacy details
+    homeNavigation.navigate('PharmacyDetail', {
+      pharmacyId: drug.pharmacy._id /* Other parameters if needed */,
+    });
+  };
+
+  const handleAddToCart = async () => {
+    const user = await getData('userData');
+    if (!user) {
+      rootNavigation.reset({
+        index: 0,
+        routes: [{ name: 'SignUp' }],
+      });
+
+      return;
+    }
+  };
+
   return (
     <Flex p={16} flex={1} backgroundColor={'#fff'}>
       <Header showRightIcon={true} />
       {isLoaded && (
-        <ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 20 }}
+        >
           <Text fontSize={24} fontWeight={'bold'} mb={10}>
             {drug.name}
           </Text>
@@ -42,8 +73,14 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
             <Text fontSize={18} fontWeight={'bold'}>
               {drug.stock.price?.toFixed(2)} Birr
             </Text>
-            <Button p={10} mx={10} borderRadius={10} backgroundColor={theme.shadows.sm}>
-              <Text fontSize={16} color={theme.colors.primary[500]}>
+            <Button
+              p={10}
+              mx={10}
+              borderRadius={10}
+              backgroundColor={theme.shadows.sm}
+              onPress={handleViewPharmacy}
+            >
+              <Text fontSize={16} color={theme.colors.primary[900]}>
                 View pharmacy
               </Text>
             </Button>
@@ -67,9 +104,7 @@ const DrugDetail = ({ navigation, route }: DrugSearchStackScreenProps<'DrugDetai
             mb={20}
             my={4}
             mt={20}
-            onPress={() => {
-              navigation.navigate('Cart');
-            }}
+            onPress={handleAddToCart}
           >
             <Text fontSize={16} color={'#fff'}>
               Add to cart

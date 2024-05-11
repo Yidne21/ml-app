@@ -16,11 +16,13 @@ const slice = createSlice({
   initialState,
   reducers: {
     verifyOtp(state, action) {
+      state.errorMessage = '';
       state.isSendingOtp = true;
       console.log(action.type);
     },
     verifyOtpSuccess(state, action) {
       state.isSendingOtp = false;
+      state.errorMessage = '';
       state.validOtp = action.payload.valid;
       console.log(action.payload.valid);
     },

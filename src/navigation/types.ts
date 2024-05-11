@@ -28,9 +28,8 @@ export type HomeStackScreenProps<Screen extends keyof HomeStackParamList> = Nati
  * Represents the parameter list for the DrugSearchStack navigation stack.
  */
 export type DrugSearchStackParamList = {
-  DrugSearch: { name: string };
+  DrugSearch: { pharmacyId: string };
   DrugDetail: { drugId: string; stockId: string };
-  Cart: undefined;
 };
 
 /**
@@ -58,6 +57,18 @@ export type ProfileStackParamList = {
 export type ProfileStackScreenProps<Screen extends keyof ProfileStackParamList> =
   NativeStackScreenProps<ProfileStackParamList, Screen>;
 
+export type OrdersStackParamList = {
+  orders: undefined;
+  OrdersDetail: { orderId: string };
+};
+
+/**
+ * Represents the props for the Orders stack screen.
+ * @template Screen - The screen key of the Orders stack.
+ */
+export type OrdersStackScreenProps<Screen extends keyof OrdersStackParamList> =
+  NativeStackScreenProps<OrdersStackParamList, Screen>;
+
 // Tab Navigator
 /**
  * Represents the parameter list for the tabs in the navigation.
@@ -66,6 +77,7 @@ export type TabParamList = {
   HomeTab: NavigatorScreenParams<HomeStackParamList>;
   DrugSearchTab: NavigatorScreenParams<DrugSearchStackParamList>;
   ProfileTab: NavigatorScreenParams<ProfileStackParamList>;
+  OrdersTab: NavigatorScreenParams<OrdersStackParamList>;
   RootTab: undefined;
 };
 

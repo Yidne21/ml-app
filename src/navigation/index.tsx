@@ -26,16 +26,21 @@ import UpdateProfile from '../app/screens/UpdateProfile';
 import OnboardingScreen from '../app/screens/OnboardingScreen';
 import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import useIsLoggedIn from '../utils/hooks/useIsLogged';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+
 // import FistoIcon from 'react-native-vector-icons/Fontisto';
-import useInitialAppLaunch from '../utils/hooks/useInitialAppLaunch';
-import { useNavigation } from '@react-navigation/native';
 import {
   HomeStackParamList,
   DrugSearchStackParamList,
   TabParamList,
   RootStackParamList,
   ProfileStackParamList,
+  OrdersStackParamList,
 } from './types';
+import MyOrders from '../app/screens/orders';
+import OrderDetail from '../app/screens/orderDetail';
+import { useEffect } from 'react';
 
 export default function DefaultLayout() {
   const insets = useSafeAreaInsets();
@@ -84,7 +89,6 @@ function DrugSearchStackScreen() {
     >
       <DrugSearchStack.Screen name="DrugSearch" component={DrugSearch} />
       <DrugSearchStack.Screen name="DrugDetail" component={DrugDetail} />
-      <DrugSearchStack.Screen name="Cart" component={Cart} />
     </DrugSearchStack.Navigator>
   );
 }
@@ -104,13 +108,37 @@ function ProfileStackScreen() {
   );
 }
 
+const OrdersStack = createNativeStackNavigator<OrdersStackParamList>();
+
+function OrdersStackScreen() {
+  return (
+    <OrdersStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <OrdersStack.Screen name="orders" component={MyOrders} />
+      <OrdersStack.Screen name="OrdersDetail" component={OrderDetail} />
+    </OrdersStack.Navigator>
+  );
+}
+
 const Tab = createBottomTabNavigator<TabParamList>();
 function Tabs() {
+  const isLoggedIn = useIsLoggedIn();
+  const [showTab, setShowTab] = React.useState(false);
+  useEffect(() => {
+    if (isLoggedIn) {
+      setShowTab(isLoggedIn);
+    }
+  }, [isLoggedIn, setShowTab, showTab]);
+
   const tabIcons: { [K in keyof TabParamList]: string } = {
     HomeTab: 'home',
     DrugSearchTab: 'search1',
     ProfileTab: 'user',
     RootTab: 'home',
+    OrdersTab: 'orders',
   };
 
   return (
@@ -131,6 +159,8 @@ function Tabs() {
             label = 'Search';
           } else if (route.name === 'ProfileTab') {
             label = 'Profile';
+          } else if (route.name === 'OrdersTab') {
+            label = 'Orders';
           }
 
           return (
@@ -148,7 +178,22 @@ function Tabs() {
     >
       <Tab.Screen name="HomeTab" component={HomeStackScreen} />
       <Tab.Screen name="DrugSearchTab" component={DrugSearchStackScreen} />
-      <Tab.Screen name="ProfileTab" component={ProfileStackScreen} />
+      {showTab ? (
+        <Tab.Screen
+          name="OrdersTab"
+          component={OrdersStackScreen}
+          options={{
+            tabBarBadge: 1,
+            tabBarBadgeStyle: {
+              backgroundColor: 'red',
+            },
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="cart-check" size={size} color={color} />
+            ),
+          }}
+        />
+      ) : null}
+      {showTab ? <Tab.Screen name="ProfileTab" component={ProfileStackScreen} /> : null}
     </Tab.Navigator>
   );
 }
@@ -156,12 +201,6 @@ function Tabs() {
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const navigation = useNavigation();
-  useInitialAppLaunch(
-    () => navigation.navigate('SignUp'), // Navigate to home screen if logged in
-    () => navigation.navigate('WalkThrough'), // Navigate to login screen if not logged in
-  );
-
   return (
     <RootStack.Navigator
       screenOptions={{
