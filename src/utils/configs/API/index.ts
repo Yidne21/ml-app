@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
 import { Base_url } from '../environments';
+import { getData } from '../asyncStorage';
 
-console.log(Base_url);
 interface ApiTypes {
   method: 'GET' | 'POST' | 'PUT' | 'DELETE';
   route: string;
@@ -12,7 +12,9 @@ interface ApiTypes {
   ContentType?: string;
   data?: any;
 }
-function API({ method, route, payload, params, token, ContentType }: ApiTypes) {
+async function API({ method, route, payload, params, token, ContentType }: ApiTypes) {
+  const user = await getData('userData');
+  token = user.accessToken;
   console.log('route', route);
   console.log('method', method);
   console.log('payload', payload);

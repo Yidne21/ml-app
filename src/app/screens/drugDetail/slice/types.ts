@@ -2,11 +2,20 @@ export interface IinitialDrugDetailState {
   isLoadingDrugDetail: boolean;
   isLoaded: boolean;
   drugDetail: Idrugs;
+  isAddingToCart: boolean;
+  cartAddSuccessMsg: string;
 }
 
 export interface IdrugDetailPayload {
   drugId: string;
   stockId: string;
+}
+
+export interface IaddToCartPayload {
+  pharmacyId: string;
+  drugId: string;
+  stockId: string;
+  quantity: number;
 }
 
 export interface Idrugs {

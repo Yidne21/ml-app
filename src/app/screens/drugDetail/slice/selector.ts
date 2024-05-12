@@ -9,3 +9,8 @@ export const selectIsLoadingDrugDetail = createSelector(
   (state) => state.isLoadingDrugDetail,
 );
 export const selectIsLoaded = createSelector([selectSlice], (state) => state.isLoaded);
+export const selectIsAddingToCart = createSelector([selectSlice], (state) => state.isAddingToCart);
+export const selectCartAddSuccessMsg = createSelector(
+  [selectSlice],
+  (state) => state.cartAddSuccessMsg,
+);

@@ -29,7 +29,7 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
       <MapView
         style={{
           width: wp(100),
-          height: hp(40),
+          height: hp(42),
         }}
         region={region}
       >
@@ -51,17 +51,18 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
             }}
           />
         )}
-        {pharmacies.map((pharmacy) => (
-          <Marker
-            key={pharmacy._id}
-            coordinate={{
-              latitude: pharmacy.location.coordinates[1],
-              longitude: pharmacy.location.coordinates[0],
-            }}
-            title={pharmacy.name}
-            pinColor={theme.colors.primary[500]}
-          />
-        ))}
+        {pharmacies &&
+          pharmacies.map((pharmacy) => (
+            <Marker
+              key={pharmacy._id}
+              coordinate={{
+                latitude: pharmacy.location.coordinates[1],
+                longitude: pharmacy.location.coordinates[0],
+              }}
+              title={pharmacy.name}
+              pinColor={theme.colors.primary[500]}
+            />
+          ))}
       </MapView>
     </Flex>
   );

@@ -10,7 +10,6 @@ export const initialState: IinitialDrugDetailState = {
   drugDetail: {
     _id: '',
     drugPhoto: [],
-    ingredients: [],
     needPrescription: false,
     name: '',
     category: '',
@@ -19,12 +18,31 @@ export const initialState: IinitialDrugDetailState = {
     recivedFrom: '',
     instruction: '',
     sideEffects: '',
-    strengthAndDosage: '',
-    manufacturedDate: '',
-    expiredDate: '',
-    receivedFrom: '',
+    strength: '',
+    dosage: '',
+    stock: {
+      _id: '',
+      price: 0,
+      recievedFrom: '',
+      expiredDate: new Date(),
+      quantity: '',
+      currentQuantity: '',
+      status: '',
+      cost: 0,
+      batchNumber: '',
+    },
+    pharmacy: {
+      _id: '',
+      name: '',
+      location: {
+        type: '',
+        coordinates: [37, 9],
+      },
+    },
   },
   isLoaded: false,
+  isAddingToCart: false,
+  cartAddSuccessMsg: '',
 };
 
 const slice = createSlice({
@@ -37,13 +55,27 @@ const slice = createSlice({
     },
     getDrugDetailSuccess: (state, action) => {
       state.drugDetail = action.payload;
-      console.log('drugDetail', action.payload);
       state.isLoadingDrugDetail = false;
       state.isLoaded = true;
     },
     getDrugDetailFailur: (state, action) => {
       state.isLoadingDrugDetail = false;
       state.isLoaded = false;
+    },
+    addToCart: (state, action) => {
+      state.isAddingToCart = true;
+      state.cartAddSuccessMsg = '';
+    },
+    addToCartSuccess: (state, action) => {
+      state.isAddingToCart = false;
+      const { success } = action.payload;
+      state.cartAddSuccessMsg = success;
+      console.log(state.cartAddSuccessMsg);
+    },
+    addToCartFailur: (state, action) => {
+      state.isAddingToCart = false;
+      state.cartAddSuccessMsg = action.payload;
+      console.log(state.cartAddSuccessMsg);
     },
   },
 });

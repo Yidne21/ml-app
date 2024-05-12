@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ScrollView } from 'react-native';
+import { ActivityIndicator, ScrollView } from 'react-native';
 import {
   DrugSearchStackScreenProps,
   HomeStackParamList,
@@ -15,13 +15,16 @@ import { Button, Text, Flex } from '../../components/Basic';
 import ImageSlider from './component/ImageSlider'; // Import ImageSlider component
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { getData } from '../../../utils/configs/asyncStorage';
+import Toast from 'react-native-root-toast';
 
-const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
+const DrugDetail = ({ route, navigation }: DrugSearchStackScreenProps<'DrugDetail'>) => {
   const { actions } = useDrugDetailScreenSlice();
   const dispatch = useDispatch();
   const { drugId, stockId } = route.params;
   const drug = useSelector(select.selectDrugDetail);
   const isLoaded = useSelector(select.selectIsLoaded);
+  const isAddingToCart = useSelector(select.selectIsAddingToCart);
+  const cartAddSuccessMsg = useSelector(select.selectCartAddSuccessMsg);
 
   useEffect(() => {
     dispatch(actions.getDrugDetail({ drugId, stockId }));
@@ -42,12 +45,32 @@ const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
     if (!user) {
       rootNavigation.reset({
         index: 0,
-        routes: [{ name: 'SignUp' }],
+        routes: [{ name: 'RootTab' }, { name: 'SignUp' }],
+      });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'DrugDetail', params: { drugId, stockId } }],
       });
 
       return;
     }
+    dispatch(
+      actions.addToCart({
+        pharmacyId: drug.pharmacy._id,
+        drugId: drug._id,
+        stockId: drug.stock._id,
+      }),
+    );
   };
+
+  useEffect(() => {
+    if (!isAddingToCart && cartAddSuccessMsg !== '') {
+      Toast.show(cartAddSuccessMsg, {
+        duration: Toast.durations.SHORT,
+        position: Toast.positions.BOTTOM,
+      });
+    }
+  }, [isAddingToCart, cartAddSuccessMsg]);
 
   return (
     <Flex p={16} flex={1} backgroundColor={'#fff'}>
@@ -96,6 +119,7 @@ const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
             {renderRow('Pharmacy', drug.pharmacy.name)}
             {renderRow('Expire Date', format(new Date(drug.stock.expiredDate), 'dd/MM/yyyy'))}
           </Flex>
+          {isAddingToCart && <ActivityIndicator size="small" color={theme.colors.primary[500]} />}
           <Button
             p={10}
             borderRadius={20}
@@ -112,6 +136,7 @@ const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
           </Button>
         </ScrollView>
       )}
+      {!isLoaded && <ActivityIndicator size="large" color={theme.colors.primary[500]} />}
     </Flex>
   );
 };

@@ -3,7 +3,7 @@ import API from '../../../../utils/configs/API';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 import { drugDetailAction as actions } from '.';
-import { IdrugDetailPayload } from './types';
+import { IdrugDetailPayload, IaddToCartPayload } from './types';
 
 function* getDrugDetail(action: PayloadAction<IdrugDetailPayload>) {
   console.log('action.payload', action.payload);
@@ -26,6 +26,28 @@ function* getDrugDetail(action: PayloadAction<IdrugDetailPayload>) {
   }
 }
 
+function* addToCart(action: PayloadAction<IaddToCartPayload>) {
+  console.log('action.payload', action.payload);
+  const { drugId, stockId, pharmacyId } = action.payload;
+  try {
+    const message: AxiosResponse = yield call(API, {
+      method: 'POST',
+      route: `cart/add`,
+      payload: { drugId, stockId, pharmacyId, quantity: 1 },
+    });
+    if (message.status === 200) {
+      yield put({
+        type: actions.addToCartSuccess.type,
+        payload: message.data,
+      });
+    }
+  } catch (error) {
+    console.log('--->', error);
+    yield put({ type: actions.addToCartFailur, payload: error });
+  }
+}
+
 export function* drugDetailSaga() {
   yield takeLatest(actions.getDrugDetail.type, getDrugDetail);
+  yield takeLatest(actions.addToCart.type, addToCart);
 }

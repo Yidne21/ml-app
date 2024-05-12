@@ -43,22 +43,24 @@ const UserDetailInfo: React.FC<UserDetailInfoProps> = ({ user }) => {
               </Text>
             </Flex>
           )}
-          <Flex flexDirection={'row'} alignItems={'center'} gap={10}>
-            <MaterialIcons
-              name="phone"
-              size={24}
-              color={theme.colors.primary[300]}
-              style={{
-                margin: 5,
-                padding: 4,
-                borderRadius: 5,
-                backgroundColor: theme.colors.transparent,
-              }}
-            />
-            <Text mt={'5px'} fontSize={fp(2)}>
-              {user.phoneNumber}
-            </Text>
-          </Flex>
+          {user.phoneNumber && (
+            <Flex flexDirection={'row'} alignItems={'center'} gap={10}>
+              <MaterialIcons
+                name="phone"
+                size={24}
+                color={theme.colors.primary[300]}
+                style={{
+                  margin: 5,
+                  padding: 4,
+                  borderRadius: 5,
+                  backgroundColor: theme.colors.transparent,
+                }}
+              />
+              <Text mt={'5px'} fontSize={fp(2)}>
+                {user.phoneNumber}
+              </Text>
+            </Flex>
+          )}
         </Box>
       </Box>
     </>
