@@ -70,13 +70,12 @@ const slice = createSlice({
       state.isAddingToCart = false;
       const { success } = action.payload;
       state.cartAddSuccessMsg = success;
+      console.log(state.cartAddSuccessMsg);
     },
     addToCartFailur: (state, action) => {
       state.isAddingToCart = false;
       state.cartAddSuccessMsg = action.payload;
-    },
-    clearCartSuccessMsg: (state) => {
-      state.cartAddSuccessMsg = '';
+      console.log(state.cartAddSuccessMsg);
     },
   },
 });

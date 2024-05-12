@@ -70,7 +70,8 @@ const DrugDetail = ({ route, navigation }: DrugSearchStackScreenProps<'DrugDetai
         position: Toast.positions.BOTTOM,
       });
     }
-  }, [isAddingToCart, cartAddSuccessMsg]);
+    dispatch(actions.clearCartSuccessMsg());
+  }, [isAddingToCart, cartAddSuccessMsg, dispatch, actions]);
 
   return (
     <Flex p={16} flex={1} backgroundColor={'#fff'}>
