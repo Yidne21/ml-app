@@ -25,6 +25,18 @@ const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
   const isLoaded = useSelector(select.selectIsLoaded);
   const isAddingToCart = useSelector(select.selectIsAddingToCart);
   const cartAddSuccessMsg = useSelector(select.selectCartAddSuccessMsg);
+  const deliveryFee = route.params.distance * drug.pharmacy.deliveryPricePerKm;
+
+  const convertToHours = (minutes: number) => {
+    let days = 0;
+    if (minutes >= 1440) {
+      days = Math.floor(minutes / 1440);
+      minutes = minutes % 1440;
+    }
+    const hours = Math.floor(minutes / 60);
+    const min = minutes % 60;
+    return `${days} day ${hours} hours ${min} min`;
+  };
 
   useEffect(() => {
     dispatch(actions.getDrugDetail({ drugId, stockId }));
@@ -55,6 +67,7 @@ const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
         pharmacyId: drug.pharmacy._id,
         drugId: drug._id,
         stockId: drug.stock._id,
+        deliveryFee,
       }),
     );
   };
@@ -113,8 +126,29 @@ const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
 
           <Flex backgroundColor={theme.shadows.sm} p={10} borderRadius={10}>
             {renderRow('From', drug.stock.recievedFrom)}
-            {renderRow('Pharmacy', drug.pharmacy.name)}
             {renderRow('Expire Date', format(new Date(drug.stock.expiredDate), 'dd/MM/yyyy'))}
+            {renderRow('Pharmacy', drug.pharmacy.name)}
+            {!drug.needPrescription && drug.pharmacy.hasDeliveryService && (
+              <>
+                {renderRow('Has Delivery Service', 'Yes')}
+                {renderRow(
+                  'Price per km',
+                  `${drug.pharmacy.deliveryPricePerKm.toFixed(2).toString()} Birr`,
+                )}
+                {renderRow(
+                  'Delivery Coverage',
+                  `${drug.pharmacy.deliveryCoverage.toFixed(2).toString()} Km`,
+                )}
+                {renderRow('Min Delivery Time', `${convertToHours(drug.pharmacy.minDeliveryTime)}`)}
+                {renderRow('Max Delivery Time', `${convertToHours(drug.pharmacy.maxDeliveryTime)}`)}
+                {renderRow(
+                  `Delivery Fee ${deliveryFee
+                    .toFixed(2)
+                    .toString()} X ${drug.pharmacy.deliveryPricePerKm.toFixed(2).toString()}`,
+                  `${deliveryFee.toFixed(2).toString()} Birr`,
+                )}
+              </>
+            )}
           </Flex>
           {isAddingToCart && <ActivityIndicator size="small" color={theme.colors.primary[500]} />}
           <Button

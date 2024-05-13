@@ -5,6 +5,23 @@ export interface InitialCartState {
     totalPages: number;
     data: IcartDetail[];
   };
+  isCheckingOut: boolean;
+  chapaCheckOutUrl: string;
+  chapaError: string;
+  isCheckOutSuccess: boolean;
+  isOrderCreating: boolean;
+  isOrderCreated: boolean;
+}
+
+export interface IcheckOutPayload {
+  amount: number;
+  email: string;
+  cartId: string;
+}
+
+export interface IcreateOrderPayload {
+  cartId: string;
+  hasDelivery: boolean;
 }
 
 export interface IcartDetail {
@@ -15,6 +32,7 @@ export interface IcartDetail {
   drugs: Idrugs[];
   totalPrice: number;
   totalQuantity: number;
+  deliveryFee: number;
   createdAt: string;
   updatedAt: string;
   __v: number;

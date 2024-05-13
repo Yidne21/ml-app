@@ -16,6 +16,7 @@ function DrugItemCard({ drug }: { drug: Idrug }) {
     navigation.navigate('DrugDetail', {
       drugId: drug._id /* Other parameters if needed */,
       stockId: drug.stocks.stockId,
+      distance: drug.pharmacy.distance,
     });
   };
   return (

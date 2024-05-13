@@ -1,4 +1,4 @@
-export interface InitialCartState {
+export interface InitialCheckoutState {
   isLoading: boolean;
   cartDetail: {
     totalDocuments: number;

@@ -15,7 +15,7 @@ export const initialState: InitialCartState = {
 };
 
 const slice = createSlice({
-  name: 'cartScreen',
+  name: 'checkOutScreen',
   initialState,
   reducers: {
     getCart: (state, action) => {

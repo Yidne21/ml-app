@@ -1,9 +1,21 @@
 import React from 'react';
-import { Text } from '../../components/Basic';
-import { RootStackScreenProps } from '../../../navigation/types';
+import { Flex } from '../../components/Basic';
+import { useSelector } from 'react-redux';
+import * as selectors from '../cart/slice/selector';
+import { WebView } from 'react-native-webview';
+import { ActivityIndicator } from 'react-native';
+import { theme } from '../../../utils/theme/theme';
 
-function CheckOut({ route, navigation }: RootStackScreenProps<'CheckOut'>) {
-  return <Text>{route.params.cartId}</Text>;
+function CheckOut() {
+  const isCheckoutLoading = useSelector(selectors.selectIsCheckOutLoading);
+  const checkOutUrl = useSelector(selectors.selectCheckOutUrl);
+
+  return (
+    <Flex flex={1}>
+      {isCheckoutLoading && <ActivityIndicator size="large" color={theme.colors.primary[500]} />}
+      <WebView source={{ uri: checkOutUrl }} style={{ flex: 1 }} />
+    </Flex>
+  );
 }
 
 export default CheckOut;

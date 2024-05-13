@@ -3,7 +3,7 @@ import API from '../../../../utils/configs/API';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 import { cartDtailAction as actions } from '.';
-import { IaddToCartPayload } from './types';
+import { IaddToCartPayload, IcheckOutPayload } from './types';
 
 function* getCartDetail(action: PayloadAction<{ pageState: { page: number; limit: number } }>) {
   const { pageState } = action.payload;
@@ -46,7 +46,51 @@ function* addToCart(action: PayloadAction<IaddToCartPayload>) {
   }
 }
 
+function* checkOut(action: PayloadAction<IcheckOutPayload>) {
+  const { email, amount, cartId } = action.payload;
+  try {
+    const chapaCheckOutUrl: AxiosResponse = yield call(API, {
+      method: 'POST',
+      route: `transaction/chapa/initiatePayment`,
+      payload: { email, amount, cartId },
+    });
+    if (chapaCheckOutUrl.status === 200) {
+      yield put({
+        type: actions.checkOutSuccess.type,
+        payload: chapaCheckOutUrl.data,
+      });
+    }
+  } catch (error) {
+    console.log('--->', error);
+    yield put({ type: actions.checkOutFailur });
+  }
+}
+
+function* createOrder(
+  action: PayloadAction<{ cartId: string; deliveryAddress: [number, number] }>,
+) {
+  const { cartId, deliveryAddress } = action.payload;
+  try {
+    const message: AxiosResponse = yield call(API, {
+      method: 'POST',
+      route: `order/${cartId}`,
+      payload: { deliveryAddress },
+    });
+    if (message.status === 200) {
+      yield put({
+        type: actions.createOrder.type,
+        payload: message.data,
+      });
+    }
+  } catch (error) {
+    console.log('--->', error);
+    yield put({ type: actions.createOrderFailur });
+  }
+}
+
 export function* cartDetailSaga() {
   yield takeLatest(actions.getCart.type, getCartDetail);
   yield takeLatest(actions.addToCart.type, addToCart);
+  yield takeLatest(actions.checkOut.type, checkOut);
+  yield takeLatest(actions.createOrder.type, createOrder);
 }

@@ -59,6 +59,7 @@ function Cart() {
             title: cartItem.pharmacyName,
             totalPrice: cartItem.totalPrice,
             totalQuantity: cartItem.totalQuantity,
+            deliveryFee: cartItem.deliveryFee || 0,
             data: cartItem.drugs,
           }))}
           renderItem={({ item }) => <ItemCard item={item} />}

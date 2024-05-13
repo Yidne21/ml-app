@@ -54,4 +54,9 @@ export interface Ipharmacy {
     type: string;
   };
   name: string;
+  deliveryPricePerKm: number;
+  hasDeliveryService: boolean;
+  deliveryCoverage: number;
+  minDeliveryTime: number;
+  maxDeliveryTime: number;
 }

@@ -12,6 +12,8 @@ interface ApiTypes {
   ContentType?: string;
   data?: any;
 }
+
+console.log(Base_url);
 async function API({ method, route, payload, params, token, ContentType }: ApiTypes) {
   const user = await getData('userData');
   token = user.accessToken;
