@@ -105,7 +105,7 @@ export type RootStackParamList = {
   SuccessScreen: { message: string; title: string };
   VerifyOtp: { prevRoute: string; email: string };
   Cart: undefined;
-  CheckOut: undefined;
+  CheckOut: { cartId: string };
   CheckOutSuccess: undefined;
   UserProfile: undefined;
   Notification: undefined;

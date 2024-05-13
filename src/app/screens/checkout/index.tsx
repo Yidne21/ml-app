@@ -1,8 +1,9 @@
 import React from 'react';
 import { Text } from '../../components/Basic';
+import { RootStackScreenProps } from '../../../navigation/types';
 
-function CheckOut() {
-  return <Text>Check out screen</Text>;
+function CheckOut({ route, navigation }: RootStackScreenProps<'CheckOut'>) {
+  return <Text>{route.params.cartId}</Text>;
 }
 
 export default CheckOut;

@@ -2,8 +2,8 @@ import React from 'react';
 import { Button, Flex, Text } from '../../../components/Basic';
 import { AntDesign } from '@expo/vector-icons';
 import { theme } from '../../../../utils/theme/theme';
+import { Entypo } from '@expo/vector-icons';
 import { fp } from '../../../../utils/constants';
-import { Feather } from '@expo/vector-icons';
 
 interface ItemCardProps {
   item: {
@@ -21,7 +21,7 @@ function ItemCard({ item }: ItemCardProps) {
           {item.drugName}
         </Text>
         <Button p={2} borderRadius={50}>
-          <Feather name="delete" size={24} color={theme.colors.danger[500]} />
+          <Entypo name="circle-with-cross" size={24} color={theme.colors.danger[500]} />
         </Button>
       </Flex>
       <Flex flexDirection={'row'} justifyContent={'space-between'} px={20} gap={4} py={'10px'}>

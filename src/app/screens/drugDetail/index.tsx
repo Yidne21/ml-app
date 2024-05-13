@@ -17,7 +17,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { getData } from '../../../utils/configs/asyncStorage';
 import Toast from 'react-native-root-toast';
 
-const DrugDetail = ({ route, navigation }: DrugSearchStackScreenProps<'DrugDetail'>) => {
+const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
   const { actions } = useDrugDetailScreenSlice();
   const dispatch = useDispatch();
   const { drugId, stockId } = route.params;
@@ -45,11 +45,7 @@ const DrugDetail = ({ route, navigation }: DrugSearchStackScreenProps<'DrugDetai
     if (!user) {
       rootNavigation.reset({
         index: 0,
-        routes: [{ name: 'RootTab' }, { name: 'SignUp' }],
-      });
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'DrugDetail', params: { drugId, stockId } }],
+        routes: [{ name: 'SignUp' }],
       });
 
       return;
