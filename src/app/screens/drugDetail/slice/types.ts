@@ -16,6 +16,7 @@ export interface IaddToCartPayload {
   drugId: string;
   stockId: string;
   quantity: number;
+  deliveryFee: number;
 }
 
 export interface Idrugs {

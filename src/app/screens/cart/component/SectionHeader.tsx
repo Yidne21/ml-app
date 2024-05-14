@@ -33,8 +33,7 @@ function SectionHeader({ section }: SectionHeaderProps) {
   const handleCheckout = () => {
     dispatch(actions.checkOut({ amount: total, cartId: section.cartId }));
     dispatch(actions.createOrder({ cartId: section.cartId, deliveryAddress }));
-
-    navigation.navigate('CheckOut', { cartId: section.cartId });
+    navigation.navigate('CheckOut');
   };
   const handleDelete = () => {};
   return (
@@ -52,10 +51,11 @@ function SectionHeader({ section }: SectionHeaderProps) {
         <Text fontSize={fp(1.5)} fontStyle={'bold'}>
           Total price: {section.totalPrice.toFixed(2)} Birr
         </Text>
-        <Text fontSize={fp(1.5)}>Quantity: {section.totalQuantity}</Text>
-        <Text fontSize={fp(1.5)}>Delivery Fee: {section.deliveryFee} Birr</Text>
+        <Text fontSize={fp(1.5)}>Quantity: {section.totalQuantity.toFixed(2)}</Text>
+        <Text fontSize={fp(1.5)}>Delivery Fee: {section.deliveryFee.toFixed(2)} Birr</Text>
         <Text fontSize={fp(1.5)}>
-          Total: {section.totalPrice.toFixed(2)} + {section.deliveryFee.toFixed(2)} = {total} Birr
+          Total: {section.totalPrice.toFixed(2)} + {section.deliveryFee.toFixed(2)} ={' '}
+          {total.toFixed(2)} Birr
         </Text>
       </Flex>
       <Flex flexDirection="row" justifyContent="space-around" padding={10} gap={4}>

@@ -10,6 +10,7 @@ import { IinitialLoginState } from '../app/screens/login/slice/types';
 import { IinitialForgotPasswordState } from '../app/screens/ForgetPassword/slice/types';
 import { IinitialUserProfileUpdateState } from '../app/screens/UpdateProfile/slice/types';
 import { InitialCartState } from '../app/screens/cart/slice/types';
+import { IinitialOrdersState } from '../app/screens/orders/slice/types';
 export interface RootState {
   nearbyPharmacyScreen: IinitialNearbyPharmaciesState;
   drugDetailScreen: IinitialDrugDetailState;
@@ -23,4 +24,5 @@ export interface RootState {
   forgotPasswordScreen: IinitialForgotPasswordState;
   userProfileUpdateScreen: IinitialUserProfileUpdateState;
   cartScreen: InitialCartState;
+  ordersScreen: IinitialOrdersState;
 }

@@ -5,11 +5,13 @@ import { RootStackScreenProps } from '../../navigation/types';
 import { Text, Image, Button, Flex } from '../components/Basic';
 
 function SuccessScreen({ navigation, route }: RootStackScreenProps<'SuccessScreen'>) {
-  const { title, message } = route.params;
-  console.log('title', title);
-  console.log('message', message);
+  const { title, message, prevRout } = route.params;
 
   const handleContinue = () => {
+    if (prevRout === 'order') {
+      navigation.navigate('RootTab');
+      return;
+    }
     navigation.navigate('Login');
   };
 

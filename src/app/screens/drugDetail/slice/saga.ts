@@ -28,12 +28,12 @@ function* getDrugDetail(action: PayloadAction<IdrugDetailPayload>) {
 
 function* addToCart(action: PayloadAction<IaddToCartPayload>) {
   console.log('action.payload', action.payload);
-  const { drugId, stockId, pharmacyId } = action.payload;
+  const { drugId, stockId, pharmacyId, deliveryFee } = action.payload;
   try {
     const message: AxiosResponse = yield call(API, {
       method: 'POST',
       route: `cart/add`,
-      payload: { drugId, stockId, pharmacyId, quantity: 1 },
+      payload: { drugId, stockId, pharmacyId, quantity: 1, deliveryFee },
     });
     if (message.status === 200) {
       yield put({

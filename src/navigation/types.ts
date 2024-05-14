@@ -102,10 +102,10 @@ export type RootStackParamList = {
   ForgotPassword: undefined;
   ResetPassword: { email: string };
   SignUp: undefined;
-  SuccessScreen: { message: string; title: string };
+  SuccessScreen: { message: string; title: string; prevRout: string };
   VerifyOtp: { prevRoute: string; email: string };
   Cart: undefined;
-  CheckOut: { cartId: string };
+  CheckOut: undefined;
   CheckOutSuccess: undefined;
   UserProfile: undefined;
   Notification: undefined;

@@ -176,24 +176,33 @@ function Tabs() {
         tabBarStyle: { backgroundColor: 'white' },
       })}
     >
-      <Tab.Screen name="HomeTab" component={HomeStackScreen} />
-      <Tab.Screen name="DrugSearchTab" component={DrugSearchStackScreen} />
+      <Tab.Screen name="HomeTab" component={HomeStackScreen} options={{ unmountOnBlur: true }} />
+      <Tab.Screen
+        name="DrugSearchTab"
+        component={DrugSearchStackScreen}
+        options={{ unmountOnBlur: true }}
+      />
       {showTab ? (
         <Tab.Screen
           name="OrdersTab"
           component={OrdersStackScreen}
           options={{
-            tabBarBadge: 1,
-            tabBarBadgeStyle: {
-              backgroundColor: 'red',
-            },
+            unmountOnBlur: true,
             tabBarIcon: ({ color, size }) => (
               <MaterialCommunityIcons name="cart-check" size={size} color={color} />
             ),
           }}
         />
       ) : null}
-      {showTab ? <Tab.Screen name="ProfileTab" component={ProfileStackScreen} /> : null}
+      {showTab ? (
+        <Tab.Screen
+          name="ProfileTab"
+          component={ProfileStackScreen}
+          options={{
+            unmountOnBlur: true,
+          }}
+        />
+      ) : null}
     </Tab.Navigator>
   );
 }

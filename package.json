@@ -4,7 +4,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
+    "android": "react-native run-android",
     "ios": "expo start --ios",
     "web": "expo start --web"
   },
@@ -41,7 +41,7 @@
     "prettier": "^3.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.74.1",
+    "react-native": "^0.74.1",
     "react-native-dimensions": "^0.0.1",
     "react-native-element-dropdown": "^2.10.1",
     "react-native-gesture-handler": "~2.16.1",

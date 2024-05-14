@@ -10,7 +10,7 @@ function* drugSearch(action: PayloadAction<IgetDrugSearchPayload>) {
   try {
     const drugSearch: AxiosResponse = yield call(API, {
       method: 'GET',
-      route: 'drug/',
+      route: 'drug/customer',
       params: { ...pageState },
     });
     if (drugSearch.status === 200) {
