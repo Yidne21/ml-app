@@ -48,7 +48,7 @@ const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
   const handleViewPharmacy = () => {
     // Navigate to PharmacyDetail screen with the pharmacy details
     homeNavigation.navigate('PharmacyDetail', {
-      pharmacyId: drug.pharmacy._id /* Other parameters if needed */,
+      pharmacyId: drug.pharmacy._id,
     });
   };
 
