@@ -60,23 +60,24 @@ function InfoCard({ pharmacyInfo }: IPharmacyInfoProps) {
         bottom={10}
         right={20}
       >
-        {Object.entries(pharmacyInfo.socialMedia).map(([platform, url]) => (
-          <Button
-            key={platform}
-            style={{
-              padding: 10,
-              borderRadius: 5,
-              marginHorizontal: 5,
-              width: 35,
-              height: 35,
-              alignItems: 'center',
-              backgroundColor: getSocialMediaColor(platform),
-            }}
-            onPress={() => Linking.openURL(url)}
-          >
-            <FontAwesome name={getSocialMediaIcon(platform)} size={14} color="white" />
-          </Button>
-        ))}
+        {pharmacyInfo.socialMedia &&
+          Object.entries(pharmacyInfo.socialMedia).map(([platform, url]) => (
+            <Button
+              key={platform}
+              style={{
+                padding: 10,
+                borderRadius: 5,
+                marginHorizontal: 5,
+                width: 35,
+                height: 35,
+                alignItems: 'center',
+                backgroundColor: getSocialMediaColor(platform),
+              }}
+              onPress={() => Linking.openURL(url)}
+            >
+              <FontAwesome name={getSocialMediaIcon(platform)} size={14} color="white" />
+            </Button>
+          ))}
       </Flex>
     </Flex>
   );

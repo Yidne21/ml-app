@@ -16,8 +16,9 @@ export const initialState: InitialCartState = {
   chapaCheckOutUrl: '',
   chapaError: '',
   isCheckOutSuccess: false,
-  isOrderCreating: false,
+  isOrderCreating: '',
   isOrderCreated: false,
+  createOrderError: '',
 };
 
 const slice = createSlice({
@@ -53,20 +54,29 @@ const slice = createSlice({
       console.log(state.chapaError);
     },
     createOrder: (state, action) => {
-      state.isOrderCreating = true;
+      state.isOrderCreating = action.payload.cartId;
       state.isOrderCreated = false;
     },
     createOrderSuccess: (state, action) => {
-      state.isOrderCreating = false;
+      state.isOrderCreating = '';
       state.isOrderCreated = true;
     },
     createOrderFailur: (state, action) => {
-      state.isOrderCreating = false;
+      state.isOrderCreating = '';
       state.isOrderCreated = false;
+      state.createOrderError = action.payload;
     },
     addToCart: (state, action) => {},
     addToCartSuccess: (state, action) => {},
     addToCartFailur: (state, action) => {},
+    clearState: (state) => {
+      state.isCheckingOut = false;
+      state.isCheckOutSuccess = false;
+      state.chapaError = '';
+      state.isOrderCreating = '';
+      state.isOrderCreated = false;
+      state.createOrderError = '';
+    },
   },
 });
 

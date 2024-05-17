@@ -36,7 +36,10 @@ function Login({ navigation }: RootStackScreenProps<'Login'>) {
         delay: 0,
       });
       dispatch(actions.resetLoginState());
-      navigation.navigate('RootTab');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'RootTab' }],
+      });
     }
   }, [actions, dispatch, isLogedIn, navigation]);
 

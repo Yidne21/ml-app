@@ -51,3 +51,4 @@ export const selectIsRequestingRefundSucces = createSelector(
   [selectSlice],
   (state) => state.isRequestingRefundSucces,
 );
+export const selectCurrentOrder = createSelector([selectSlice], (state) => state.currentOrder);

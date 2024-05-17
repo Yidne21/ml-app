@@ -9,8 +9,9 @@ export interface InitialCartState {
   chapaCheckOutUrl: string;
   chapaError: string;
   isCheckOutSuccess: boolean;
-  isOrderCreating: boolean;
+  isOrderCreating: '';
   isOrderCreated: boolean;
+  createOrderError: string;
 }
 
 export interface IcheckOutPayload {

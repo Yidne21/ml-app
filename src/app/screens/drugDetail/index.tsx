@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
 import { ActivityIndicator, ScrollView } from 'react-native';
-import {
-  DrugSearchStackScreenProps,
-  HomeStackParamList,
-  RootStackParamList,
-} from '../../../navigation/types';
+import { DrugSearchStackScreenProps, RootStackParamList } from '../../../navigation/types';
 import { useDrugDetailScreenSlice } from './slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { theme } from '../../../utils/theme/theme';
@@ -25,7 +21,12 @@ const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
   const isLoaded = useSelector(select.selectIsLoaded);
   const isAddingToCart = useSelector(select.selectIsAddingToCart);
   const cartAddSuccessMsg = useSelector(select.selectCartAddSuccessMsg);
-  const deliveryFee = route.params.distance * drug.pharmacy.deliveryPricePerKm;
+  let deliveryFee = 0;
+  const pharmacyId = drug.pharmacy._id;
+
+  if (drug.pharmacy.hasDeliveryService) {
+    deliveryFee = route.params.distance * drug.pharmacy.deliveryPricePerKm;
+  }
 
   const convertToHours = (minutes: number) => {
     let days = 0;
@@ -42,34 +43,34 @@ const DrugDetail = ({ route }: DrugSearchStackScreenProps<'DrugDetail'>) => {
     dispatch(actions.getDrugDetail({ drugId, stockId }));
   }, [actions, dispatch, drugId, stockId]);
 
-  const homeNavigation = useNavigation<NavigationProp<HomeStackParamList>>();
   const rootNavigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const handleViewPharmacy = () => {
-    // Navigate to PharmacyDetail screen with the pharmacy details
-    homeNavigation.navigate('PharmacyDetail', {
-      pharmacyId: drug.pharmacy._id,
+    rootNavigation.navigate('RootTab', {
+      screen: 'HomeTab',
+      params: {
+        screen: 'PharmacyDetail',
+        params: {
+          pharmacyId,
+        },
+      },
     });
   };
 
   const handleAddToCart = async () => {
     const user = await getData('userData');
     if (!user) {
-      rootNavigation.reset({
-        index: 0,
-        routes: [{ name: 'SignUp' }],
-      });
-
-      return;
+      rootNavigation.navigate('SignUp');
+    } else {
+      dispatch(
+        actions.addToCart({
+          pharmacyId: drug.pharmacy._id,
+          drugId: drug._id,
+          stockId: drug.stock._id,
+          deliveryFee,
+        }),
+      );
     }
-    dispatch(
-      actions.addToCart({
-        pharmacyId: drug.pharmacy._id,
-        drugId: drug._id,
-        stockId: drug.stock._id,
-        deliveryFee,
-      }),
-    );
   };
 
   useEffect(() => {

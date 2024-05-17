@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Flex, Text } from '../../../components/Basic';
 import { fp, wp } from '../../../../utils/constants';
 import { theme } from '../../../../utils/theme/theme';
 import { Entypo } from '@expo/vector-icons';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../../../navigation/types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useCartDtailScreenSlice } from '../slice';
 import useCurrentCoordinates from '../../../../utils/hooks/useCurrentCoordinates';
+import * as select from '../slice/selector';
+import Toast from 'react-native-root-toast';
 
 interface SectionHeaderProps {
   section: {
@@ -20,6 +22,9 @@ interface SectionHeaderProps {
 }
 
 function SectionHeader({ section }: SectionHeaderProps) {
+  const isChekedOut = useSelector(select.selectIsCheckOutSuccess);
+  const isOrderCreated = useSelector(select.selectIsOrderCreated);
+  const creteOrderError = useSelector(select.selectCreateOrderError);
   const total = section.totalPrice + section.deliveryFee;
 
   let deliveryAddress = useCurrentCoordinates();
@@ -30,10 +35,29 @@ function SectionHeader({ section }: SectionHeaderProps) {
   const { actions } = useCartDtailScreenSlice();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (creteOrderError) {
+      Toast.show(creteOrderError, {
+        duration: Toast.durations.LONG,
+        position: Toast.positions.BOTTOM,
+        shadow: true,
+        animation: true,
+        hideOnPress: true,
+        delay: 0,
+      });
+      dispatch(actions.clearState());
+    }
+
+    if (isChekedOut || isOrderCreated) {
+      navigation.navigate('CheckOut');
+
+      dispatch(actions.clearState());
+    }
+  }, [actions, creteOrderError, dispatch, isChekedOut, isOrderCreated, navigation]);
+
   const handleCheckout = () => {
     dispatch(actions.checkOut({ amount: total, cartId: section.cartId }));
     dispatch(actions.createOrder({ cartId: section.cartId, deliveryAddress }));
-    navigation.navigate('CheckOut');
   };
   const handleDelete = () => {};
   return (

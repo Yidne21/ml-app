@@ -17,6 +17,8 @@ function Cart() {
   const isLoading = useSelector(select.selectIsLoading);
   const [nextPage, setNextPage] = useState(1);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const isCheckoutLoading = useSelector(select.selectIsCheckOutLoading);
+  const isCreatingOrder = useSelector(select.selectIsOrderCreating);
 
   useEffect(() => {
     dispatch(
@@ -64,7 +66,13 @@ function Cart() {
           }))}
           renderItem={({ item }) => <ItemCard item={item} />}
           keyExtractor={(item, index) => index.toString()}
-          renderSectionHeader={({ section }) => <SectionHeader section={section} />}
+          renderSectionHeader={({ section }) => {
+            return isCheckoutLoading && section.cartId.toString() === isCreatingOrder ? (
+              <ActivityIndicator size="large" color={theme.colors.primary[500]} />
+            ) : (
+              <SectionHeader section={section} />
+            );
+          }}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => <Text>Cart is empty</Text>}
           ItemSeparatorComponent={() => <Flex height={5} backgroundColor={theme.colors.white} />}

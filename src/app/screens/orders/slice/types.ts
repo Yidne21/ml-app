@@ -12,6 +12,7 @@ export interface IinitialOrdersState {
   isConfirmingSucces: boolean;
   isExtendingSucces: boolean;
   isRequestingRefundSucces: boolean;
+  currentOrder: string;
 }
 export interface IgetOrdersPayload {
   pageState: {

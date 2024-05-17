@@ -84,7 +84,7 @@ function* createOrder(
     }
   } catch (error) {
     console.log('--->', error);
-    yield put({ type: actions.createOrderFailur });
+    yield put({ type: actions.createOrderFailur, payload: error });
   }
 }
 

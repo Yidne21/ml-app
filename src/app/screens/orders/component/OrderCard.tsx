@@ -4,64 +4,22 @@ import { Iorder } from '../slice/types';
 import { theme } from '../../../../utils/theme/theme';
 import { wp, fp } from '../../../../utils/constants';
 import { format } from 'date-fns';
-import { useSelector, useDispatch } from 'react-redux';
-import * as select from '../slice/selector';
+import { useDispatch, useSelector } from 'react-redux';
 import { useOrderSlice } from '../slice';
-import { useNavigation } from '@react-navigation/native';
+import * as select from '../slice/selector';
+import { ActivityIndicator } from 'react-native';
 
 interface IorderCardProps {
   order: Iorder;
 }
 
 function OrderCard({ order }: IorderCardProps) {
-  const navigation = useNavigation();
+  const isConfirming = useSelector(select.selectIsConfirmingOrder);
+  const isExtending = useSelector(select.selectIsExtendingOrder);
+  const isRefunding = useSelector(select.selectIsRequestingRefund);
+  const currentOrder = useSelector(select.selectCurrentOrder);
   const { actions } = useOrderSlice();
   const dispatch = useDispatch();
-  const isConfirmed = useSelector(select.selectIsConfirmingSucces);
-  const isExtended = useSelector(select.selectIsExtendingSucces);
-  const isRefunded = useSelector(select.selectIsRequestingRefundSucces);
-
-  if (isConfirmed) {
-    dispatch(actions.resetState());
-    navigation.reset({
-      index: 1,
-      routes: [
-        { name: 'RootTab' },
-        {
-          name: 'SuccessScreen',
-          params: { message: 'Order Confirmed', title: 'Confirm order', prevRout: 'order' },
-        },
-      ],
-    });
-  }
-
-  if (isExtended) {
-    dispatch(actions.resetState());
-    navigation.reset({
-      index: 1,
-      routes: [
-        { name: 'RootTab', params: { screen: 'Orders' } },
-        {
-          name: 'SuccessScreen',
-          params: { message: 'Order Extended', title: 'Extend order', prevRout: 'order' },
-        },
-      ],
-    });
-  }
-
-  if (isRefunded) {
-    dispatch(actions.resetState());
-    navigation.reset({
-      index: 1,
-      routes: [
-        { name: 'RootTab', params: { screen: 'Orders' } },
-        {
-          name: 'SuccessScreen',
-          params: { message: 'Order Refunded', title: 'Refund order', prevRout: 'order' },
-        },
-      ],
-    });
-  }
 
   const handleRefund = () => {
     dispatch(actions.refund({ orderId: order._id }));
@@ -99,7 +57,7 @@ function OrderCard({ order }: IorderCardProps) {
         <Flex backgroundColor={theme.shadows.sm} p={10} borderRadius={10}>
           {renderRow('Order To', order.pharmacy.name)}
           {renderRow('Email', order.pharmacy.email)}
-          {renderRow('Quantity', order.totalAmount.toFixed(2).toString() + ' Drugs')}
+          {renderRow('Quantity', order.quantity.toString() + ' Drugs')}
           {renderRow('Total', order.totalAmount.toFixed(2).toString() + ' Birr')}
           {renderRow('Status', order.status)}
 
@@ -123,9 +81,13 @@ function OrderCard({ order }: IorderCardProps) {
               borderRadius={5}
               onPress={handleConfirm}
             >
-              <Text color="black" fontSize={fp(3)}>
-                Confirm
-              </Text>
+              {isConfirming && currentOrder === order._id.toString() ? (
+                <ActivityIndicator size={fp(3)} color={theme.colors.primary[500]} />
+              ) : (
+                <Text color="black" fontSize={fp(3)}>
+                  Confirm
+                </Text>
+              )}
             </Button>
           )}
           {order.status === 'expired' && (
@@ -137,9 +99,13 @@ function OrderCard({ order }: IorderCardProps) {
               borderRadius={5}
               onPress={handleExtend}
             >
-              <Text color="black" fontSize={fp(3)}>
-                Extend
-              </Text>
+              {isExtending && currentOrder === order._id.toString() ? (
+                <ActivityIndicator size="small" color={theme.colors.primary[500]} />
+              ) : (
+                <Text color="black" fontSize={fp(3)}>
+                  Extend
+                </Text>
+              )}
             </Button>
           )}
           {order.status === 'expired' ||
@@ -152,9 +118,13 @@ function OrderCard({ order }: IorderCardProps) {
                 borderRadius={5}
                 onPress={handleRefund}
               >
-                <Text color="black" fontSize={fp(3)}>
-                  Refund
-                </Text>
+                {isRefunding && currentOrder === order._id.toString() ? (
+                  <ActivityIndicator size="small" color={theme.colors.primary[500]} />
+                ) : (
+                  <Text color="black" fontSize={fp(3)}>
+                    Refund
+                  </Text>
+                )}
               </Button>
             ))}
         </Box>

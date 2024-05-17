@@ -23,6 +23,7 @@ export const initialState: IinitialOrdersState = {
   isConfirmingSucces: false,
   isExtendingSucces: false,
   isRequestingRefundSucces: false,
+  currentOrder: '',
 };
 
 const slice = createSlice({
@@ -47,48 +48,58 @@ const slice = createSlice({
     refund: (state, action) => {
       state.isRequestingRefund = true;
       state.isRequestingRefundSucces = false;
+      state.currentOrder = action.payload.orderId;
     },
     refundSuccess: (state, action) => {
       state.isRequestingRefund = false;
       state.isRequestingRefundSucces = true;
+      state.currentOrder = '';
     },
     refundFailure: (state, action) => {
       state.isRequestingRefund = false;
       state.requestingRefundError = action.payload;
       state.isRequestingRefundSucces = false;
+      state.currentOrder = '';
     },
 
     confirmOrder: (state, action) => {
       state.isConfirmingOrder = true;
       state.isConfirmingSucces = false;
+      state.currentOrder = action.payload.orderId;
     },
     confirmOrderSuccess: (state, action) => {
       state.isConfirmingOrder = false;
       state.isConfirmingSucces = true;
+      state.currentOrder = '';
     },
     confirmOrderFailure: (state, action) => {
       state.isConfirmingOrder = false;
       state.isConfirmingSucces = false;
       state.confirmingOrderError = action.payload;
+      state.currentOrder = '';
     },
 
     extend: (state, action) => {
       state.isExtendingOrder = true;
       state.isExtendingSucces = false;
+      state.currentOrder = action.payload.orderId;
     },
     extendSuccess: (state, action) => {
       state.isExtendingOrder = false;
       state.isExtendingSucces = true;
+      state.currentOrder = '';
     },
     extendFailure: (state, action) => {
       state.isExtendingOrder = false;
       state.isExtendingSucces = false;
       state.extendingOrderError = action.payload;
+      state.currentOrder = '';
     },
     resetState: (state) => {
       state.isConfirmingSucces = false;
       state.isExtendingSucces = false;
       state.isRequestingRefundSucces = false;
+      state.currentOrder = '';
     },
   },
 });

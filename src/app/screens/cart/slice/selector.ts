@@ -20,3 +20,7 @@ export const selectIsOrderCreating = createSelector(
   (state) => state.isOrderCreating,
 );
 export const selectIsOrderCreated = createSelector([selectSlice], (state) => state.isOrderCreated);
+export const selectCreateOrderError = createSelector(
+  [selectSlice],
+  (state) => state.createOrderError,
+);

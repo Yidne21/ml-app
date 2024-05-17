@@ -11,14 +11,17 @@ function MyOrder() {
   const dispatch = useDispatch();
   const data = useSelector(select.selectOrders);
   const [nextPage, setNextPage] = useState(1);
+  const isConfirming = useSelector(select.selectIsConfirmingOrder);
+  const isExtending = useSelector(select.selectIsExtendingOrder);
+  const isRefunding = useSelector(select.selectIsRequestingRefund);
 
   useEffect(() => {
     dispatch(
       actions.getOrders({
-        pageState: { page: nextPage, limit: 10 },
+        pageState: { page: 1, limit: 10 },
       }),
     );
-  }, [dispatch, actions, nextPage, data.totalDocuments]);
+  }, [dispatch, actions, nextPage, data.totalDocuments, isConfirming, isExtending, isRefunding]);
 
   return (
     <Flex flex={1} backgroundColor="#fff">

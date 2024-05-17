@@ -47,7 +47,7 @@ function DrugLists({ drugs, nextPage, setNextPage }: IDrugListProps) {
         refreshing={isRefreshing}
         onRefresh={handleOnRefresh}
         renderItem={({ item }) => <DrugItemCard drug={item} />}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item, index) => index.toString()}
         onEndReached={handleOnEndReached}
         numColumns={2}
         showsVerticalScrollIndicator={false}
