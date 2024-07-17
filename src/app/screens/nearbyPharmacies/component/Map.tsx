@@ -26,7 +26,7 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
   console.log(userLocation, 'userLocation');
   return (
     <Flex flex={1}>
-      <MapView
+{/*       <MapView
         style={{
           width: wp(100),
           height: hp(42),
@@ -63,7 +63,7 @@ export default function Map({ pharmacies, region, userLocation, setRegion }: IMa
               pinColor={theme.colors.primary[500]}
             />
           ))}
-      </MapView>
+      </MapView> */}
     </Flex>
   );
 }
