@@ -6,7 +6,7 @@ import PharmacyList from './component/PharmacyList';
 import { Box, Flex, Text } from '../../components/Basic';
 import useCurrentCoordinates from '../../../utils/hooks/useCurrentCoordinates';
 import { fp } from '../../../utils/constants';
-import Map from './component/Map';
+// import Map from './component/Map';
 
 function Home() {
   const location = useCurrentCoordinates();
@@ -45,12 +45,15 @@ function Home() {
     <Flex flex={1} backgroundColor="#fff">
       <Flex backgroundColor="#fff" flex={1} flexDirection={'row'}>
         <Box>
-          <Map
+          <Text fontSize={fp(2)} fontWeight="bold" px={15} py={10}>
+Google Maps functionality is currently unavailable due to the absence of an API key. We are working to resolve this issue and will have it up and running soon. Stay tuned!
+          </Text>
+{/*           <Map
             pharmacies={data.data}
             region={region}
             userLocation={Location}
             setRegion={setRegion}
-          />
+          /> */}
         </Box>
       </Flex>
       <Text fontSize={fp(2)} fontWeight="bold" px={15} py={10}>
