@@ -6,7 +6,6 @@
     "preview": {
       "android": {
         "image": "latest"
-        "buildType": "apk"
       },
       "env": {
         "API_URL": "https://medicin-locator-service.onrender.com"
